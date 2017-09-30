@@ -23,7 +23,7 @@
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
 
-	<property name="hbm2ddl.auto">create</property> <!-- CREA LA BD -->
+    <property name="hbm2ddl.auto">update</property> <!-- actualiza LA BD, si la quiero borrar y hacerla de nuevo pongo el valor create -->
     <!-- update validate -->
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Detalleoferta" />

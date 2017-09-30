@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.fabiocompany.supermercadosdeltaplus.test.SupermercadosDeltaPlusTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 20.084 sec <<< FAILURE! - in com.fabiocompany.supermercadosdeltaplus.test.SupermercadosDeltaPlusTest
-guardarUsuario(com.fabiocompany.supermercadosdeltaplus.test.SupermercadosDeltaPlusTest)  Time elapsed: 20.082 sec  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.909 sec <<< FAILURE! - in com.fabiocompany.supermercadosdeltaplus.test.SupermercadosDeltaPlusTest
+guardarUsuario(com.fabiocompany.supermercadosdeltaplus.test.SupermercadosDeltaPlusTest)  Time elapsed: 3.906 sec  <<< ERROR!
 com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException: object references an unsaved transient instance - save the transient instance before flushing: com.fabiocompany.supermercadosdeltaplus.model.Tipodepago
 	at org.hibernate.engine.internal.ForeignKeys.getEntityIdentifierIfNotUnsaved(ForeignKeys.java:294)
 	at org.hibernate.type.EntityType.getIdentifier(EntityType.java:537)

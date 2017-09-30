@@ -9,7 +9,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author magm
  *
  */
-@ComponentScan({ "ar.com.magm.ti.app", "ar.com.magm.ti.web" })
+@ComponentScan({ "com.fabiocompany.supermercadosdeltaplus.app", "com.fabiocompany.supermercadosdeltaplus.web" })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ContextConfig {
 	@Bean
