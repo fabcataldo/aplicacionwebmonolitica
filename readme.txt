@@ -1,1 +1,1 @@
-Este es el repo personal de web 3
+Este es el repo del proyecto SupermercadosDeltaPlus de Ingeniería Web III
