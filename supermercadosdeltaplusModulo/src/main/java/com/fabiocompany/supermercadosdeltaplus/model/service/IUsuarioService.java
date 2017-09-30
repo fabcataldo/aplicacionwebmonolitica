@@ -11,7 +11,9 @@ package com.fabiocompany.supermercadosdeltaplus.model.service;
  */
 import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.service.IGenericService;
+import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
+import java.util.List;
 
 public interface IUsuarioService extends IGenericService<Usuario, Integer>{
-    
+    public List<Usuario> list(String parteDelNombre) throws ServiceException; 
 }

@@ -12,7 +12,9 @@ package com.fabiocompany.supermercadosdeltaplus.model.dao;
 
 import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.IGenericDAO;
+import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
+import java.util.List;
 
 public interface IUsuarioDAO extends IGenericDAO<Usuario, Integer>{
-    
+    	public List<Usuario> list(String parteDelNombre) throws PersistenceException; 
 }
