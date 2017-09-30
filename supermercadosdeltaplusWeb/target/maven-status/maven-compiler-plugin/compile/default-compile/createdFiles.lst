@@ -1,0 +1,14 @@
+com/fabiocompany/supermercadosdeltaplus/app/config/WebMvcConfig.class
+com/fabiocompany/supermercadosdeltaplus/web/services/Constants.class
+com/fabiocompany/supermercadosdeltaplus/web/services/BaseRSController.class
+com/fabiocompany/supermercadosdeltaplus/app/config/SecurityConfig.class
+com/fabiocompany/supermercadosdeltaplus/app/setup/MyApplicationContextInitializer.class
+com/fabiocompany/supermercadosdeltaplus/app/Application.class
+com/fabiocompany/supermercadosdeltaplus/web/controllers/WelcomeController.class
+com/fabiocompany/supermercadosdeltaplus/web/services/DenyRSController.class
+com/fabiocompany/supermercadosdeltaplus/app/config/PersistenceConfig.class
+com/fabiocompany/supermercadosdeltaplus/app/config/auth/UserDetailService.class
+com/fabiocompany/supermercadosdeltaplus/app/config/ContextConfig.class
+com/fabiocompany/supermercadosdeltaplus/app/Beans.class
+com/fabiocompany/supermercadosdeltaplus/app/config/SecurityWebApplicationInitializer.class
+com/fabiocompany/supermercadosdeltaplus/web/services/EntidadRSController.class
