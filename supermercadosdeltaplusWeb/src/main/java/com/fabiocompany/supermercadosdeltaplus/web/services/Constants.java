@@ -19,5 +19,6 @@ public final class Constants {
 	public static final String URL_DENY = "/deny";
 	
 	public static final String URL_ENTIDAD= URL_BASE + "/entidades";
+        public static final String URL_USUARIO=URL_BASE+"/usuarios";
 	
 }

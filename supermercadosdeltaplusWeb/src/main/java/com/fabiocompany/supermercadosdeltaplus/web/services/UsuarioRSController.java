@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author fabio
  */
 @RestController
-@RequestMapping(value = Constants.URL_ENTIDAD)
+@RequestMapping(value = Constants.URL_USUARIO)
 public class UsuarioRSController {
 	private static Logger LOG = LoggerFactory.getLogger(UsuarioRSController.class);
 	@Autowired
