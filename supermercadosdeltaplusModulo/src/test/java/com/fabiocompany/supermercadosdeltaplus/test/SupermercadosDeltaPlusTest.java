@@ -134,7 +134,7 @@ public class SupermercadosDeltaPlusTest extends BaseTest{
 */         
         Cabeceraticket ctguardado=new Cabeceraticket();
         ctguardado=cabeceraticketservice.saveOrUpdate(ct);
-        assertTrue("Error id de cabecera ticket", ctguardado.getIdcabeceraticket()>-1 );
+        assertTrue("Error id de cabecera ticket", ctguardado.getIdticket()>-1 );
 
         Tipodepago tipodepagoguardado=new Tipodepago();
         tipodepagoguardado=tipodepagoservice.saveOrUpdate(tp);
