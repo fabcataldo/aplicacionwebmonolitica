@@ -40,7 +40,7 @@ public class Cabeceraticket  implements java.io.Serializable {
     private Usuario usuario;
     
     @Column(name="fecha")
-    private String fecha;
+    private long fecha;
     
     //@OneToMany(fetch = FetchType.LAZY, mappedBy = "cabeceraticket", cascade= CascadeType.ALL)
     @OneToMany(cascade=CascadeType.ALL)
@@ -56,7 +56,7 @@ public class Cabeceraticket  implements java.io.Serializable {
         this.idticket = idticket;
         this.usuario = usuario;
     }
-    public Cabeceraticket(int idticket, Usuario usuario, String fecha, Set<Detalleticket> detalletickets) {
+    public Cabeceraticket(int idticket, Usuario usuario, long fecha, Set<Detalleticket> detalletickets) {
        this.idticket = idticket;
        this.usuario = usuario;
        this.fecha = fecha;
@@ -77,11 +77,11 @@ public class Cabeceraticket  implements java.io.Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    public String getFecha() {
+    public long getFecha() {
         return this.fecha;
     }
     
-    public void setFecha(String fecha) {
+    public void setFecha(long fecha) {
         this.fecha = fecha;
     }
     public Set getDetalletickets() {

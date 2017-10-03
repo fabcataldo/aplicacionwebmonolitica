@@ -12,6 +12,6 @@ package com.fabiocompany.supermercadosdeltaplus.model.service;
 import com.fabiocompany.supermercadosdeltaplus.model.Tarjeta;
 import com.fabiocompany.supermercadosdeltaplus.service.IGenericService;
 
-public interface ITarjetaService extends IGenericService<Tarjeta, String>{
+public interface ITarjetaService extends IGenericService<Tarjeta, Integer>{
     
 }

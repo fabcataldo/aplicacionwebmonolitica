@@ -5,8 +5,8 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate;
 
-import com.fabiocompany.supermercadosdeltaplus.model.Detalleoferta;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.IDetalleofertaDAO;
+import com.fabiocompany.supermercadosdeltaplus.model.Detalleofertaypromocion;
+import com.fabiocompany.supermercadosdeltaplus.model.dao.IDetalleofertaypromocionDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.hibernate.GenericDAO;
 import org.hibernate.SessionFactory;
 
@@ -14,8 +14,8 @@ import org.hibernate.SessionFactory;
  *
  * @author fabio
  */
-public class DetalleofertaDAO extends GenericDAO<Detalleoferta, Integer> implements IDetalleofertaDAO {
-	public DetalleofertaDAO(SessionFactory sessionFactory) {
+public class DetalleofertaypromocionDAO extends GenericDAO<Detalleofertaypromocion, Integer> implements IDetalleofertaypromocionDAO {
+	public DetalleofertaypromocionDAO(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 }

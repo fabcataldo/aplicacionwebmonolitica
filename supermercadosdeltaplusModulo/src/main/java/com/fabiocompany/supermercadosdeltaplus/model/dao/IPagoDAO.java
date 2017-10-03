@@ -5,14 +5,18 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.dao;
 
+import com.fabiocompany.supermercadosdeltaplus.model.Pago;
+
 /**
  *
  * @author fabio
  */
 
-import com.fabiocompany.supermercadosdeltaplus.model.Detalleoferta;
+import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.IGenericDAO;
+import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
+import java.util.List;
 
-public interface IDetalleofertaDAO extends IGenericDAO<Detalleoferta, Integer>{
-    
+public interface IPagoDAO extends IGenericDAO<Pago, Integer>{
+    	
 }

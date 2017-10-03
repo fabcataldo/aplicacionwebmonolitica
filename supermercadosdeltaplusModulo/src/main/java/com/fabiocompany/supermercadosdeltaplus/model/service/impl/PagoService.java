@@ -5,19 +5,19 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.service.impl;
 
-import com.fabiocompany.supermercadosdeltaplus.model.Tarjeta;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.ITarjetaDAO;
-import com.fabiocompany.supermercadosdeltaplus.model.service.ITarjetaService;
+import com.fabiocompany.supermercadosdeltaplus.model.Pago;
+import com.fabiocompany.supermercadosdeltaplus.model.dao.IPagoDAO;
+import com.fabiocompany.supermercadosdeltaplus.model.service.IPagoService;
 import com.fabiocompany.supermercadosdeltaplus.service.impl.GenericService;
 
 /**
  *
  * @author fabio
  */
-public class TarjetaService extends GenericService<Tarjeta, Integer>
-		implements ITarjetaService {
+public class PagoService extends GenericService<Pago, Integer>
+		implements IPagoService {
 
-	public TarjetaService(ITarjetaDAO dao) {
+	public PagoService(IPagoDAO dao) {
 		super(dao);
 	}
 	

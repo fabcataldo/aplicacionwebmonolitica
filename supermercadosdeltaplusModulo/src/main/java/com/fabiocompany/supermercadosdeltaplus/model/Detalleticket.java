@@ -19,6 +19,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -40,15 +42,13 @@ public class Detalleticket  implements java.io.Serializable {
     @JoinColumn(name="idticket")  
     private Cabeceraticket cabeceraticket;
     
-    @ManyToOne
-    @JoinColumn(name="idtipodepago")
-    private Tipodepago tipodepago;
     
+    @OneToOne(cascade=CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Pago pago;
+ 
     @Column(name="cantidad")
     private int cantidad;
-    
-    @Column(name="montodepago")
-    private double montodepago;
     
     @Column(name="subtotal")
     private double subtotal;
@@ -63,7 +63,7 @@ public class Detalleticket  implements java.io.Serializable {
 	@JoinTable(name="ticketsyofertas", joinColumns = {
             @JoinColumn(name = "iddetalleticket") }, inverseJoinColumns = {
 		@JoinColumn(name = "iddetalleoferta") })
-    private Set<Detalleoferta> detalleofertas = new HashSet(0);
+    private Set<Detalleofertaypromocion> detalleofertas = new HashSet(0);
     
     @ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="ticketsyproductos", joinColumns = {
@@ -71,100 +71,134 @@ public class Detalleticket  implements java.io.Serializable {
 		@JoinColumn(name = "idproducto") })
     private Set<Producto> productos = new HashSet(0);
 
+
     public Detalleticket() {
     }
+    
+    public Detalleticket(int iddetalleticket, Cabeceraticket cabeceraticket, Pago pago,
+			int cantidad, double subtotal, double total, int cantidadporproducto, Set<Detalleofertaypromocion> detalleofertas,
+			Set<Producto> productos) {
+		this.iddetalleticket = iddetalleticket;
+		this.cabeceraticket = cabeceraticket;
+		this.pago = pago;
+		this.cantidad = cantidad;
+		this.subtotal = subtotal;
+		this.total = total;
+		this.cantidadporproducto = cantidadporproducto;
+		this.detalleofertas = detalleofertas;
+		this.productos = productos;
+	}
 
-	
-    public Detalleticket(int iddetalleticket, Cabeceraticket cabeceraticket, Tipodepago tipodepago) {
-        this.iddetalleticket = iddetalleticket;
-        this.cabeceraticket = cabeceraticket;
-        this.tipodepago = tipodepago;
-    }
-    public Detalleticket(int iddetalleticket, Cabeceraticket cabeceraticket, Tipodepago tipodepago, Integer cantidad, Double montodepago, Double subtotal, Double total, Integer cantidadporproducto, Set<Detalleoferta> detalleofertas, Set<Producto> productos) {
-       this.iddetalleticket = iddetalleticket;
-       this.cabeceraticket = cabeceraticket;
-       this.tipodepago = tipodepago;
-       this.cantidad = cantidad;
-       this.montodepago = montodepago;
-       this.subtotal = subtotal;
-       this.total = total;
-       this.cantidadporproducto = cantidadporproducto;
-       this.detalleofertas = detalleofertas;
-       this.productos = productos;
-    }
-   
-    public int getIddetalleticket() {
-        return this.iddetalleticket;
-    }
-    
-    public void setIddetalleticket(int iddetalleticket) {
-        this.iddetalleticket = iddetalleticket;
-    }
-    public Cabeceraticket getCabeceraticket() {
-        return this.cabeceraticket;
-    }
-    
-    public void setCabeceraticket(Cabeceraticket cabeceraticket) {
-        this.cabeceraticket = cabeceraticket;
-    }
-    public Tipodepago getTipodepago() {
-        return this.tipodepago;
-    }
-    
-    public void setTipodepago(Tipodepago tipodepago) {
-        this.tipodepago = tipodepago;
-    }
-    public Integer getCantidad() {
-        return this.cantidad;
-    }
-    
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-    public Double getMontodepago() {
-        return this.montodepago;
-    }
-    
-    public void setMontodepago(Double montodepago) {
-        this.montodepago = montodepago;
-    }
-    public Double getSubtotal() {
-        return this.subtotal;
-    }
-    
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
-    }
-    public Double getTotal() {
-        return this.total;
-    }
-    
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-    public Integer getCantidadporproducto() {
-        return this.cantidadporproducto;
-    }
-    
-    public void setCantidadporproducto(Integer cantidadporproducto) {
-        this.cantidadporproducto = cantidadporproducto;
-    }
-    public Set getDetalleofertas() {
-        return this.detalleofertas;
-    }
-    
-    public void setDetalleofertas(Set<Detalleoferta> detalleofertas) {
-        this.detalleofertas = detalleofertas;
-    }
-    public Set getProductos() {
-        return this.productos;
-    }
-    
-    public void setProductos(Set<Producto> productos) {
-        this.productos = productos;
-    }
-    
-    @Override
+
+
+	public int getIddetalleticket() {
+		return iddetalleticket;
+	}
+
+
+
+	public void setIddetalleticket(int iddetalleticket) {
+		this.iddetalleticket = iddetalleticket;
+	}
+
+
+
+	public Cabeceraticket getCabeceraticket() {
+		return cabeceraticket;
+	}
+
+
+
+	public void setCabeceraticket(Cabeceraticket cabeceraticket) {
+		this.cabeceraticket = cabeceraticket;
+	}
+
+
+	public Pago getPago() {
+		return pago;
+	}
+
+
+
+	public void setPago(Pago pago) {
+		this.pago = pago;
+	}
+
+
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+
+
+	public double getSubtotal() {
+		return subtotal;
+	}
+
+
+
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
+	}
+
+
+
+	public double getTotal() {
+		return total;
+	}
+
+
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+
+
+	public int getCantidadporproducto() {
+		return cantidadporproducto;
+	}
+
+
+
+	public void setCantidadporproducto(int cantidadporproducto) {
+		this.cantidadporproducto = cantidadporproducto;
+	}
+
+
+
+	public Set<Detalleofertaypromocion> getDetalleofertas() {
+		return detalleofertas;
+	}
+
+
+
+	public void setDetalleofertas(Set<Detalleofertaypromocion> detalleofertas) {
+		this.detalleofertas = detalleofertas;
+	}
+
+
+
+	public Set<Producto> getProductos() {
+		return productos;
+	}
+
+
+
+	public void setProductos(Set<Producto> productos) {
+		this.productos = productos;
+	}
+
+
+
+	@Override
     public int hashCode() {
         return getIddetalleticket();
     }

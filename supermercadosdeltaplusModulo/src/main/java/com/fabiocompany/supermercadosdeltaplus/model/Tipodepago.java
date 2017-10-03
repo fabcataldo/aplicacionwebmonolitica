@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
 
@@ -25,9 +27,9 @@ import org.hibernate.annotations.IndexColumn;
 //@MappedSuperclass
 @Table(name="tipodepago")
 public class Tipodepago  implements java.io.Serializable {
-
 	//@EmbeddedId
     //@AttributeOverride(name="idtipodepago", column = @Column(name="idtipodepago"))
+	
     @Id
     @Column(name="idtipodepago")
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -39,24 +41,18 @@ public class Tipodepago  implements java.io.Serializable {
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="idtipodepago")
     @IndexColumn(name="idx")
-    private Set<Detalleticket> detalletickets = new HashSet(0);
-    
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="idtipodepago")
-    @IndexColumn(name="idx")
     private Set<Tarjeta> tarjetas = new HashSet(0);
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Pago pago;
+ 
     public Tipodepago() {
     }
 
-	
-    public Tipodepago(int idtipodepago) {
-        this.idtipodepago = idtipodepago;
-    }
-    public Tipodepago(int idtipodepago, String descripciontipodepago, Set<Detalleticket> detalletickets, Set<Tarjeta> tarjetas) {
+    public Tipodepago(int idtipodepago, String descripciontipodepago, Set<Tarjeta> tarjetas) {
        this.idtipodepago = idtipodepago;
        this.descripciontipodepago = descripciontipodepago;
-       this.detalletickets = detalletickets;
        this.tarjetas = tarjetas;
     }
    
@@ -74,13 +70,7 @@ public class Tipodepago  implements java.io.Serializable {
     public void setDescripciontipodepago(String descripciontipodepago) {
         this.descripciontipodepago = descripciontipodepago;
     }
-    public Set getDetalletickets() {
-        return this.detalletickets;
-    }
-    
-    public void setDetalletickets(Set<Detalleticket> detalletickets) {
-        this.detalletickets = detalletickets;
-    }
+
     public Set getTarjetas() {
         return this.tarjetas;
     }
@@ -89,7 +79,16 @@ public class Tipodepago  implements java.io.Serializable {
         this.tarjetas = tarjetas;
     }
     
-    @Override
+    
+    public Pago getPago() {
+		return pago;
+	}
+
+	public void setPago(Pago pago) {
+		this.pago = pago;
+	}
+
+	@Override
     public int hashCode() {
         return getIdtipodepago();
     }

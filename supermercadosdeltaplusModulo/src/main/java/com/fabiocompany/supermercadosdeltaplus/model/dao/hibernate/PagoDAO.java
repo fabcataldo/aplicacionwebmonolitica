@@ -5,8 +5,8 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate;
 
-import com.fabiocompany.supermercadosdeltaplus.model.Tarjeta;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.ITarjetaDAO;
+import com.fabiocompany.supermercadosdeltaplus.model.Pago;
+import com.fabiocompany.supermercadosdeltaplus.model.dao.IPagoDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.hibernate.GenericDAO;
 import org.hibernate.SessionFactory;
 
@@ -14,8 +14,8 @@ import org.hibernate.SessionFactory;
  *
  * @author fabio
  */
-public class TarjetaDAO extends GenericDAO<Tarjeta, Integer> implements ITarjetaDAO {
-	public TarjetaDAO(SessionFactory sessionFactory) {
+public class PagoDAO extends GenericDAO<Pago, Integer> implements IPagoDAO {
+	public PagoDAO(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 }

@@ -7,32 +7,36 @@ package com.fabiocompany.supermercadosdeltaplus.test;
 
 import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
 import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
-import com.fabiocompany.supermercadosdeltaplus.model.Detalleoferta;
+import com.fabiocompany.supermercadosdeltaplus.model.Detalleofertaypromocion;
 import com.fabiocompany.supermercadosdeltaplus.model.Detalleticket;
+import com.fabiocompany.supermercadosdeltaplus.model.Pago;
 import com.fabiocompany.supermercadosdeltaplus.model.Personausuario;
 import com.fabiocompany.supermercadosdeltaplus.model.Producto;
 import com.fabiocompany.supermercadosdeltaplus.model.Tarjeta;
 import com.fabiocompany.supermercadosdeltaplus.model.Tipodepago;
 import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.CabeceraticketDAO;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.DetalleofertaDAO;
+import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.DetalleofertaypromocionDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.DetalleticketDAO;
+import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.PagoDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.PersonausuarioDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.ProductoDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.TarjetaDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.TipodepagoDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.UsuarioDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.ICabeceraticketService;
-import com.fabiocompany.supermercadosdeltaplus.model.service.IDetalleofertaService;
+import com.fabiocompany.supermercadosdeltaplus.model.service.IDetalleofertaypromocionService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IDetalleticketService;
+import com.fabiocompany.supermercadosdeltaplus.model.service.IPagoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IPersonausuarioService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IProductoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.ITarjetaService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.ITipodepagoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IUsuarioService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.CabeceraticketService;
-import com.fabiocompany.supermercadosdeltaplus.model.service.impl.DetalleofertaService;
+import com.fabiocompany.supermercadosdeltaplus.model.service.impl.DetalleofertaypromocionService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.DetalleticketService;
+import com.fabiocompany.supermercadosdeltaplus.model.service.impl.PagoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.PersonausuarioService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.ProductoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.TarjetaService;
@@ -58,11 +62,12 @@ public class SupermercadosDeltaPlusTest extends BaseTest{
 	IUsuarioService usuarioservice=new UsuarioService(new UsuarioDAO((SessionFactory) sessionFactory()));
         IPersonausuarioService personausuarioservice=new PersonausuarioService(new PersonausuarioDAO((SessionFactory) sessionFactory()));
         ICabeceraticketService cabeceraticketservice=new CabeceraticketService(new CabeceraticketDAO((SessionFactory) sessionFactory()));
-        IDetalleofertaService detalleofertaservice=new DetalleofertaService(new DetalleofertaDAO((SessionFactory) sessionFactory()));
+        IDetalleofertaypromocionService detalleofertaservice=new DetalleofertaypromocionService(new DetalleofertaypromocionDAO((SessionFactory) sessionFactory()));
         IDetalleticketService detalleticketservice=new DetalleticketService(new DetalleticketDAO((SessionFactory) sessionFactory()));
         IProductoService productoservice=new ProductoService(new ProductoDAO((SessionFactory) sessionFactory()));
         ITarjetaService tarjetaservice=new TarjetaService(new TarjetaDAO((SessionFactory) sessionFactory()));
         ITipodepagoService tipodepagoservice=new TipodepagoService(new TipodepagoDAO((SessionFactory) sessionFactory()));
+        IPagoService pagoservice=new PagoService(new PagoDAO((SessionFactory) sessionFactory()));
         
         Usuario u=new Usuario();
         u.setNombreusuario("fabio");
@@ -77,15 +82,14 @@ public class SupermercadosDeltaPlusTest extends BaseTest{
         pu.setCorreo("fabio@gmail.com");
 
         Cabeceraticket ct=new Cabeceraticket();
-        ct.setFecha("24/09/2017");
+        ct.setFecha(24092017);
         ct.setUsuario(u);
         //ct.setIdticket(1);
         
         Producto p=new Producto();
         p.setIdproducto(1);
-        p.setPrecio(60.50);
-        p.setDescripcion("Arroz La Colonia 1kg");
-        
+        p.setPrecio(61.0);
+        p.setDescripcion("Arroz La colonia 500 gr");
         
         //Es un solo producto, por lo tanto hago un solo detalle ticket
         Detalleticket dt=new Detalleticket();
@@ -94,28 +98,30 @@ public class SupermercadosDeltaPlusTest extends BaseTest{
         dt.setCabeceraticket(ct);
         dt.setSubtotal(dt.getCantidad()*p.getPrecio());
         dt.setTotal(dt.getSubtotal()+0);
-        dt.setMontodepago(61.0);
+        
+        Pago pago=new Pago();
+        pago.setMontodepago(61.0);
         
         Tipodepago tp=new Tipodepago();
-        tp.setDescripciontipodepago("En efectivo");        
+        tp.setDescripciontipodepago("Con tarjeta");        
         
         Tarjeta t=new Tarjeta();
         t.setNombretarjeta("Visa");
         t.setNumtarjeta("865744093-334");
         
-        Detalleoferta detalleoferta=new Detalleoferta();
-        detalleoferta.setDescripciondepromocion("Ninguna oferta o promocion");
-        detalleoferta.setMontodedescuento(0.0);
+        Detalleofertaypromocion detalleoferta=new Detalleofertaypromocion();
+        detalleoferta.setDescripcion("Ninguna oferta o promocion");
+        detalleoferta.setMonto(0.0);
 
         u.setPersonausuario(pu);
         ct.getDetalletickets().add(dt);
-        dt.setTipodepago(tp);
-        tp.getDetalletickets().add(dt);
+        dt.setPago(pago);
         dt.getProductos().add(p);
         dt.getDetalleofertas().add(detalleoferta);
+        tp.setPago(pago);
+        t.setTipodepago(tp);
+        tp.getTarjetas().add(t);
         p.getDetalletickets().add(dt);
-        //t.setTipodepago(tp);
-        //tp.getTarjetas().add(t);
         
 //-----------------GUARDADO en la BD--------------------------------------
         Usuario usuarioguardado=new Usuario();

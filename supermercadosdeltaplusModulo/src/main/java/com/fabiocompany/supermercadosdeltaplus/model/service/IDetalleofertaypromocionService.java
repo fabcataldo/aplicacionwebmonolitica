@@ -9,9 +9,9 @@ package com.fabiocompany.supermercadosdeltaplus.model.service;
  *
  * @author fabio
  */
-import com.fabiocompany.supermercadosdeltaplus.model.Detalleoferta;
+import com.fabiocompany.supermercadosdeltaplus.model.Detalleofertaypromocion;
 import com.fabiocompany.supermercadosdeltaplus.service.IGenericService;
 
-public interface IDetalleofertaService extends IGenericService<Detalleoferta, Integer>{
+public interface IDetalleofertaypromocionService extends IGenericService<Detalleofertaypromocion, Integer>{
     
 }

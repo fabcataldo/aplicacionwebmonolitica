@@ -10,9 +10,9 @@ package com.fabiocompany.supermercadosdeltaplus.model.dao;
  * @author fabio
  */
 
-import com.fabiocompany.supermercadosdeltaplus.model.Tarjeta;
+import com.fabiocompany.supermercadosdeltaplus.model.Detalleofertaypromocion;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.IGenericDAO;
 
-public interface ITarjetaDAO extends IGenericDAO<Tarjeta, Integer>{
+public interface IDetalleofertaypromocionDAO extends IGenericDAO<Detalleofertaypromocion, Integer>{
     
 }
