@@ -62,8 +62,8 @@ public class Detalleticket  implements java.io.Serializable {
     @ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="ticketsyofertas", joinColumns = {
             @JoinColumn(name = "iddetalleticket") }, inverseJoinColumns = {
-		@JoinColumn(name = "iddetalleoferta") })
-    private Set<Detalleofertaypromocion> detalleofertas = new HashSet(0);
+		@JoinColumn(name = "iddetalleofertaypromocion") })
+    private Set<Detalleofertaypromocion> detallesofertaypromocion = new HashSet(0);
     
     @ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="ticketsyproductos", joinColumns = {
@@ -76,7 +76,7 @@ public class Detalleticket  implements java.io.Serializable {
     }
     
     public Detalleticket(int iddetalleticket, Cabeceraticket cabeceraticket, Pago pago,
-			int cantidad, double subtotal, double total, int cantidadporproducto, Set<Detalleofertaypromocion> detalleofertas,
+			int cantidad, double subtotal, double total, int cantidadporproducto, Set<Detalleofertaypromocion> detallesofertaypromocion,
 			Set<Producto> productos) {
 		this.iddetalleticket = iddetalleticket;
 		this.cabeceraticket = cabeceraticket;
@@ -85,7 +85,7 @@ public class Detalleticket  implements java.io.Serializable {
 		this.subtotal = subtotal;
 		this.total = total;
 		this.cantidadporproducto = cantidadporproducto;
-		this.detalleofertas = detalleofertas;
+		this.detallesofertaypromocion = detallesofertaypromocion;
 		this.productos = productos;
 	}
 
@@ -174,14 +174,14 @@ public class Detalleticket  implements java.io.Serializable {
 
 
 
-	public Set<Detalleofertaypromocion> getDetalleofertas() {
-		return detalleofertas;
+	public Set<Detalleofertaypromocion> getDetallesofertaypromocion() {
+		return detallesofertaypromocion;
 	}
 
 
 
-	public void setDetalleofertas(Set<Detalleofertaypromocion> detalleofertas) {
-		this.detalleofertas = detalleofertas;
+	public void setDetallesofertaypromocion(Set<Detalleofertaypromocion> detallesofertaypromocion) {
+		this.detallesofertaypromocion = detallesofertaypromocion;
 	}
 
 

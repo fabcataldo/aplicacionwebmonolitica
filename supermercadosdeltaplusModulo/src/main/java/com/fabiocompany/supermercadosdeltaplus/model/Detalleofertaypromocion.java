@@ -38,7 +38,7 @@ public class Detalleofertaypromocion implements java.io.Serializable {
     @Column(name="descripcion")
     private String descripcion;
      
-    @ManyToMany(cascade = {CascadeType.ALL},mappedBy="detalleofertas")
+    @ManyToMany(cascade = {CascadeType.ALL},mappedBy="detallesofertaypromocion")
     private Set<Detalleticket> detalletickets = new HashSet(0);
 
     public Detalleofertaypromocion() {

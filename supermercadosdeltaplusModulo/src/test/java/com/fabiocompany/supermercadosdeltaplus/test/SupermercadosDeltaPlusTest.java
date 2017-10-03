@@ -62,7 +62,7 @@ public class SupermercadosDeltaPlusTest extends BaseTest{
 	IUsuarioService usuarioservice=new UsuarioService(new UsuarioDAO((SessionFactory) sessionFactory()));
         IPersonausuarioService personausuarioservice=new PersonausuarioService(new PersonausuarioDAO((SessionFactory) sessionFactory()));
         ICabeceraticketService cabeceraticketservice=new CabeceraticketService(new CabeceraticketDAO((SessionFactory) sessionFactory()));
-        IDetalleofertaypromocionService detalleofertaservice=new DetalleofertaypromocionService(new DetalleofertaypromocionDAO((SessionFactory) sessionFactory()));
+        IDetalleofertaypromocionService detalleofertaypromocionservice=new DetalleofertaypromocionService(new DetalleofertaypromocionDAO((SessionFactory) sessionFactory()));
         IDetalleticketService detalleticketservice=new DetalleticketService(new DetalleticketDAO((SessionFactory) sessionFactory()));
         IProductoService productoservice=new ProductoService(new ProductoDAO((SessionFactory) sessionFactory()));
         ITarjetaService tarjetaservice=new TarjetaService(new TarjetaDAO((SessionFactory) sessionFactory()));
@@ -109,21 +109,25 @@ public class SupermercadosDeltaPlusTest extends BaseTest{
         t.setNombretarjeta("Visa");
         t.setNumtarjeta("865744093-334");
         
-        Detalleofertaypromocion detalleoferta=new Detalleofertaypromocion();
-        detalleoferta.setDescripcion("Ninguna oferta o promocion");
-        detalleoferta.setMonto(0.0);
+        Detalleofertaypromocion detalleofertayprom=new Detalleofertaypromocion();
+        detalleofertayprom.setDescripcion("Ninguna oferta o promocion");
+        detalleofertayprom.setMonto(0.0);
 
         u.setPersonausuario(pu);
         ct.getDetalletickets().add(dt);
         dt.setPago(pago);
         dt.getProductos().add(p);
-        dt.getDetalleofertas().add(detalleoferta);
+        dt.getDetallesofertaypromocion().add(detalleofertayprom);
         tp.setPago(pago);
         t.setTipodepago(tp);
         tp.getTarjetas().add(t);
         p.getDetalletickets().add(dt);
         
 //-----------------GUARDADO en la BD--------------------------------------
+        Producto pguardado=new Producto();
+        pguardado=productoservice.save(p);
+        assertTrue("Error id de producto", pguardado.getIdproducto()>-1 );
+        
         Usuario usuarioguardado=new Usuario();
         usuarioguardado=usuarioservice.saveOrUpdate(u);
         assertTrue("Error id de usuario", usuarioguardado.getIdusuario()>-1 );
@@ -134,32 +138,29 @@ public class SupermercadosDeltaPlusTest extends BaseTest{
         assertTrue("Error id de personausuario", puguardado.getIdpersonausuario()>-1 );
         assertEquals("Error nombre de personausuario", puguardado.getNombrepersonausuario(), "fabio");
 
-        Detalleticket dtguardado=new Detalleticket();
-        dtguardado=detalleticketservice.save(dt);
-        assertTrue("Error id de detalle ticket", dtguardado.getIddetalleticket()>-1 );
-*/         
-        Cabeceraticket ctguardado=new Cabeceraticket();
+*/
+        
+      /*  Cabeceraticket ctguardado=new Cabeceraticket();
         ctguardado=cabeceraticketservice.saveOrUpdate(ct);
         assertTrue("Error id de cabecera ticket", ctguardado.getIdticket()>-1 );
 
+        
+        Detalleofertaypromocion doypguardado=new Detalleofertaypromocion();
+        doypguardado=detalleofertaypromocionservice.save(detalleofertayprom);
+        assertTrue("Error id de detalle oferta", doypguardado.getIddetalleofertaypromocion()>-1 );
+        
+        Detalleticket dtguardado=new Detalleticket();
+        dtguardado=detalleticketservice.save(dt);
+        assertTrue("Error id de detalle ticket", dtguardado.getIddetalleticket()>-1 );
+        
         Tipodepago tipodepagoguardado=new Tipodepago();
         tipodepagoguardado=tipodepagoservice.saveOrUpdate(tp);
         assertTrue("Error id de tipo de pago", tipodepagoguardado.getIdtipodepago()>-1 );
        
-
-        /*
         Tarjeta tarjetaguardada=new Tarjeta();
         tarjetaguardada=tarjetaservice.save(t);
         assertTrue("Error id de tarjeta", tarjetaguardada.getIdtarjeta()>-1 );
-
-        Producto pguardado=new Producto();
-        pguardado=productoservice.save(p);
-        assertTrue("Error id de producto", pguardado.getIdproducto()>-1 );
         */
-
-        /*Detalleoferta doguardado=new Detalleoferta();
-        doguardado=detalleofertaservice.save(detalleoferta);
-        assertTrue("Error id de detalle oferta", doguardado.getIddetalleoferta()>-1 );
-        */  
+        
     }
 }

@@ -44,7 +44,7 @@ public class Usuario  implements java.io.Serializable {
     @Column(name="tipodeusuario")
     private String tipodeusuario;
     
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="idusuario")
     @IndexColumn(name="idx")
     private Set<Cabeceraticket> cabeceratickets = new HashSet(0);
