@@ -38,7 +38,7 @@ public class Producto  implements java.io.Serializable {
     private double precio;
     
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy="productos")
-    private Set<Detalleticket> detalletickets = new HashSet(0);
+    private Set<Detalleticket> detalletickets = new HashSet<Detalleticket>(0);
 
     public Producto() {
     }

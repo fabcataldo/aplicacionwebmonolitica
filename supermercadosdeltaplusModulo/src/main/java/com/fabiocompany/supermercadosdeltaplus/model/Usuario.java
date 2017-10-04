@@ -32,7 +32,7 @@ public class Usuario  implements java.io.Serializable {
     private int idusuario;
     
     @OneToOne(cascade=CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name="idpersonausuario")
     private Personausuario personausuario;
     
     @Column(name="nombreusuario")

@@ -41,29 +41,11 @@ public class Detalleticket  implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name="idticket")  
     private Cabeceraticket cabeceraticket;
-    
-    
-    @OneToOne(cascade=CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Pago pago;
+     
  
     @Column(name="cantidad")
     private int cantidad;
-    
-    @Column(name="subtotal")
-    private double subtotal;
-    
-    @Column(name="total")
-    private double total;
-    
-    @Column(name="cantidadporproducto")
-    private int cantidadporproducto;
-    
-    @ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="ticketsyofertas", joinColumns = {
-            @JoinColumn(name = "iddetalleticket") }, inverseJoinColumns = {
-		@JoinColumn(name = "iddetalleofertaypromocion") })
-    private Set<Detalleofertaypromocion> detallesofertaypromocion = new HashSet(0);
+
     
     @ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="ticketsyproductos", joinColumns = {
@@ -75,17 +57,12 @@ public class Detalleticket  implements java.io.Serializable {
     public Detalleticket() {
     }
     
-    public Detalleticket(int iddetalleticket, Cabeceraticket cabeceraticket, Pago pago,
-			int cantidad, double subtotal, double total, int cantidadporproducto, Set<Detalleofertaypromocion> detallesofertaypromocion,
+    public Detalleticket(int iddetalleticket, Cabeceraticket cabeceraticket,
+    		int cantidad,
 			Set<Producto> productos) {
 		this.iddetalleticket = iddetalleticket;
 		this.cabeceraticket = cabeceraticket;
-		this.pago = pago;
 		this.cantidad = cantidad;
-		this.subtotal = subtotal;
-		this.total = total;
-		this.cantidadporproducto = cantidadporproducto;
-		this.detallesofertaypromocion = detallesofertaypromocion;
 		this.productos = productos;
 	}
 
@@ -114,76 +91,14 @@ public class Detalleticket  implements java.io.Serializable {
 	}
 
 
-	public Pago getPago() {
-		return pago;
-	}
-
-
-
-	public void setPago(Pago pago) {
-		this.pago = pago;
-	}
-
-
-
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
-
 
 
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-
-
-
-	public double getSubtotal() {
-		return subtotal;
-	}
-
-
-
-	public void setSubtotal(double subtotal) {
-		this.subtotal = subtotal;
-	}
-
-
-
-	public double getTotal() {
-		return total;
-	}
-
-
-
-	public void setTotal(double total) {
-		this.total = total;
-	}
-
-
-
-	public int getCantidadporproducto() {
-		return cantidadporproducto;
-	}
-
-
-
-	public void setCantidadporproducto(int cantidadporproducto) {
-		this.cantidadporproducto = cantidadporproducto;
-	}
-
-
-
-	public Set<Detalleofertaypromocion> getDetallesofertaypromocion() {
-		return detallesofertaypromocion;
-	}
-
-
-
-	public void setDetallesofertaypromocion(Set<Detalleofertaypromocion> detallesofertaypromocion) {
-		this.detallesofertaypromocion = detallesofertaypromocion;
-	}
-
 
 
 	public Set<Producto> getProductos() {

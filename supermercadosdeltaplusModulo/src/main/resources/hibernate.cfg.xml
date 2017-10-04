@@ -23,16 +23,17 @@
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
 
-    <property name="hbm2ddl.auto">create</property> <!-- actualiza LA BD, si la quiero borrar y hacerla de nuevo pongo el valor create -->
+    <property name="hbm2ddl.auto">update</property> <!-- actualiza LA BD, si la quiero borrar y hacerla de nuevo pongo el valor create -->
     <!-- update validate -->
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Detalleofertaypromocion" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Detalleticket" />
+    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Usuario" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Personausuario" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Producto" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Tarjeta" />
+
+    <!-- <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Tarjeta" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Tipodepago" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Usuario" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Pago" />
+    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Detalleofertaypromocion" />
+    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Pago" /> -->
   </session-factory>
 </hibernate-configuration>
