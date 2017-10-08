@@ -2,6 +2,7 @@ package com.fabiocompany.supermercadosdeltaplus.model;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -46,8 +47,7 @@ public class Usuario  implements java.io.Serializable {
     
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="idusuario")
-    @IndexColumn(name="idx")
-    private Set<Cabeceraticket> cabeceratickets = new HashSet(0);
+    private List<Cabeceraticket> cabeceratickets;
 
     public Usuario() {
     }
@@ -57,7 +57,7 @@ public class Usuario  implements java.io.Serializable {
         this.idusuario = idusuario;
         this.personausuario = personausuario;
     }
-    public Usuario(int idusuario, Personausuario personausuario, String nombreusuario, String contraseniausuario, String tipodeusuario, Set<Cabeceraticket> cabeceratickets) {
+    public Usuario(int idusuario, Personausuario personausuario, String nombreusuario, String contraseniausuario, String tipodeusuario, List<Cabeceraticket> cabeceratickets) {
        this.idusuario = idusuario;
        this.personausuario = personausuario;
        this.nombreusuario = nombreusuario;
@@ -101,11 +101,11 @@ public class Usuario  implements java.io.Serializable {
     public void setTipodeusuario(String tipodeusuario) {
         this.tipodeusuario = tipodeusuario;
     }
-    public Set getCabeceratickets() {
+    public List getCabeceratickets() {
         return this.cabeceratickets;
     }
     
-    public void setCabeceratickets(Set<Cabeceraticket> cabeceratickets) {
+    public void setCabeceratickets(List<Cabeceraticket> cabeceratickets) {
         this.cabeceratickets = cabeceratickets;
     }
 

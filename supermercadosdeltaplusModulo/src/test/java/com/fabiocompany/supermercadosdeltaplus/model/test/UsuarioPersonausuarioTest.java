@@ -1,4 +1,4 @@
-package com.fabiocompany.supermercadosdeltaplus.test;
+package com.fabiocompany.supermercadosdeltaplus.model.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -43,6 +43,24 @@ public class UsuarioPersonausuarioTest extends BaseTest{
         usuarioguardado=usuarioservice.save(u);
         assertTrue("Error id de usuario", usuarioguardado.getIdusuario()>-1 );
         assertEquals("Error nombre de usuario", usuarioguardado.getNombreusuario(), "fabio");
+        
+        Usuario u2=new Usuario();
+        u2.setNombreusuario("ricardo");
+        u2.setTipodeusuario("usuario comun");
+        u2.setContraseniausuario("ricardo1234");
+
+        Personausuario pu2=new Personausuario();
+        pu2.setDnipersonausuario("32435666");
+        pu2.setNombrepersonausuario("ricardo lopez");
+        pu2.setNumerodetelefono("4312309");
+        pu2.setCorreo("ricardo_gago@gmail.com");
+        
+        u2.setPersonausuario(pu2);
+        
+        Usuario usuarioguardado2=new Usuario();
+        usuarioguardado2=usuarioservice.save(u2);
+        assertTrue("Error id de usuario", usuarioguardado2.getIdusuario()>-1 );
+        assertEquals("Error nombre de usuario", usuarioguardado2.getNombreusuario(), "ricardo");
 
         
 	}

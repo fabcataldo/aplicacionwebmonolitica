@@ -5,6 +5,8 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.service;
 
+import java.util.List;
+
 /**
  *
  * @author fabio
@@ -13,5 +15,5 @@ import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
 import com.fabiocompany.supermercadosdeltaplus.service.IGenericService;
 
 public interface ICabeceraticketService extends IGenericService<Cabeceraticket, Integer>{
-    
+    public String usuarioQueMasCompro(List<Object> listadeticketsyusuarios);
 }

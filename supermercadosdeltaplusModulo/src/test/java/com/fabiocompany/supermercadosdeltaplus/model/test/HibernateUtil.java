@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fabiocompany.supermercadosdeltaplus.test;
+package com.fabiocompany.supermercadosdeltaplus.model.test;
 
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;

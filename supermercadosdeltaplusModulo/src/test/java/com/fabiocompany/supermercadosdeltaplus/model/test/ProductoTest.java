@@ -1,4 +1,4 @@
-package com.fabiocompany.supermercadosdeltaplus.test;
+package com.fabiocompany.supermercadosdeltaplus.model.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -31,6 +31,7 @@ public class ProductoTest extends BaseTest{
 
         Producto pguardado2=new Producto();
         pguardado2=productoservice.save(p2);
+        //si la condición es true, está todo ok. Si no, salta el mensaje que está entre comillas
         assertTrue("Error id de producto", pguardado2.getIdproducto()>-1 );
         
 	}

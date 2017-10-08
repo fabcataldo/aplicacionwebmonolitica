@@ -3,6 +3,7 @@ package com.fabiocompany.supermercadosdeltaplus.model;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -45,8 +46,7 @@ public class Cabeceraticket  implements java.io.Serializable {
     //@OneToMany(fetch = FetchType.LAZY, mappedBy = "cabeceraticket", cascade= CascadeType.ALL)
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="idticket")
-    @IndexColumn(name="idx")
-    private Set<Detalleticket> detalletickets = new HashSet(0);
+    private List<Detalleticket> detalletickets;
 
     public Cabeceraticket() {
     }
@@ -56,7 +56,7 @@ public class Cabeceraticket  implements java.io.Serializable {
         this.idticket = idticket;
         this.usuario = usuario;
     }
-    public Cabeceraticket(int idticket, Usuario usuario, long fecha, Set<Detalleticket> detalletickets) {
+    public Cabeceraticket(int idticket, Usuario usuario, long fecha, List<Detalleticket> detalletickets) {
        this.idticket = idticket;
        this.usuario = usuario;
        this.fecha = fecha;
@@ -84,11 +84,11 @@ public class Cabeceraticket  implements java.io.Serializable {
     public void setFecha(long fecha) {
         this.fecha = fecha;
     }
-    public Set getDetalletickets() {
+    public List getDetalletickets() {
         return this.detalletickets;
     }
     
-    public void setDetalletickets(Set<Detalleticket> detalletickets) {
+    public void setDetalletickets(List<Detalleticket> detalletickets) {
         this.detalletickets = detalletickets;
     }
 

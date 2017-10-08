@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: com.fabiocompany.supermercadosdeltaplus.test.OfertarProductoTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 61.477 sec <<< FAILURE! - in com.fabiocompany.supermercadosdeltaplus.test.OfertarProductoTest
+probarServicioDeNegocio(com.fabiocompany.supermercadosdeltaplus.test.OfertarProductoTest)  Time elapsed: 61.469 sec  <<< ERROR!
+com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException: null
+	at com.fabiocompany.supermercadosdeltaplus.persistence.dao.hibernate.GenericDAO.getSession(GenericDAO.java:62)
+	at com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.DetalleticketDAO.detalleDeTickets(DetalleticketDAO.java:33)
+	at com.fabiocompany.supermercadosdeltaplus.model.service.impl.DetalleticketService.ofertarProducto(DetalleticketService.java:43)
+	at com.fabiocompany.supermercadosdeltaplus.test.OfertarProductoTest.probarServicioDeNegocio(OfertarProductoTest.java:20)
+

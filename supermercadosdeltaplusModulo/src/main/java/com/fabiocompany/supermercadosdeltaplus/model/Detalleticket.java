@@ -2,7 +2,9 @@ package com.fabiocompany.supermercadosdeltaplus.model;
 // Generated 24/09/2017 15:11:33 by Hibernate Tools 4.3.1
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -51,7 +53,7 @@ public class Detalleticket  implements java.io.Serializable {
 	@JoinTable(name="ticketsyproductos", joinColumns = {
             @JoinColumn(name = "iddetalleticket") }, inverseJoinColumns = {
 		@JoinColumn(name = "idproducto") })
-    private Set<Producto> productos = new HashSet(0);
+    private List<Producto> productos=new ArrayList<Producto>();
 
 
     public Detalleticket() {
@@ -59,7 +61,7 @@ public class Detalleticket  implements java.io.Serializable {
     
     public Detalleticket(int iddetalleticket, Cabeceraticket cabeceraticket,
     		int cantidad,
-			Set<Producto> productos) {
+    		List<Producto> productos) {
 		this.iddetalleticket = iddetalleticket;
 		this.cabeceraticket = cabeceraticket;
 		this.cantidad = cantidad;
@@ -91,7 +93,7 @@ public class Detalleticket  implements java.io.Serializable {
 	}
 
 
-	public double getCantidad() {
+	public int getCantidad() {
 		return cantidad;
 	}
 
@@ -101,13 +103,13 @@ public class Detalleticket  implements java.io.Serializable {
 	}
 
 
-	public Set<Producto> getProductos() {
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
 
 
-	public void setProductos(Set<Producto> productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
 
@@ -134,9 +136,8 @@ public class Detalleticket  implements java.io.Serializable {
             return false;
         }
         return true;
-    }
-
-
+    }  
+    
 
 }
 

@@ -1,4 +1,4 @@
-package com.fabiocompany.supermercadosdeltaplus.test;
+package com.fabiocompany.supermercadosdeltaplus.model.test;
 
 import org.hibernate.SessionFactory;
 

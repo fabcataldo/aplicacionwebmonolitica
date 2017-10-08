@@ -13,5 +13,5 @@ import com.fabiocompany.supermercadosdeltaplus.model.Producto;
 import com.fabiocompany.supermercadosdeltaplus.service.IGenericService;
 
 public interface IProductoService extends IGenericService<Producto, Integer>{
-    
+
 }

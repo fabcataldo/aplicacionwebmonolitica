@@ -3,6 +3,7 @@ package com.fabiocompany.supermercadosdeltaplus.model;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -38,16 +39,12 @@ public class Producto  implements java.io.Serializable {
     private double precio;
     
     @ManyToMany(cascade = {CascadeType.ALL},mappedBy="productos")
-    private Set<Detalleticket> detalletickets = new HashSet<Detalleticket>(0);
+    private List<Detalleticket> detalletickets;
 
     public Producto() {
     }
 
-	
-    public Producto(int idproducto) {
-        this.idproducto = idproducto;
-    }
-    public Producto(int idproducto, String descripcion, Double precio, Set<Detalleticket> detalletickets) {
+    public Producto(int idproducto, String descripcion, Double precio, List<Detalleticket> detalletickets) {
        this.idproducto = idproducto;
        this.descripcion = descripcion;
        this.precio = precio;
@@ -75,11 +72,11 @@ public class Producto  implements java.io.Serializable {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
-    public Set getDetalletickets() {
+    public List getDetalletickets() {
         return this.detalletickets;
     }
     
-    public void setDetalletickets(Set<Detalleticket> detalletickets) {
+    public void setDetalletickets(List<Detalleticket> detalletickets) {
         this.detalletickets = detalletickets;
     }
     

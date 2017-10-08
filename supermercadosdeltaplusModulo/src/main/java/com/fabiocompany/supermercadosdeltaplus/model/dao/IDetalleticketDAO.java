@@ -5,6 +5,10 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.dao;
 
+
+
+import java.util.List;
+
 /**
  *
  * @author fabio
@@ -12,7 +16,8 @@ package com.fabiocompany.supermercadosdeltaplus.model.dao;
 
 import com.fabiocompany.supermercadosdeltaplus.model.Detalleticket;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.IGenericDAO;
+import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
 
 public interface IDetalleticketDAO extends IGenericDAO<Detalleticket, Integer>{
-    
+	public List<Object> detalleDeTickets() throws PersistenceException;
 }
