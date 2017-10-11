@@ -32,21 +32,16 @@ public class CabeceraticketDAO extends GenericDAO<Cabeceraticket, Integer> imple
 	
 	//servicio de persistencia
 	//que ayuda al servicio de negocio usuarioQueMasCompro()
-	public List<Object> obtenerListadeTicketsyUsuarios() throws PersistenceException{
+	public List<Cabeceraticket> obtenerListadeTicketsyUsuarios() throws PersistenceException{
 		List<Cabeceraticket> listatickets;
-		List<Usuario> usuarios;
-		List<Object> ticketsyusuarios=new ArrayList<Object>();
 		try {
 			listatickets=getSession().createQuery("from Cabeceraticket").list();
-			usuarios=getSession().createQuery("from Usuario").list();
-			ticketsyusuarios.add(listatickets);
-			ticketsyusuarios.add(usuarios);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			throw new PersistenceException(e.getMessage(), e);
 		} finally {
 			closeSession();
 		}
-		return ticketsyusuarios;
+		return listatickets;
 	}
 }

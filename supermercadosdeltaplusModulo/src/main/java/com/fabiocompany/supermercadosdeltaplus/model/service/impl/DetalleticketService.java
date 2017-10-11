@@ -5,6 +5,7 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,15 +30,25 @@ public class DetalleticketService extends GenericService<Detalleticket, Integer>
 	//el producto menos vendido supongo que tiene mucho stock; lo detecto, y a partir de ahí
 	//puedo decir por una salida que se oferte este producot así se vende más
 	@Override
-	public String ofertarProducto(List<Object> listadetickets){
-		String productomenosvendido="";
-		List<Detalleticket> listadelostickets=(List<Detalleticket>) listadetickets.get(0);
-		List<Producto> listadelosproductos=(List<Producto>) listadetickets.get(1);
-
-		//en el for haría el "join" que hago en mysql, pero con objetos
+	public String ofertarProducto(List<Detalleticket> listadetickets){
+		String productomenosvendido=listadetickets.get(0).getProductos().get(0).getDescripcion();	
+		List<Integer> cantidaddeproductosporticket=new ArrayList<Integer>();
+		int contadordeticketsporproducto=1;
+		List<String> productoporticketNombredeProductos=new ArrayList<String>();
+		
 		for(int i=0;i<listadetickets.size();i++){
-			if(((i+1)<listadelostickets.size())&&(listadelostickets.get(i).getCantidad()<listadelostickets.get(i+1).getCantidad())){
-				productomenosvendido=listadelosproductos.get(i).getDescripcion();
+			if(productomenosvendido.equals(listadetickets.get(0).getProductos().get(0).getDescripcion())) {
+				contadordeticketsporproducto++;
+				continue;
+			}	
+			cantidaddeproductosporticket.add(contadordeticketsporproducto);
+			contadordeticketsporproducto=1;
+			productoporticketNombredeProductos.add(listadetickets.get(i).getProductos().get(i).getDescripcion());
+		}
+		
+		for(int i=0;i<cantidaddeproductosporticket.size();i++) {
+			if(cantidaddeproductosporticket.get(i)<=cantidaddeproductosporticket.get(i+1)) {
+				productomenosvendido=productoporticketNombredeProductos.get(i);
 			}
 		}
 		return "El producto menos vendido tiene la siguiente descripción: "+productomenosvendido+". Se va a ofrecer un descuento del 25% para éste.";

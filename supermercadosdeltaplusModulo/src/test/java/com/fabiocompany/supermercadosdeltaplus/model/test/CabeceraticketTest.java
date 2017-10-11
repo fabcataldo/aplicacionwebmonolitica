@@ -21,44 +21,47 @@ public class CabeceraticketTest extends BaseTest{
 	@Test
 	public void metodo() throws ServiceException, NotFoundException{
         ICabeceraticketService cabeceraticketservice=new CabeceraticketService(new CabeceraticketDAO((SessionFactory) sessionFactory()));
-  /*
+
         Usuario u=new Usuario();
         u.setIdusuario(1);
         
         Cabeceraticket ct=new Cabeceraticket();
-        ct.setFecha(4102017);
+        ct.setFecha(10102017);
         ct.setUsuario(u);
          
         Cabeceraticket ctguardado=new Cabeceraticket();
         ctguardado=cabeceraticketservice.save(ct);
         assertTrue("Error id de cabecera ticket", ctguardado.getIdticket()>-1 );
-
+        
+//------------------------------------------------------------------------------------------
  
         Usuario u2=new Usuario();
         u2.setIdusuario(3);
         
         Cabeceraticket ct2=new Cabeceraticket();
-        ct2.setFecha(6102017);
+        ct2.setFecha(10102017);
         ct2.setUsuario(u2);
          
         Cabeceraticket ctguardado2=new Cabeceraticket();
         ctguardado2=cabeceraticketservice.save(ct2);
         assertTrue("Error id de cabecera ticket", ctguardado2.getIdticket()>-1 );
 
-    
+//------------------------------------------------------------------------------------------
+
         Usuario u3=new Usuario();
         u3.setIdusuario(3);
         
         Cabeceraticket ct3=new Cabeceraticket();
-        ct3.setFecha(15102017);
+        ct3.setFecha(10102017);
         ct3.setUsuario(u3);
          
         Cabeceraticket ctguardado3=new Cabeceraticket();
         ctguardado3=cabeceraticketservice.save(ct3);
         assertTrue("Error id de cabecera ticket", ctguardado3.getIdticket()>-1 );
-             
+
+//------------------------------------------------------------------------------------------
         Usuario u4=new Usuario();
-        u4.setIdusuario(3);
+        u4.setIdusuario(1);
         
         Cabeceraticket ct4=new Cabeceraticket();
         ct4.setFecha(15102017);
@@ -68,8 +71,7 @@ public class CabeceraticketTest extends BaseTest{
         ctguardado4=cabeceraticketservice.save(ct4);
         assertTrue("Error id de cabecera ticket", ctguardado4.getIdticket()>-1 );
  
-*/    
-        
+//------------------------------------------------------------------------------------------
         Usuario u5=new Usuario();
         u5.setIdusuario(3);
         
@@ -79,7 +81,23 @@ public class CabeceraticketTest extends BaseTest{
          
         Cabeceraticket ctguardado5=new Cabeceraticket();
         ctguardado5=cabeceraticketservice.save(ct5);
+        
+        //Si el idticket del ct guardado es < que 1, assertTrue tira un AssertError
+        //junto con el msj que viene como parámetro
         assertTrue("Error id de cabecera ticket", ctguardado5.getIdticket()>-1 );
+//------------------------------------------------------------------------------------------   
+        Usuario u6=new Usuario();
+        u6.setIdusuario(4);
+        
+        Cabeceraticket ct6=new Cabeceraticket();
+        ct6.setFecha(10102017);
+        ct6.setUsuario(u6);
+         
+        Cabeceraticket ctguardado6=new Cabeceraticket();
+        ctguardado6=cabeceraticketservice.save(ct6);
+        
+        assertTrue("Error id de cabecera ticket", ctguardado6.getIdticket()>-1 );
+      
 	}
 	
 }

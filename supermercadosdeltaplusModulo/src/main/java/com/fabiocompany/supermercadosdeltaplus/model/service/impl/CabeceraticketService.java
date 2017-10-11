@@ -8,18 +8,15 @@ package com.fabiocompany.supermercadosdeltaplus.model.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
-import com.fabiocompany.supermercadosdeltaplus.model.Detalleticket;
-import com.fabiocompany.supermercadosdeltaplus.model.Producto;
-import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.ICabeceraticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.ICabeceraticketService;
-import com.fabiocompany.supermercadosdeltaplus.model.service.IUsuarioService;
+import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
+import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
 import com.fabiocompany.supermercadosdeltaplus.service.impl.GenericService;
+
 
 /**
  *
@@ -29,27 +26,32 @@ public class CabeceraticketService extends GenericService<Cabeceraticket, Intege
 		implements ICabeceraticketService {
 	
 	private static Logger LOG = LoggerFactory.getLogger(DetalleticketService.class);
+	private ICabeceraticketDAO dao;
+	
 	public CabeceraticketService(ICabeceraticketDAO dao) {
 		super(dao);
+		this.dao=dao;
+		
 	}
-
 	
 	//servicio de negocio
 	@Override
-	 public String usuarioQueMasCompro(List<Object> listadeticketsyusuarios) {
-		//Descargo del parámetro que viene del método, las listas que me hacen falta 
-		//para procesar la información que recibo
-		List<Cabeceraticket> listadelascabecerasticket=(List<Cabeceraticket>) listadeticketsyusuarios.get(0);
-		List<Usuario> listadelosusuarios=(List<Usuario>) listadeticketsyusuarios.get(1);
-		
+	 public String usuarioQueMasCompro() throws ServiceException {
+		List<Cabeceraticket> listadeticketsyusuarios;
+		try {
+			listadeticketsyusuarios = dao.obtenerListadeTicketsyUsuarios();
+		} catch (PersistenceException e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException(e.getMessage(),e);
+		}
 		//variables auxiliares
 		String usuarioquemascompro="";
+		int numerodecomprasdelusuarioquemascompro=0;
 		List<String> nombredelusuariodexcompras=new ArrayList<String>();
 		List<Integer> numerodecomprasdelusuarioi=new ArrayList<Integer>();
-		int contadordeticketsporusuario=0;
-		int numerodecomprasdelusuarioquemascompro=0;
 		List<Cabeceraticket> listadelosticketsdelasemanaactual=new ArrayList<Cabeceraticket>();
 
+		
 		//Armo la fecha actual como long, y luego el ultimo dia de la semana como long
 		Calendar c1=Calendar.getInstance();
 		//BORRAR EL +1 EN EL DIADEFINDESEMANALONGGG
@@ -63,54 +65,64 @@ public class CabeceraticketService extends GenericService<Cabeceraticket, Intege
 		String diadelfindesemanastring=diadelfindesemana+""+mesactual+""+anioactual;
 		long diadelfindesemanalong=Long.parseLong(diadelfindesemanastring);
 
-		//guardo los tickets que están en la semana actual
-		//pregunto primero si la fecha del ticket está dentro de la semana actual
-		//luego, pregunto si el usuario de la iteración i coincide con el
-		//usuario del ticket i
-		//si es así, cuento los tickets de dicho usuario
-		//luego guardo dicho usuario en una lista de usuarios, que luego me va a servir
-		//para decir bueno X usuario, hizo TALES compras (pienso como si tuviese una matriz)
-		//guardo luego también el numero de compras del usuario i		
-		for(int i=0;i<listadelosusuarios.size();i++) {
-			for(int j=0;j<listadelascabecerasticket.size();j++) {
-				if((listadelascabecerasticket.get(j).getFecha()>=fechaactual)&&(listadelascabecerasticket.get(j).getFecha()<=diadelfindesemanalong)){
-					if(listadelosusuarios.get(i).getIdusuario()==listadelascabecerasticket.get(j).getUsuario().getIdusuario()) {
-						contadordeticketsporusuario++;	
-					}
-					//guardo los tickets de la semana actual, sin importar los usuarios
-					listadelosticketsdelasemanaactual.add(listadelascabecerasticket.get(i));
-				}
-			}
-			nombredelusuariodexcompras.add(listadelosusuarios.get(i).getNombreusuario());
+		int contadordeticketsporusuario=1;
+		int jusuarioprocesado=0;
 		
-			//si ya se terminaron de guardar los tickets del usuario i,guardo la cantidad de compras 
-			//del usuarioi y reinicio el contador de tickets para el próximo usuario
-			numerodecomprasdelusuarioi.add(contadordeticketsporusuario);
-			contadordeticketsporusuario=0;
+		//almaceno en una lista, un nombre de usuario
+		//en otra lista, almaceno las compras de cada usuario de la lista anteriormente dicha
+		String nombredelusuarioqueseestaprocesando=listadeticketsyusuarios.get(jusuarioprocesado).getUsuario().getNombreusuario();
+		for(int i=0;i<listadeticketsyusuarios.size();i++) {
+			if(((i+1)!=listadeticketsyusuarios.size())&&(listadeticketsyusuarios.get(i).getFecha()>=fechaactual)&&(listadeticketsyusuarios.get(i).getFecha()<=diadelfindesemanalong)){
+				if(nombredelusuarioqueseestaprocesando==listadeticketsyusuarios.get(i+1).getUsuario().getNombreusuario()) {
+					contadordeticketsporusuario++;
+				}
+				//guardo los tickets de la semana actual, sin importar los usuarios
+				listadelosticketsdelasemanaactual.add(listadeticketsyusuarios.get(i));
+			}
+			if(i==listadeticketsyusuarios.size()-1) {
+				//System.out.println("NOmbre del usuario:"+nombredelusuarioqueseestaprocesando);
+				//System.out.println("Numero de compras del usuario:"+contadordeticketsporusuario);
+				//System.out.println("-------------------------------------------");
+				
+				numerodecomprasdelusuarioi.add(contadordeticketsporusuario);
+				contadordeticketsporusuario=0;
+				nombredelusuariodexcompras.add(nombredelusuarioqueseestaprocesando);
+				jusuarioprocesado++;
+				nombredelusuarioqueseestaprocesando=listadeticketsyusuarios.get(jusuarioprocesado).getUsuario().getNombreusuario();
+				i=jusuarioprocesado+1;
+				
+			}
 		}
 		
 		//saco el promedio de compras
-		double sumadecomprasdelosusuarios=0.0;
+		int sumadecomprasdelosusuarios=0;
 		double promediodecomprasdelosusuarios=0.0;
 		for(int i=0;i<numerodecomprasdelusuarioi.size();i++) {
+			//System.out.println("variable numerodecomprasdelusuarioi.get(i):"+numerodecomprasdelusuarioi.get(i));
 			sumadecomprasdelosusuarios+=numerodecomprasdelusuarioi.get(i);
+			//System.out.println(sumadecomprasdelosusuarios);
 		}
+		//System.out.println("SUMA DE COMPRAS DE LOS USUARIOS:"+sumadecomprasdelosusuarios);
+		//System.out.println(listadelosticketsdelasemanaactual.size());
+		
 		promediodecomprasdelosusuarios=Math.ceil(sumadecomprasdelosusuarios/listadelosticketsdelasemanaactual.size());
+		//System.out.println(promediodecomprasdelosusuarios+"\n\n\n\n");
 		
 		//Ya saqué el promedio de las compras, ahora veo qué usuario iguala 
 		//o supera el promedio, para luego darle la oferta del 30%
 		for(int i=0;i<nombredelusuariodexcompras.size();i++) {
-			if(numerodecomprasdelusuarioi.get(i)>=promediodecomprasdelosusuarios) {
+			//System.out.println(numerodecomprasdelusuarioquemascompro);
+			//System.out.println(nombredelusuariodexcompras.get(i));
+			if(numerodecomprasdelusuarioi.get(i)>promediodecomprasdelosusuarios) {
 				usuarioquemascompro=nombredelusuariodexcompras.get(i);
 				numerodecomprasdelusuarioquemascompro=numerodecomprasdelusuarioi.get(i);
+				//System.out.println(numerodecomprasdelusuarioquemascompro);
 			}
 		}
 
-		
 		return "\n El usuario que más compras realizó fué el que tiene por nombre de usuario"
-				+ ": "+usuarioquemascompro+". La cantidad de compras que realizó hasta "
-				+ "el momento es de: "+numerodecomprasdelusuarioquemascompro+" compras. "
-				+ "Él tiene, por una semana, un descuento del 30% en todos los productos "
-				+ "que compre.";
+				+ ": "+usuarioquemascompro+" con "+numerodecomprasdelusuarioquemascompro
+				+ " realizadas. Él tiene, por una semana, un descuento del 30% en todos los" 
+				+ "productos que compre.";
 	}
 }

@@ -26,6 +26,7 @@ public class UsuarioPersonausuarioTest extends BaseTest{
 	public void metodo() throws ServiceException, NotFoundException{
         IPersonausuarioService personausuarioservice=new PersonausuarioService(new PersonausuarioDAO((SessionFactory) sessionFactory()));
         IUsuarioService usuarioservice=new UsuarioService(new UsuarioDAO((SessionFactory) sessionFactory()));       
+
         Usuario u=new Usuario();
         u.setNombreusuario("fabio");
         u.setTipodeusuario("administrador");
@@ -38,6 +39,7 @@ public class UsuarioPersonausuarioTest extends BaseTest{
         pu.setCorreo("fabio@gmail.com");
         
         u.setPersonausuario(pu);
+        
         
         Usuario usuarioguardado=new Usuario();
         usuarioguardado=usuarioservice.save(u);
@@ -60,9 +62,29 @@ public class UsuarioPersonausuarioTest extends BaseTest{
         Usuario usuarioguardado2=new Usuario();
         usuarioguardado2=usuarioservice.save(u2);
         assertTrue("Error id de usuario", usuarioguardado2.getIdusuario()>-1 );
+        
+        //Devuelve el msj que está entre comillas si el nombre del usuario guardado 
+        //no es "ricardo"
         assertEquals("Error nombre de usuario", usuarioguardado2.getNombreusuario(), "ricardo");
 
+
+        Usuario u3=new Usuario();
+        u3.setNombreusuario("carlos");
+        u3.setTipodeusuario("usuario comun");
+        u3.setContraseniausuario("carlos1234");
+
+        Personausuario pu3=new Personausuario();
+        pu3.setDnipersonausuario("3300222");
+        pu3.setNombrepersonausuario("carlos");
+        pu3.setNumerodetelefono("44000000");
+        pu3.setCorreo("carlos@gmail.com");
         
-	}
-	
+        u3.setPersonausuario(pu3);
+        
+        Usuario usuarioguardado3=new Usuario();
+        usuarioguardado3=usuarioservice.save(u3);
+        assertTrue("Error id de usuario", usuarioguardado3.getIdusuario()>-1 );
+        
+        
+	}	
 }

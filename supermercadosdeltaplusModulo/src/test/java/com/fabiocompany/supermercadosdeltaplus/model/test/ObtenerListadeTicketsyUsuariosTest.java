@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 
+import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.CabeceraticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.DetalleticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
@@ -14,15 +15,21 @@ import com.fabiocompany.supermercadosdeltaplus.persistence.exception.Persistence
 public class ObtenerListadeTicketsyUsuariosTest extends BaseTest{
 
 	@Test
-	public void probarObtenerListadeTicketsyUsuarios() throws PersistenceException {
+	public void TestObtenerListadeTicketsyUsuarios() throws PersistenceException {
 		CabeceraticketDAO cabeceraticketdao;
 		cabeceraticketdao=new CabeceraticketDAO((SessionFactory) sessionFactory());
-		List<Object> listaticketsyusuarios=null;
+		List<Cabeceraticket> listaticketsyusuarios=null;
 		listaticketsyusuarios=cabeceraticketdao.obtenerListadeTicketsyUsuarios();
-		assertTrue("Se consiguió la lista de tickets y usuarios",listaticketsyusuarios!=null);
-		for(int i=0;i<listaticketsyusuarios.size();i++) {
+
+		//este método comprueba si un objeto no es nulo
+		//si la lista es nula, assertNotNull tira un assertError junto
+		//con el msj que está como parámetro
+		assertNotNull("No se pudo conseguir la lista de tickets y usuarios",listaticketsyusuarios);
+		/*for(int i=0;i<listaticketsyusuarios.size();i++) {
 			System.out.println("\n"+listaticketsyusuarios.get(i));
 		}
+		*/
+		
 	}
 
 }

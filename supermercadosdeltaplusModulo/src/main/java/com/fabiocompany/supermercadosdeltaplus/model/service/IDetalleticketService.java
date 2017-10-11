@@ -20,5 +20,5 @@ import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceExceptio
 
 public interface IDetalleticketService extends IGenericService<Detalleticket, Integer>{
 	//Servicio de negocio
-	public String ofertarProducto(List<Object> listadetickets);
+	public String ofertarProducto(List<Detalleticket> listadetickets);
 }

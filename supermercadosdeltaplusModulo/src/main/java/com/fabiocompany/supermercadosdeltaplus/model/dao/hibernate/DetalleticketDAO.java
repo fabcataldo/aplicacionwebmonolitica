@@ -32,22 +32,18 @@ public class DetalleticketDAO extends GenericDAO<Detalleticket, Integer> impleme
 	//servicio que voy a utilizar para el servicio de negocio "ofertarProducto() del detalleticketservice"
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> detalleDeTickets() throws PersistenceException {
+	public List<Detalleticket> detalleDeTickets() throws PersistenceException {
 		List<Detalleticket> tickets;
-		List<Producto> productos;
-		List<Object> ticketsyproductos=new ArrayList<Object>();
+		
 		try {
 			tickets=getSession().createQuery("from Detalleticket").list();
-			productos=getSession().createQuery("from Producto").list();
-			ticketsyproductos.add(tickets);
-			ticketsyproductos.add(productos);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			throw new PersistenceException(e.getMessage(), e);
 		} finally {
 			closeSession();
 		}
-		return ticketsyproductos;
+		return tickets;
 	}
 	
 	

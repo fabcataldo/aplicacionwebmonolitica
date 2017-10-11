@@ -13,7 +13,8 @@ import java.util.List;
  */
 import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
 import com.fabiocompany.supermercadosdeltaplus.service.IGenericService;
+import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
 
 public interface ICabeceraticketService extends IGenericService<Cabeceraticket, Integer>{
-    public String usuarioQueMasCompro(List<Object> listadeticketsyusuarios);
+    public String usuarioQueMasCompro() throws ServiceException;
 }

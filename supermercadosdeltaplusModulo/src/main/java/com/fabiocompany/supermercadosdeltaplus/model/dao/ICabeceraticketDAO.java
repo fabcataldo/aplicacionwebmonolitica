@@ -17,5 +17,5 @@ import com.fabiocompany.supermercadosdeltaplus.persistence.dao.IGenericDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
 
 public interface ICabeceraticketDAO extends IGenericDAO<Cabeceraticket, Integer>{
-	public List<Object> obtenerListadeTicketsyUsuarios() throws PersistenceException;
+	public List<Cabeceraticket> obtenerListadeTicketsyUsuarios() throws PersistenceException;
 }

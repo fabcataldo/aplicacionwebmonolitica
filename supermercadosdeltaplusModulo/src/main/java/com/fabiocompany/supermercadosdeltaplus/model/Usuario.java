@@ -4,6 +4,9 @@ package com.fabiocompany.supermercadosdeltaplus.model;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,10 +23,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
+import org.hibernate.annotations.Proxy;
 
 @Entity
 //@MappedSuperclass
 @Table(name="usuario")
+@Proxy(lazy = false)
+@Access(value = AccessType.FIELD)
 public class Usuario  implements java.io.Serializable {
     //@EmbeddedId
     //@AttributeOverride(name="idusuario", column = @Column(name="idusuario"))
@@ -131,6 +137,15 @@ public class Usuario  implements java.io.Serializable {
         }
         return true;
     }
+
+
+	@Override
+	public String toString() {
+		String devolver="Usuario [idusuario=" + idusuario + ", personausuario=" + personausuario + ", nombreusuario="
+				+ nombreusuario + ", contraseniausuario=" + contraseniausuario + ", tipodeusuario=" + tipodeusuario+"\n\n";
+		return devolver;
+	}
+
 
 }
 

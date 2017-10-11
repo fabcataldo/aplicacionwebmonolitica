@@ -1,5 +1,6 @@
 package com.fabiocompany.supermercadosdeltaplus.model.test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -18,15 +19,19 @@ import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceExceptio
 
 public class OfertarProductoTest extends BaseTest{
 	@Test
-	public void probarServicioDeNegocio() throws ServiceException, NotFoundException, PersistenceException{
+	public void TestOfertarProducto() throws ServiceException, NotFoundException, PersistenceException{
 		SessionFactory sessionFactory=this.sessionFactory();
 		DetalleticketDAO detalleticketdao=new DetalleticketDAO(sessionFactory);
-		List<Object> listadeticketsdelabd;
+		List<Detalleticket> listadeticketsdelabd;
 		listadeticketsdelabd=detalleticketdao.detalleDeTickets();
 		
 		IDetalleticketService detalleticketservice=new DetalleticketService(new DetalleticketDAO(sessionFactory));		
 		String okproducto=detalleticketservice.ofertarProducto(listadeticketsdelabd);
-		assertTrue("Se consiguió el producto menos vendido",okproducto!=null);
+		
+		//este método comprueba si un objeto no es nulo
+		//si el string es nulo, assertNotNull tira un assertError junto
+		//con el msj que está como parámetro
+		assertNotNull("No se consiguió el producto menos vendido",okproducto);
 		System.out.println(okproducto);
 	}
 	
