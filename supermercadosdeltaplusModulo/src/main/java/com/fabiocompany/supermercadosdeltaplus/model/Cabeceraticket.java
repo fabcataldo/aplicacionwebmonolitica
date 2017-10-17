@@ -30,9 +30,9 @@ import org.hibernate.annotations.Proxy;
  */
 @Entity
 //@MappedSuperclass
-@Table(name="cabeceraticket")
 @Proxy(lazy = false)
 @Access(value = AccessType.FIELD)
+@Table(name="cabeceraticket")
 public class Cabeceraticket  implements java.io.Serializable {
 
     //@EmbeddedId
@@ -124,15 +124,16 @@ public class Cabeceraticket  implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		/*return "Cabeceraticket [idticket=" + idticket + ", usuario=" + usuario + ", fecha=" + fecha
+		return "Cabeceraticket [idticket=" + idticket + ", usuario=" + usuario + ", fecha=" + fecha
 				+ ", detalletickets=" + detalletickets + "]";
-		*/
+		
+		//YA ESTA RESUELTO
 		//salta error en consola sobre el detalleticket
 		//org.hibernate.LazyInitializationException: failed to lazily initialize a
 		//collection of role:
 		//com.fabiocompany.supermercadosdeltaplus.model.Detalleticket.productos,
 		//could not initialize proxy - no Session
-		return "Cabeceraticket [idticket=" + idticket + ", usuario=" + usuario + ", fecha=" + fecha+"]";
+		//return "Cabeceraticket [idticket=" + idticket + ", usuario=" + usuario + ", fecha=" + fecha+"]";
 	}
 
     

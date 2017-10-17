@@ -28,7 +28,7 @@ public class UsuarioRSController {
 	private static Logger LOG = LoggerFactory.getLogger(UsuarioRSController.class);
 	@Autowired
 	IUsuarioService usuarioService;
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping(value = "/usuarios/", method = RequestMethod.GET)
 	public ResponseEntity<Object> list() {
 		try {
 			return new ResponseEntity<Object>(usuarioService.list(), HttpStatus.OK);

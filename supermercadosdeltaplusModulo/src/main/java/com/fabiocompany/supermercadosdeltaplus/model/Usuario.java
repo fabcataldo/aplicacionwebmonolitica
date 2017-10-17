@@ -25,11 +25,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.Proxy;
 
-@Entity
 //@MappedSuperclass
-@Table(name="usuario")
+@Entity
 @Proxy(lazy = false)
 @Access(value = AccessType.FIELD)
+@Table(name="usuario")
 public class Usuario  implements java.io.Serializable {
     //@EmbeddedId
     //@AttributeOverride(name="idusuario", column = @Column(name="idusuario"))

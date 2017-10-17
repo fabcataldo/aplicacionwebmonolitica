@@ -35,9 +35,9 @@ import org.hibernate.annotations.Proxy;
  */
 //@MappedSuperclass
 @Entity
-@Table(name="detalleticket")
 @Proxy(lazy = false)
 @Access(value = AccessType.FIELD)
+@Table(name="detalleticket")
 public class Detalleticket  implements java.io.Serializable {
 
 	//@EmbeddedId
@@ -147,11 +147,12 @@ public class Detalleticket  implements java.io.Serializable {
 
     @Override
 	public String toString() {
-    	/*	return "Detalleticket [iddetalleticket=" + iddetalleticket + ", cabeceraticket=" + cabeceraticket
-				+ ", cantidad=" + cantidad + ", productos=" + productos + "]";
-	*/
-		return "Detalleticket [iddetalleticket=" + iddetalleticket + ","
-			+ " cantidad=" + cantidad +"]";
+   		return "Detalleticket [iddetalleticket=" + iddetalleticket + ", cabeceraticket=" + cabeceraticket
+			+ ", cantidad=" + cantidad + ", productos=" + productos + "]";
+
+   		//YA ARREGLADO
+		//return "Detalleticket [iddetalleticket=" + iddetalleticket + ","
+		//	+ " cantidad=" + cantidad +"]";
 		//salta error en productos y en cabecera ticket:
 		//org.hibernate.LazyInitializationException: failed to lazily initialize 
 		//a collection of role: 

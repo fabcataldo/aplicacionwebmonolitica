@@ -22,11 +22,9 @@ public class OfertarProductoTest extends BaseTest{
 	public void TestOfertarProducto() throws ServiceException, NotFoundException, PersistenceException{
 		SessionFactory sessionFactory=this.sessionFactory();
 		DetalleticketDAO detalleticketdao=new DetalleticketDAO(sessionFactory);
-		List<Detalleticket> listadeticketsdelabd;
-		listadeticketsdelabd=detalleticketdao.detalleDeTickets();
 		
 		IDetalleticketService detalleticketservice=new DetalleticketService(new DetalleticketDAO(sessionFactory));		
-		String okproducto=detalleticketservice.ofertarProducto(listadeticketsdelabd);
+		String okproducto=detalleticketservice.ofertarProducto();
 		
 		//este método comprueba si un objeto no es nulo
 		//si el string es nulo, assertNotNull tira un assertError junto

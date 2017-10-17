@@ -29,7 +29,7 @@
 	<logger name="org.springframework.web.servlet.mvc" level="WARN" /> <!-- some serialization issues are at trace level here: org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod -->
 
 	<!-- our service -->
-	<logger name="ar.com.magm" level="DEBUG" />
+	<logger name="com.fabiocompany.supermercadosdeltaplus" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

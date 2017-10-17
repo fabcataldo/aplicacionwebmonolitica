@@ -17,8 +17,6 @@ public class UsuarioQueMasComproTest extends BaseTest{
 	@Test
 	public void TestUsuarioQueMasCompro() throws ServiceException {
 		SessionFactory sessionFactory=this.sessionFactory();
-		CabeceraticketDAO cabeceraticketdao=new CabeceraticketDAO(sessionFactory());
-
 		ICabeceraticketService cabeceraticketservice=new CabeceraticketService(new CabeceraticketDAO(sessionFactory));
 		String usuarioconmascompras=cabeceraticketservice.usuarioQueMasCompro();	
 		
