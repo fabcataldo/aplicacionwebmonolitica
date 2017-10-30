@@ -8,16 +8,12 @@ import org.junit.Test;
 
 import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
 import com.fabiocompany.supermercadosdeltaplus.model.Personausuario;
-import com.fabiocompany.supermercadosdeltaplus.model.Producto;
 import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.PersonausuarioDAO;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.ProductoDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.UsuarioDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IPersonausuarioService;
-import com.fabiocompany.supermercadosdeltaplus.model.service.IProductoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IUsuarioService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.PersonausuarioService;
-import com.fabiocompany.supermercadosdeltaplus.model.service.impl.ProductoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.UsuarioService;
 import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
 

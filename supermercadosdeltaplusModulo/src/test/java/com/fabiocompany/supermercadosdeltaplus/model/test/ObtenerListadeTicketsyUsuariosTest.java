@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.CabeceraticketDAO;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.DetalleticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
 
 public class ObtenerListadeTicketsyUsuariosTest extends BaseTest{
@@ -25,10 +24,10 @@ public class ObtenerListadeTicketsyUsuariosTest extends BaseTest{
 		//si la lista es nula, assertNotNull tira un assertError junto
 		//con el msj que está como parámetro
 		assertNotNull("No se pudo conseguir la lista de tickets y usuarios",listaticketsyusuarios);
-		/*for(int i=0;i<listaticketsyusuarios.size();i++) {
+		for(int i=0;i<listaticketsyusuarios.size();i++) {
 			System.out.println("\n"+listaticketsyusuarios.get(i));
 		}
-		*/
+		
 		
 	}
 

@@ -10,9 +10,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
 import com.fabiocompany.supermercadosdeltaplus.model.Detalleticket;
-import com.fabiocompany.supermercadosdeltaplus.model.Producto;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.IDetalleticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IDetalleticketService;
 import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
@@ -66,6 +64,6 @@ public class DetalleticketService extends GenericService<Detalleticket, Integer>
 				productomenosvendido=productoporticketNombredeProductos.get(i);
 			}
 		}
-		return "El producto menos vendido tiene la siguiente descripción: "+productomenosvendido+". Se va a ofrecer un descuento del 25% para éste.";
+		return "El producto menos vendido tiene la siguiente descripcion: "+productomenosvendido+". Se va a ofrecer un descuento del 25% para este.";
 	}
 }

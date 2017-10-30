@@ -5,6 +5,7 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.service;
 
+import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
 /**
  *
  * @author fabio
@@ -16,4 +17,5 @@ import java.util.List;
 
 public interface IUsuarioService extends IGenericService<Usuario, Integer>{
     public List<Usuario> list(String parteDelNombre) throws ServiceException; 
+    public Usuario load(String nombredeluser) throws ServiceException, NotFoundException;
 }

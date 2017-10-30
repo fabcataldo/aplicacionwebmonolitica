@@ -9,6 +9,7 @@
 /home/fabio/Documentos/facu/ingweb3/repoingweb3personal/supermercadosdeltaplusWeb/src/main/java/com/fabiocompany/supermercadosdeltaplus/app/Application.java
 /home/fabio/Documentos/facu/ingweb3/repoingweb3personal/supermercadosdeltaplusWeb/src/main/java/com/fabiocompany/supermercadosdeltaplus/app/config/auth/UserDetailService.java
 /home/fabio/Documentos/facu/ingweb3/repoingweb3personal/supermercadosdeltaplusWeb/src/main/java/com/fabiocompany/supermercadosdeltaplus/app/setup/MyApplicationContextInitializer.java
+/home/fabio/Documentos/facu/ingweb3/repoingweb3personal/supermercadosdeltaplusWeb/src/main/java/com/fabiocompany/supermercadosdeltaplus/web/services/ServiciosDeNegocioRSController.java
 /home/fabio/Documentos/facu/ingweb3/repoingweb3personal/supermercadosdeltaplusWeb/src/main/java/com/fabiocompany/supermercadosdeltaplus/web/services/Constants.java
 /home/fabio/Documentos/facu/ingweb3/repoingweb3personal/supermercadosdeltaplusWeb/src/main/java/com/fabiocompany/supermercadosdeltaplus/app/config/SecurityConfig.java
 /home/fabio/Documentos/facu/ingweb3/repoingweb3personal/supermercadosdeltaplusWeb/src/main/java/com/fabiocompany/supermercadosdeltaplus/web/services/DenyRSController.java

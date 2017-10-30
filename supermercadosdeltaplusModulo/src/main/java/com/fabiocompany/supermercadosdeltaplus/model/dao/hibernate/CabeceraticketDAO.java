@@ -6,16 +6,10 @@
 package com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate;
 
 import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
-import com.fabiocompany.supermercadosdeltaplus.model.Detalleticket;
-import com.fabiocompany.supermercadosdeltaplus.model.Producto;
-import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.ICabeceraticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.hibernate.GenericDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

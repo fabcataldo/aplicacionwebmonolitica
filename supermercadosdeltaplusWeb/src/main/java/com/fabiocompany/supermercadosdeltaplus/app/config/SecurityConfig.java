@@ -24,11 +24,6 @@ import org.springframework.web.filter.CorsFilter;
 import com.fabiocompany.supermercadosdeltaplus.app.config.auth.UserDetailService;
 import com.fabiocompany.supermercadosdeltaplus.web.services.Constants;
 
-/**
- * 
- * @author magm
- *
- */
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableWebSecurity

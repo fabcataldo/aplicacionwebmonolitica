@@ -1,15 +1,11 @@
 package com.fabiocompany.supermercadosdeltaplus.model.test;
 
 import static org.junit.Assert.*;
-import java.util.List;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
-
-import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.CabeceraticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.ICabeceraticketService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.CabeceraticketService;
-import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
 import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
 
 public class UsuarioQueMasComproTest extends BaseTest{

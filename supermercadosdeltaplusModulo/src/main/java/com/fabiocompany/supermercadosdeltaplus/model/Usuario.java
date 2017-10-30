@@ -1,38 +1,30 @@
 package com.fabiocompany.supermercadosdeltaplus.model;
 
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import org.hibernate.annotations.IndexColumn;
 import org.hibernate.annotations.Proxy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 
-//@MappedSuperclass
 @Entity
 @Proxy(lazy = false)
 @Access(value = AccessType.FIELD)
 @Table(name="usuario")
-public class Usuario  implements java.io.Serializable {
-    //@EmbeddedId
-    //@AttributeOverride(name="idusuario", column = @Column(name="idusuario"))
+public class Usuario  implements UserDetails, java.io.Serializable {
     @Id
     @Column(name="idusuario")
     @GeneratedValue(strategy=GenerationType.AUTO) //columna autoincremental
@@ -55,6 +47,17 @@ public class Usuario  implements java.io.Serializable {
     @JoinColumn(name="idusuario")
     private List<Cabeceraticket> cabeceratickets;
 
+
+
+	private boolean accountEnabled = true;
+
+	private boolean accountExpired = false;
+
+	private boolean accountLocked = false;
+
+	private boolean credentialsExpired = false;
+
+	
     public Usuario() {
     }
 
@@ -138,15 +141,110 @@ public class Usuario  implements java.io.Serializable {
         return true;
     }
 
-
-	@Override
-	public String toString() {
-		String devolver="Usuario [idusuario=" + idusuario + ", personausuario=" + personausuario + ", nombreusuario="
-				+ nombreusuario + ", contraseniausuario=" + contraseniausuario + ", tipodeusuario=" + tipodeusuario+"\n\n";
-		return devolver;
+	
+	public boolean isAccountEnabled() {
+		return accountEnabled;
 	}
 
 
+	public void setAccountEnabled(boolean accountEnabled) {
+		this.accountEnabled = accountEnabled;
+	}
+
+
+	public boolean isAccountExpired() {
+		return accountExpired;
+	}
+
+
+	public void setAccountExpired(boolean accountExpired) {
+		this.accountExpired = accountExpired;
+	}
+
+
+	public boolean isAccountLocked() {
+		return accountLocked;
+	}
+
+
+	public void setAccountLocked(boolean accountLocked) {
+		this.accountLocked = accountLocked;
+	}
+
+
+	public boolean isCredentialsExpired() {
+		return credentialsExpired;
+	}
+
+
+	public void setCredentialsExpired(boolean credentialsExpired) {
+		this.credentialsExpired = credentialsExpired;
+	}
+
+	public boolean containsAuthority(String auth) {
+		for (GrantedAuthority ga : getAuthorities()) {
+			if (ga.getAuthority().equalsIgnoreCase(auth))
+				return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return AuthorityUtils.createAuthorityList(getTipodeusuario());
+	}
+
+
+	@Override
+	public String getPassword() {
+		return getContraseniausuario();
+	}
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return getNombreusuario();
+	}
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return !isAccountExpired();
+	}
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return !isAccountLocked();
+	}
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return !isCredentialsExpired();
+	}
+
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return isAccountEnabled();
+	}
+
+
+	@Override
+	public String toString() {
+		return "Usuario:\nNombre de usuario: "+getNombreusuario()+". Contraseña: "
+				+getContraseniausuario()+". Tipo de usuario"+getTipodeusuario()
+				+". Account Expired?: "+isAccountExpired()+
+				". Account enabled?: "+isAccountEnabled()+". Account locked?: "+isAccountLocked()
+				+". Credentials expired?:"+isCredentialsExpired()+". Info de su persona:"
+				+getPersonausuario();		
+	}
 }
 
 

@@ -1,16 +1,9 @@
 package com.fabiocompany.supermercadosdeltaplus.model.test;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import org.hibernate.SessionFactory;
 import org.junit.Test;
-
 import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
-import com.fabiocompany.supermercadosdeltaplus.model.Detalleticket;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.IDetalleticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.DetalleticketDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IDetalleticketService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.DetalleticketService;
@@ -21,7 +14,7 @@ public class OfertarProductoTest extends BaseTest{
 	@Test
 	public void TestOfertarProducto() throws ServiceException, NotFoundException, PersistenceException{
 		SessionFactory sessionFactory=this.sessionFactory();
-		DetalleticketDAO detalleticketdao=new DetalleticketDAO(sessionFactory);
+//		DetalleticketDAO detalleticketdao=new DetalleticketDAO(sessionFactory);
 		
 		IDetalleticketService detalleticketservice=new DetalleticketService(new DetalleticketDAO(sessionFactory));		
 		String okproducto=detalleticketservice.ofertarProducto();

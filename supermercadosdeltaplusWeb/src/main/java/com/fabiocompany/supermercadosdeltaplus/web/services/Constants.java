@@ -1,9 +1,5 @@
 package com.fabiocompany.supermercadosdeltaplus.web.services;
-/**
- * 
- * @author magm
- *
- */
+
 public final class Constants {
 	public static final String URL_API = "/api";
 	public static final String URL_API_VERSION = "/v1";

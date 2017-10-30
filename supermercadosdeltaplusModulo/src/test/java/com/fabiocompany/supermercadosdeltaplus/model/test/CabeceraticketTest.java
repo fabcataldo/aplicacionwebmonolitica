@@ -7,14 +7,10 @@ import org.junit.Test;
 
 import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
 import com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket;
-import com.fabiocompany.supermercadosdeltaplus.model.Producto;
 import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.CabeceraticketDAO;
-import com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate.ProductoDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.ICabeceraticketService;
-import com.fabiocompany.supermercadosdeltaplus.model.service.IProductoService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.impl.CabeceraticketService;
-import com.fabiocompany.supermercadosdeltaplus.model.service.impl.ProductoService;
 import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
 
 public class CabeceraticketTest extends BaseTest{

@@ -9,6 +9,7 @@ import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.IUsuarioDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.hibernate.GenericDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
+import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -28,15 +29,29 @@ public class UsuarioDAO extends GenericDAO<Usuario, Integer> implements IUsuario
     @Override
     public List<Usuario> list(String parteDelNombre) throws PersistenceException {
         List<Usuario> l = null;
-	try {
-		l = getSession().createQuery("FROM usuario u WHERE u.nombreusuario LIKE :parteNombre")
-				.setString("parteNombre", "%"+parteDelNombre+"%").list();
-	} catch (Exception e) {
-		LOG.error(e.getMessage(), e);
-		throw new PersistenceException(e.getMessage(), e);
-	} finally {
-		closeSession();
-	}
-	return l;
+        try {
+        	l = getSession().createQuery("FROM Usuario u WHERE u.nombreusuario LIKE :parteNombre")
+        			.setString("parteNombre", "%"+parteDelNombre+"%").list();
+        } catch (Exception e) {
+        	LOG.error(e.getMessage(), e);
+        	throw new PersistenceException(e.getMessage(), e);
+        } finally {
+        	closeSession();
+        }
+        return l;
     }
+    
+	public Usuario load(String nombredeusuario) throws PersistenceException, NotFoundException {
+		Usuario r=null;
+		try {
+			r = (Usuario) getSession().createQuery(String.format("FROM %s WHERE nombreusuario=:nombredeusuario", getDomainClass().getSimpleName())).setString("nombreusuario", nombredeusuario).uniqueResult();
+			if(r==null)
+				throw new NotFoundException();
+		} catch (Exception e) {
+			throw new PersistenceException(e.getMessage(), e);
+		} finally {
+			closeSession();
+		}
+		return r;
+	}
 }

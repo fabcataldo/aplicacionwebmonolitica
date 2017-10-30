@@ -5,6 +5,7 @@
  */
 package com.fabiocompany.supermercadosdeltaplus.model.service.impl;
 
+import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
 import com.fabiocompany.supermercadosdeltaplus.model.Usuario;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.IUsuarioDAO;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IUsuarioService;
@@ -25,17 +26,26 @@ public class UsuarioService extends GenericService<Usuario, Integer>
     private IUsuarioDAO dao;
 	public UsuarioService(IUsuarioDAO dao) {
 		super(dao);
-                this.dao=dao;
+        this.dao=dao;
 	}
 
     @Override
     public List<Usuario> list(String parteDelNombre) throws ServiceException {
         try {
             return dao.list(parteDelNombre);
-	} catch (PersistenceException e) {
+        } catch (PersistenceException e) {
             LOG.error(e.getMessage(), e);
             throw new ServiceException(e.getMessage(), e);
-	}
+        }
     }
+    
+	@Override
+	public Usuario load(String nombredeluser) throws ServiceException, NotFoundException {
+		try {
+			return dao.load(nombredeluser);
+		} catch (PersistenceException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+	}
    
 }
