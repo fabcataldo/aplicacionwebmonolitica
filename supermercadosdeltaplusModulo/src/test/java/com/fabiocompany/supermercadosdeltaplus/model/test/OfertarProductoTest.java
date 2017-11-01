@@ -12,7 +12,7 @@ import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceExceptio
 
 public class OfertarProductoTest extends BaseTest{
 	@Test
-	public void TestOfertarProducto() throws ServiceException, NotFoundException, PersistenceException{
+	public void OfertarProductoTest() throws ServiceException, NotFoundException, PersistenceException{
 		SessionFactory sessionFactory=this.sessionFactory();
 //		DetalleticketDAO detalleticketdao=new DetalleticketDAO(sessionFactory);
 		
@@ -23,7 +23,7 @@ public class OfertarProductoTest extends BaseTest{
 		//si el string es nulo, assertNotNull tira un assertError junto
 		//con el msj que está como parámetro
 		assertNotNull("No se consiguió el producto menos vendido",okproducto);
-		System.out.println(okproducto);
+		//System.out.println(okproducto);
 	}
 	
 }

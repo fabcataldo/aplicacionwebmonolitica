@@ -26,6 +26,11 @@ import org.hibernate.annotations.Proxy;
 @Table(name="detalleticket")
 public class Detalleticket  implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @Column(name="iddetalleticket")
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -129,21 +134,15 @@ public class Detalleticket  implements java.io.Serializable {
         return true;
     }
 
-    @Override
+	@Override
 	public String toString() {
-   		return "Detalleticket [iddetalleticket=" + iddetalleticket + ", cabeceraticket=" + cabeceraticket
-			+ ", cantidad=" + cantidad + ", productos=" + productos + "]";
-
-   		//YA ARREGLADO
-		//return "Detalleticket [iddetalleticket=" + iddetalleticket + ","
-		//	+ " cantidad=" + cantidad +"]";
-		//salta error en productos y en cabecera ticket:
-		//org.hibernate.LazyInitializationException: failed to lazily initialize 
-		//a collection of role: 
-		//com.fabiocompany.supermercadosdeltaplus.model.Detalleticket.productos, 
-		//could not initialize proxy - no Session
-
+		//return "Detalleticket [iddetalleticket=" + iddetalleticket + ", cabeceraticket=" + cabeceraticket
+			//	+ ", cantidad=" + cantidad + ", productos=" + productos + "]";
+		return "Detalleticket [iddetalleticket=" + iddetalleticket
+				+ ", cantidad=" + cantidad + "]";
 	}
+
+
 	
 }
 

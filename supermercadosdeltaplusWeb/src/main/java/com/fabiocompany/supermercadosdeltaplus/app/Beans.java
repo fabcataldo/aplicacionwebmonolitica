@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
 public class Beans {
 	@Bean
 	@Autowired
-	public IUsuarioDAO UsuarioDAO(final SessionFactory sessionFactory) {
-		return new UsuarioDAO(sessionFactory);
+	public IUserDAO UserDAO(final SessionFactory sessionFactory) {
+		return new UserDAO(sessionFactory);
 	}
 	
 	@Bean
 	@Autowired
-	public IUsuarioService UsuarioService(final IUsuarioDAO usuarioDAO) {
-		return new UsuarioService(usuarioDAO);
+	public IUserService User(final IUserDAO userDAO) {
+		return new UserService(userDAO);
 	}
 	
 	@Bean

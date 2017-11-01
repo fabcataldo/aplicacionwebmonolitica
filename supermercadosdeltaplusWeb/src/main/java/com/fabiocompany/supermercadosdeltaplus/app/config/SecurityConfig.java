@@ -17,12 +17,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
 import com.fabiocompany.supermercadosdeltaplus.app.config.auth.UserDetailService;
 import com.fabiocompany.supermercadosdeltaplus.web.services.Constants;
+import com.fabiocompany.supermercadosdeltaplus.app.config.auth.rememberme.PersistentTokenRememberMeService;
+import com.fabiocompany.supermercadosdeltaplus.model.service.IAuthTokenService;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
@@ -52,9 +54,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(corsFilter(), ChannelProcessingFilter.class);
 
-		http.authorizeRequests().antMatchers(Constants.URL_BASE + "/**").permitAll();
+		http.authorizeRequests().antMatchers(Constants.URL_BASE + "/**").authenticated();
+		http.rememberMe().rememberMeServices(rememberMeServices()).key("w3rm").alwaysRemember(true);
+
 		if (Boolean.parseBoolean(env.getProperty("auth.basic", "true"))) {
-			http.httpBasic().and().rememberMe().alwaysRemember(true).tokenValiditySeconds(60 * 60 * 24).key("web3pass");
+			http.httpBasic();
 		}
 		if (Boolean.parseBoolean(env.getProperty("auth.form", "true"))) {
 			FormLoginConfigurer<HttpSecurity> flc = http.formLogin();
@@ -62,8 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				flc.loginPage(env.getProperty("auth.form.login.page")).permitAll().loginProcessingUrl("/login");
 			}
 			flc.defaultSuccessUrl(env.getProperty("auth.form.login.success", "/")).permitAll().and().logout()
-					.permitAll().logoutSuccessUrl(env.getProperty("logout.success.url", "/login?logout")).and()
-					.rememberMe().alwaysRemember(true).tokenValiditySeconds(60 * 60 * 24).key("web3pass");
+					.permitAll().logoutSuccessUrl(env.getProperty("logout.success.url", "/login?logout"));
 		}
 
 		if (Boolean.parseBoolean(env.getProperty("ensure.https", "false")))
@@ -75,9 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailService userDetailsService;
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		if (Boolean.parseBoolean(env.getProperty("in.memory.users", "true"))) {
 			auth.inMemoryAuthentication().withUser("user").password("password").roles("USER", "ADMIN").and()
 					.withUser("admin").password("password").roles("USER", "ADMIN");
@@ -85,4 +87,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			auth.userDetailsService(userDetailsService);
 		}
 	}
+
+	@Autowired
+	private IAuthTokenService authTokenService;
+
+	@Bean
+	public RememberMeServices rememberMeServices() {
+		PersistentTokenRememberMeService rememberMeServices = new PersistentTokenRememberMeService("w3rm",
+				userDetailsService, authTokenService);
+		rememberMeServices.setAlwaysRemember(true);
+		rememberMeServices.setCookieName("rmw3");
+		rememberMeServices.setUseSecureCookie(false);
+		rememberMeServices.setTokenValiditySeconds(60 * 60 * 24);
+		return rememberMeServices;
+	}
+
 }

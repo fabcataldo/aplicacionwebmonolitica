@@ -95,15 +95,9 @@ public class Producto  implements java.io.Serializable {
         return true;
     }
 
+
 	@Override
 	public String toString() {
-		return "Producto [idproducto=" + idproducto + ", descripcion=" + descripcion + ", precio=" + precio
-				+ ", detalletickets=" + detalletickets + "]";
-	}
-	
-	/*@Override
-	public String toString() {
-		
 		return "Producto [idproducto=" + idproducto + ", descripcion=" + descripcion + ", precio=" + precio
 				+ "]";
 		//salta error en detalletickets:
@@ -111,10 +105,7 @@ public class Producto  implements java.io.Serializable {
 		//a collection of role: 
 		//com.fabiocompany.supermercadosdeltaplus.model.Detalleticket.productos, 
 		//could not initialize proxy - no Session
-	}*/
-    
-	
-
+	}
 }
 
 
