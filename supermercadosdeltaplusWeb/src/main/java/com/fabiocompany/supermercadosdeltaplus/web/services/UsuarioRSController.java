@@ -6,7 +6,7 @@
 package com.fabiocompany.supermercadosdeltaplus.web.services;
 
 
-import com.fabiocompany.supermercadosdeltaplus.model.service.IUsuarioService;
+import com.fabiocompany.supermercadosdeltaplus.model.service.IUserService;
 import com.fabiocompany.supermercadosdeltaplus.service.SimpleResponse;
 import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
 import org.slf4j.Logger;

@@ -67,12 +67,12 @@ public class CabeceraticketService extends GenericService<Cabeceraticket, Intege
 		int i=0;
 		//almaceno en una lista, un nombre de usuario
 		//en otra lista, almaceno las compras de cada usuario de la lista anteriormente dicha
-		String nombredelusuarioqueseestaprocesando=listadeticketsyusuarios.get(0).getUsuario().getNombreusuario();
+		String nombredelusuarioqueseestaprocesando=listadeticketsyusuarios.get(0).getUsuario().getUsername();
 		while(i<(listadeticketsyusuarios.size()-1)) {
-			if(listadeticketsyusuarios.get(i+1).getUsuario().getNombreusuario()!=null) {
+			if(listadeticketsyusuarios.get(i+1).getUsuario().getUsername()!=null) {
 				//si está dentro de la semana actual el ticket, lo cuento
 				if((listadeticketsyusuarios.get(i).getFecha()>=fechaactual)||(listadeticketsyusuarios.get(i).getFecha()<=fechaactual)&&(listadeticketsyusuarios.get(i).getFecha()<=fechadeldiadefindesemana)){
-					if((nombredelusuarioqueseestaprocesando==listadeticketsyusuarios.get(i+1).getUsuario().getNombreusuario())) {
+					if((nombredelusuarioqueseestaprocesando==listadeticketsyusuarios.get(i+1).getUsuario().getUsername())) {
 						contadordeticketsporusuario++;
 					}
 					//guardo los tickets de la semana actual, sin importar los usuarios
@@ -86,7 +86,7 @@ public class CabeceraticketService extends GenericService<Cabeceraticket, Intege
 				contadordeticketsporusuario=0;
 				nombredelusuariodexcompras.add(nombredelusuarioqueseestaprocesando);
 				j++;
-				nombredelusuarioqueseestaprocesando=listadeticketsyusuarios.get(j).getUsuario().getNombreusuario();
+				nombredelusuarioqueseestaprocesando=listadeticketsyusuarios.get(j).getUsuario().getUsername();
 				i=0;
 				i=j+1;
 			}

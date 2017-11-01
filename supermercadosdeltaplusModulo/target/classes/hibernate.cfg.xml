@@ -27,13 +27,9 @@
     <!-- update validate -->
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Cabeceraticket" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Detalleticket" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Usuario" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Personausuario" />
+    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.User" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Producto" />
-
-    <!-- <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Tarjeta" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Tipodepago" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Detalleofertaypromocion" />
-    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Pago" /> -->
+    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Role" />
+    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Privilege" />
   </session-factory>
 </hibernate-configuration>

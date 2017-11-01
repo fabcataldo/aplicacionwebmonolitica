@@ -27,8 +27,8 @@ public class Cabeceraticket  implements java.io.Serializable {
     private int idticket;
     
     @ManyToOne
-    @JoinColumn(name="idusuario")
-    private Usuario usuario;
+    @JoinColumn(name="idUser")
+    private User usuario;
     
     @Column(name="fecha")
     private long fecha;
@@ -41,11 +41,11 @@ public class Cabeceraticket  implements java.io.Serializable {
     }
 
 	
-    public Cabeceraticket(int idticket, Usuario usuario) {
+    public Cabeceraticket(int idticket, User usuario) {
         this.idticket = idticket;
         this.usuario = usuario;
     }
-    public Cabeceraticket(int idticket, Usuario usuario, long fecha, List<Detalleticket> detalletickets) {
+    public Cabeceraticket(int idticket, User usuario, long fecha, List<Detalleticket> detalletickets) {
        this.idticket = idticket;
        this.usuario = usuario;
        this.fecha = fecha;
@@ -59,11 +59,11 @@ public class Cabeceraticket  implements java.io.Serializable {
     public void setIdticket(int idticket) {
         this.idticket = idticket;
     }
-    public Usuario getUsuario() {
+    public User getUsuario() {
         return this.usuario;
     }
     
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(User usuario) {
         this.usuario = usuario;
     }
     public long getFecha() {
