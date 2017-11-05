@@ -31,5 +31,7 @@
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Producto" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Role" />
     <mapping class="com.fabiocompany.supermercadosdeltaplus.model.Privilege" />
+    <mapping class="com.fabiocompany.supermercadosdeltaplus.model.AlgoritmoHash" />
+    
   </session-factory>
 </hibernate-configuration>

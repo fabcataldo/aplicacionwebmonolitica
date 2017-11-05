@@ -91,6 +91,7 @@ public abstract class AbstractRememberMeServicesCustom
 	 */
 	public final Authentication autoLogin(HttpServletRequest request, HttpServletResponse response) {
 		String token = request.getParameter("token");
+		String xauthtokenheader = request.getHeader("x-auth-token");
 
 		// By Magm
 		boolean byToken = false;
@@ -101,13 +102,20 @@ public abstract class AbstractRememberMeServicesCustom
 			return null;
 		}
 
+		// BY FABIO
+		if(xauthtokenheader==null) {
+			return null;
+		}
+		
 		// By Magm
 		if (rememberMeCookie == null) {
 			rememberMeCookie = token;
 			byToken = true;
+			logger.debug("Token detectado");
 		}
 
 		logger.debug("Remember-me cookie detected");
+		logger.debug("Cabecera x-auth-token detectada");
 
 		if (rememberMeCookie.length() == 0) {
 			logger.debug("Cookie was empty");
@@ -128,12 +136,22 @@ public abstract class AbstractRememberMeServicesCustom
 					cookieTokensTemp[t] = cookieTokens[t];
 				cookieTokens = cookieTokensTemp;
 			}
-
-			user = processAutoLoginCookie(cookieTokens, request, response);
+			
+			// BY FABIO
+			//estoy tratando de autenticarme por el header x-auth-token
+			//enviandolé el token que ya guardé en la cookie que está en la bd, 
+			//cuando me loguié antes
+			//agregué el parámetro del header x-auth-token al metodo abstracto processautologincookie()
+			user = processAutoLoginCookie(cookieTokens, request, response, xauthtokenheader);
 			userDetailsChecker.check(user);
 
 			logger.debug("Remember-me cookie accepted");
 
+			// BY FABIO
+			if(xauthtokenheader!=null) {
+				logger.debug("Cabecera x-auth-token aceptada");
+			}
+			
 			return createSuccessfulAuthentication(request, user);
 		} catch (CookieTheftException cte) {
 			cancelCookie(request, response);
@@ -362,7 +380,7 @@ public abstract class AbstractRememberMeServicesCustom
 	 *             from the system).
 	 */
 	protected abstract UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
-			HttpServletResponse response) throws RememberMeAuthenticationException, UsernameNotFoundException;
+			HttpServletResponse response, String xauthtokenheader) throws RememberMeAuthenticationException, UsernameNotFoundException;
 
 	/**
 	 * Sets a "cancel cookie" (with maxAge = 0) on the response to disable

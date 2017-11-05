@@ -29,12 +29,14 @@ public class PersistentTokenRememberMeService extends AbstractRememberMeServices
 
 	}
 
+	// BY FABIO
+	//agregué el parámetro del header x-auth-token al metodo abstracto processautologincookie()
 	/**
 	 * Re Logins
 	 */
 	@Override
 	protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response, String xauthtokenheader) {
 		boolean byToken = cookieTokens.length == 3;
 
 		if (cookieTokens.length < 2 || cookieTokens.length > 3) {
@@ -52,11 +54,17 @@ public class PersistentTokenRememberMeService extends AbstractRememberMeServices
 		} catch (NotFoundException e1) {
 			throw new RememberMeAuthenticationException("No persistent token found for series id: " + presentedSeries);
 		}
-
-		if (!presentedToken.equals(authToken.getToken())) {
+		
+		// BY FABIO
+		//agregué el parámetro del header x-auth-token al if de abajo
+		if ((!presentedToken.equals(authToken.getToken()))&&(xauthtokenheader.equals(authToken.getToken()))) {
 		}
 
 		System.out.println(authToken);
+
+		// BY FABIO
+		System.out.println("X-AUTH-TOKEN: "+xauthtokenheader);
+		
 		if (!authToken.valid()) {
 			try {
 				if (authToken.getType().equals(AuthToken.TYPE_DEFAULT)
