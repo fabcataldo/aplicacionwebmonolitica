@@ -13,28 +13,31 @@ public class AlgoritmoHashDAO extends GenericDAO<AlgoritmoHash, Integer> impleme
 		super(sessionFactory);
 	}
 
-	public String ObtenerHash(String url) throws PersistenceException{
+	public String ObtenerArreglodeHashes() throws PersistenceException{
 		String hashaguardar="";
 		String hashaguardar2="";
+		
+		AlgoritmoHash ah=new AlgoritmoHash();
+		ah.setTexto("http://localhost:8080/supermercadosdeltaplus/api/v1/usuarioquemascompro");
+		hashaguardar=ah.GenerarHash();
+		ah.setResultadohash(hashaguardar);
+		this.save(ah);
+		
+		AlgoritmoHash ah2=new AlgoritmoHash();
+		ah2.setTexto("http://www.google.com.ar/");
+		hashaguardar2=ah2.GenerarHash();
+		ah2.setResultadohash(hashaguardar2);
+		hashaguardar="\n"+ah.toString()+"\n"+ah2.toString();
+		//hashaguardar=""+hashaguardar+"-"+hashaguardar2;
+		this.save(ah2);
+		
+		return hashaguardar;
+	}
+		
+	public String ObtenerHash(String url) throws PersistenceException{
 		String hashquevieneenlaurl="";
 
-		if(url.length()==60) {
-			AlgoritmoHash ah=new AlgoritmoHash();
-			ah.setTexto("http://localhost:8080/supermercadosdeltaplus/api/v1/usuarioquemascompro");
-			hashaguardar=ah.GenerarHash();
-			ah.setResultadohash(hashaguardar);
-			this.save(ah);
-			AlgoritmoHash ah2=new AlgoritmoHash();
-			ah2.setTexto("http://www.google.com.ar/");
-			hashaguardar2=ah2.GenerarHash();
-			ah2.setResultadohash(hashaguardar2);
-			hashaguardar=""+hashaguardar+"-"+hashaguardar2;
-			this.save(ah2);
-			//retorno los hashes de las dos urls a redireccionar
-			return hashaguardar;
-		}
-		else {
-			//CORREGIR EL STRING DE ABAJO, tiene problemas
+		if(url.length()>=68) {
 			hashquevieneenlaurl=url.substring(58, url.length());
 			AlgoritmoHash ahbd=new AlgoritmoHash();
 			try {
@@ -42,7 +45,8 @@ public class AlgoritmoHashDAO extends GenericDAO<AlgoritmoHash, Integer> impleme
 				if(ahbd==null)
 					throw new NotFoundException();
 				else{
-					return "<a href="+ahbd.getTexto()+">Redireccionar a: "+ahbd.getTexto()+"/</a>";
+					//return "<a href="+ahbd.getTexto()+">Redireccionar a: "+ahbd.getTexto()+"/</a>";
+					return ahbd.getTexto();
 				}
 			} catch (Exception e) {
 				throw new PersistenceException(e.getMessage(), e);
@@ -50,5 +54,6 @@ public class AlgoritmoHashDAO extends GenericDAO<AlgoritmoHash, Integer> impleme
 				closeSession();
 			}
 		}
+		return null;
 	}
 }

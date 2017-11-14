@@ -69,6 +69,12 @@ public class AlgoritmoHash {
 		return algoritmodehash;
 	}
 
+	
+	@Override
+	public String toString() {
+		return "\n"+"["+ resultadohash+ "]";
+	}
+
 	//todo el codigo necesario para obtener el hash, se obtuvo de 
 	//http://codesandtags.org/generando-hash-en-java-messagedigest/
 	public String GenerarHash() {

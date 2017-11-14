@@ -22,11 +22,18 @@ public class UserDetailService implements UserDetailsService {
 	
 	public static String AUTOLOGIN="**autoLogin**";
 	public static String AUTOLOGIN_BYTOKEN="**autoLogin byToken**";
+	
+	//BY FABIO
+	public static String AUTOLOGIN_BYHEADER="**autoLogin byHeader**";
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		boolean autoLogin = false;
 		boolean byToken = false;
+		
+		//BY FABIO
+		boolean byHeader=false;
+		
 		if (username.startsWith(AUTOLOGIN)) {
 			autoLogin = true;
 			username = username.substring(AUTOLOGIN.length(), username.length());
@@ -36,6 +43,14 @@ public class UserDetailService implements UserDetailsService {
 			byToken = true;
 			username = username.substring(AUTOLOGIN_BYTOKEN.length(), username.length());
 		}
+		
+		//BY FABIO
+		if (username.startsWith(AUTOLOGIN_BYHEADER)) {
+			autoLogin = true;
+			byHeader = true;
+			username = username.substring(AUTOLOGIN_BYHEADER.length(), username.length());
+		}
+		
 		if (!autoLogin)
 			LOG.debug("Try login: {}", username);
 		User r = null;
@@ -47,10 +62,13 @@ public class UserDetailService implements UserDetailsService {
 			throw new UsernameNotFoundException(username + " no encontrado");
 		}
 
+		//BY FABIO, agregué el byHEADER
+		//si es autologin, looged ok, y despues digo si entré por primera vez (login inicial)
+		//por token (autologin byToken), por cookie (autologin) o por header 
 		if (!autoLogin)
 			LOG.debug("{} logged OK", username);
 		LOG.debug("User logged: {} - {} [{}]", r.getUsername(), r.getAuthorities(),
-				autoLogin ? (byToken ? "autologin byToken" : "autologin") : "login inicial");
+				autoLogin ? (byToken ? "autologin byToken" : byHeader ? "autologin byHEADER" : "autologin") : "login inicial");
 		return r;
 	}
 

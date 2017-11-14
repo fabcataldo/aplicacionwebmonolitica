@@ -7,4 +7,5 @@ import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceExceptio
 
 public interface IAlgoritmoHashService extends IGenericService<AlgoritmoHash, Integer> {
 	public String ObtenerHashService(String url) throws ServiceException;
+	public String ObtenerArregloDeHashesService() throws ServiceException;
 }

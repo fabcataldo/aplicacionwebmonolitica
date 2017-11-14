@@ -37,15 +37,4 @@ public class UsuarioRSController {
 			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-/*	@RequestMapping(value="/usuarios/{partedelnombre}", method=RequestMethod.GET)
-	public ResponseEntity<Object> list(@PathVariable("partedelnombre") String parteDelNombre){
-        try {
-        	return new ResponseEntity<Object>(userService.list(parteDelNombre), HttpStatus.OK);
-		} catch (ServiceException e) {
-			LOG.error(e.getMessage(), e);
-			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.NOT_FOUND);
-		}
-	}
-*/
 }

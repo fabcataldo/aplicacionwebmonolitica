@@ -29,25 +29,32 @@ public class PersistentTokenRememberMeService extends AbstractRememberMeServices
 
 	}
 
-	// BY FABIO
-	//agregué el parámetro del header x-auth-token al metodo abstracto processautologincookie()
 	/**
 	 * Re Logins
 	 */
 	@Override
 	protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
-			HttpServletResponse response, String xauthtokenheader) {
+			HttpServletResponse response) {
 		boolean byToken = cookieTokens.length == 3;
+		
+		//BY FABIO
+		boolean byHeader = cookieTokens.length == 4;
 
-		if (cookieTokens.length < 2 || cookieTokens.length > 3) {
+		//BY FABIO
+		//agregué el cookieTokens.length>4. antes tenía >3
+		if (cookieTokens.length < 2 || cookieTokens.length > 4) {
 			throw new InvalidCookieException("Cookie token did not contain " + 2 + " tokens, but contained '"
 					+ Arrays.asList(cookieTokens) + "'");
 		}
 
 		final String presentedSeries = cookieTokens[0];
 		final String presentedToken = cookieTokens[1];
+		
 		AuthToken authToken;
 		try {
+			//Si no encuentra el valor de presentedSeries en la base de datos, chau
+			//se perdió la cookie
+			// si no, no pasa por los catchs y sigue derecho
 			authToken = authTokenService.load(presentedSeries);
 		} catch (ServiceException e1) {
 			throw new RememberMeAuthenticationException("No persistent token found for series id: " + presentedSeries);
@@ -55,16 +62,12 @@ public class PersistentTokenRememberMeService extends AbstractRememberMeServices
 			throw new RememberMeAuthenticationException("No persistent token found for series id: " + presentedSeries);
 		}
 		
-		// BY FABIO
-		//agregué el parámetro del header x-auth-token al if de abajo
-		if ((!presentedToken.equals(authToken.getToken()))&&(xauthtokenheader.equals(authToken.getToken()))) {
+		if ((!presentedToken.equals(authToken.getToken()))) {
+			
 		}
 
 		System.out.println(authToken);
 
-		// BY FABIO
-		System.out.println("X-AUTH-TOKEN: "+xauthtokenheader);
-		
 		if (!authToken.valid()) {
 			try {
 				if (authToken.getType().equals(AuthToken.TYPE_DEFAULT)
@@ -102,6 +105,11 @@ public class PersistentTokenRememberMeService extends AbstractRememberMeServices
 		String messageService = UserDetailService.AUTOLOGIN;
 		if (byToken)
 			messageService = UserDetailService.AUTOLOGIN_BYTOKEN;
+
+		//BY FABIO
+		else
+			if(byHeader)
+				messageService = UserDetailService.AUTOLOGIN_BYHEADER;
 
 		return getUserDetailsService().loadUserByUsername(messageService + authToken.getUsername());
 	}

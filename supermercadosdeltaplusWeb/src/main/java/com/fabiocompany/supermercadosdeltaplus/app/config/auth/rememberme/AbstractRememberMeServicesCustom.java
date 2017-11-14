@@ -91,31 +91,35 @@ public abstract class AbstractRememberMeServicesCustom
 	 */
 	public final Authentication autoLogin(HttpServletRequest request, HttpServletResponse response) {
 		String token = request.getParameter("token");
-		String xauthtokenheader = request.getHeader("x-auth-token");
-
 		// By Magm
 		boolean byToken = false;
 		String rememberMeCookie = extractRememberMeCookie(request);
-
-		// By Magm
-		if (rememberMeCookie == null && token == null) {
-			return null;
-		}
-
-		// BY FABIO
-		if(xauthtokenheader==null) {
-			return null;
-		}
 		
+		//By FABIO
+		boolean byHeader=false;
+		String xauthtokenheader = request.getHeader("x-auth-token");
+
 		// By Magm
-		if (rememberMeCookie == null) {
+		// BY FABIO (agregué lo de xauthtoken)
+		if (rememberMeCookie == null && token == null && xauthtokenheader==null) {
+			return null;
+		}
+
+		// By Magm y FABIO
+		if (rememberMeCookie == null && token != null) {
 			rememberMeCookie = token;
 			byToken = true;
 			logger.debug("Token detectado");
 		}
 
 		logger.debug("Remember-me cookie detected");
-		logger.debug("Cabecera x-auth-token detectada");
+		
+		//by FABIO
+		if(xauthtokenheader!=null) {
+			rememberMeCookie = xauthtokenheader;
+			logger.debug("Cabecera x-auth-token detectada");
+			byHeader=true;
+		}
 
 		if (rememberMeCookie.length() == 0) {
 			logger.debug("Cookie was empty");
@@ -127,22 +131,38 @@ public abstract class AbstractRememberMeServicesCustom
 
 		try {
 			String[] cookieTokens = decodeCookie(rememberMeCookie);
-			// by Magm
-			if (byToken) {
-				// Informo que es por token a los callbacks agregando un
+			
+			//BY FABIO
+			int largodelarreglo=0;
+			if (byToken || byHeader) {
+				// by Magm y Fabio
+				// Informo que es por token o por header a los callbacks agregando un
 				// elemento a cookieToken
-				String[] cookieTokensTemp = new String[cookieTokens.length + 1];
+				//cookieTokens ahora va a tener>series y token, y
+				//opcionalmente parámetro token o la cabecera (un lugar más vacío
+				//para luego indicarle a la clase hija si el autologin fue por token o 
+				//por header)
+				//dependiendo de cómo haya entrado, si por token o por cabecera
+				//antes en el corchete se sumaba +1, porque estaba el bytoken solo
+				
+				//dependiendo si es por token o por header que me logié
+				//prepara el largo del cookietokens para luego mandarlo
+				if(byToken)
+					largodelarreglo=cookieTokens.length+1;
+				else {
+					if(byHeader)
+						largodelarreglo=cookieTokens.length+2;	
+				}
+				String[] cookieTokensTemp = new String[largodelarreglo];
 				for (int t = 0; t < cookieTokens.length; t++)
 					cookieTokensTemp[t] = cookieTokens[t];
 				cookieTokens = cookieTokensTemp;
+				
+				for (int t = 0; t < cookieTokens.length; t++)
+					logger.debug("CookieTokens: "+cookieTokens[t]);
 			}
-			
-			// BY FABIO
-			//estoy tratando de autenticarme por el header x-auth-token
-			//enviandolé el token que ya guardé en la cookie que está en la bd, 
-			//cuando me loguié antes
-			//agregué el parámetro del header x-auth-token al metodo abstracto processautologincookie()
-			user = processAutoLoginCookie(cookieTokens, request, response, xauthtokenheader);
+					
+			user = processAutoLoginCookie(cookieTokens, request, response);
 			userDetailsChecker.check(user);
 
 			logger.debug("Remember-me cookie accepted");
@@ -380,7 +400,7 @@ public abstract class AbstractRememberMeServicesCustom
 	 *             from the system).
 	 */
 	protected abstract UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request,
-			HttpServletResponse response, String xauthtokenheader) throws RememberMeAuthenticationException, UsernameNotFoundException;
+			HttpServletResponse response) throws RememberMeAuthenticationException, UsernameNotFoundException;
 
 	/**
 	 * Sets a "cancel cookie" (with maxAge = 0) on the response to disable

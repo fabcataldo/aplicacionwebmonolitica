@@ -24,9 +24,15 @@ public class AlgoritmoHashService extends GenericService<AlgoritmoHash, Integer>
 		try {
 			return this.dao.ObtenerHash(url);
 		} catch (PersistenceException e) {
-			// TODO Auto-generated catch block
 			throw new ServiceException(e.getMessage(), e);
 		}
 	}
-		
+	
+	public String ObtenerArregloDeHashesService() throws ServiceException{
+		try {
+			return this.dao.ObtenerArreglodeHashes();
+		} catch (PersistenceException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+	}
 }
