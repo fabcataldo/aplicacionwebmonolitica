@@ -7,4 +7,5 @@ import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceExceptio
 
 public interface IUserService extends IGenericService<User, Integer> {
 	public User load(String username) throws ServiceException, NotFoundException;
+	public int addRoleService(User user, int idrole) throws ServiceException, NotFoundException;
 }

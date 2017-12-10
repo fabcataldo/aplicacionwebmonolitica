@@ -1,0 +1,68 @@
+<div class="container">
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-header">
+				<div class="row" style="margin-top: 20px;">
+					<div class="col-md-1"></div>
+					<div class="col-md-1">
+						<button type="button" ng-click="agregar()" class="btn btn-primary">Agregar</button>
+					</div>
+					<div class="col-md-8">
+						<form>
+							<div class="input-group">
+								<div class="input-group-addon"></div>
+								<input type="text" class="form-control"
+									placeholder="Texto a buscar" ng-model="search">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Nombre de usuario</th>
+								<th>Contraseña</th>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>Correo electrónico</th>
+								<th>Cuenta habilitada</th>
+								<th>Cuenta expirada</th>
+								<th>Cuenta blockeada</th>
+								<th>Credenciales expiradas</th>
+								<th>Opciones</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="r in data | filter:search">
+								<td>{{r.idUser}}</td>
+								<td>{{r.username}}</td>
+								<td>{{r.password}}</td>
+								<td>{{r.firstName}}</td>
+								<td>{{r.lastName}}</td>
+								<td>{{r.email}}</td>
+								<td>{{r.accountEnabled}}</td>
+								<td>{{r.accountExpired}}</td>
+								<td>{{r.accountLocked}}</td>
+								<td>{{r.credentialsExpired}}</td>
+								<td>
+									<button type="button" class="puntero glyphicon glyphicon-edit"
+										ng-click="editar(r)" class="btn btn-primary"></button>
+									<button type="button"
+										class="espacio10 puntero glyphicon glyphicon-trash"
+										ng-click="remove(r.idUser)" class="btn btn-primary"></button>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-footer">
+		<dir-pagination-controls max-size="20" pagination-id="users"></dir-pagination-controls>
+	</div>
+</div>

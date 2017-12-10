@@ -25,4 +25,11 @@ public class UserService extends GenericService<User, Integer> implements IUserS
 		}
 	}
 
+	public int addRoleService(User user, int idrole) throws ServiceException, NotFoundException {
+		try {
+			return dao.addRoleDAO(user, idrole);
+		} catch (PersistenceException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+	}
 }

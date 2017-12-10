@@ -7,5 +7,5 @@ import com.fabiocompany.supermercadosdeltaplus.persistence.exception.Persistence
 
 public interface IAlgoritmoHashDAO extends IGenericDAO<AlgoritmoHash, Integer> {
 	public String ObtenerHash(String url) throws PersistenceException;
-	public String ObtenerArreglodeHashes() throws PersistenceException;
+	public String[] ObtenerArreglodeHashes() throws PersistenceException;
 }

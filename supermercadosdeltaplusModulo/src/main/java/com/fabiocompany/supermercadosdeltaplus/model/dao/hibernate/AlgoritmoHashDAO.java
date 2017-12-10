@@ -13,9 +13,10 @@ public class AlgoritmoHashDAO extends GenericDAO<AlgoritmoHash, Integer> impleme
 		super(sessionFactory);
 	}
 
-	public String ObtenerArreglodeHashes() throws PersistenceException{
+	public String[] ObtenerArreglodeHashes() throws PersistenceException{
 		String hashaguardar="";
 		String hashaguardar2="";
+		String arreglo[] = new String[2];
 		
 		AlgoritmoHash ah=new AlgoritmoHash();
 		ah.setTexto("http://localhost:8080/supermercadosdeltaplus/api/v1/usuarioquemascompro");
@@ -27,21 +28,25 @@ public class AlgoritmoHashDAO extends GenericDAO<AlgoritmoHash, Integer> impleme
 		ah2.setTexto("http://www.google.com.ar/");
 		hashaguardar2=ah2.GenerarHash();
 		ah2.setResultadohash(hashaguardar2);
-		hashaguardar="\n"+ah.toString()+"\n"+ah2.toString();
+		
+		arreglo[0]=ah.toString();
+		arreglo[1]=ah2.toString();
+		//hashaguardar="\n"+ah.toString()+"\n"+ah2.toString();
 		//hashaguardar=""+hashaguardar+"-"+hashaguardar2;
 		this.save(ah2);
 		
-		return hashaguardar;
+		return arreglo;
+		//return hashaguardar;
 	}
 		
 	public String ObtenerHash(String url) throws PersistenceException{
-		String hashquevieneenlaurl="";
+		//String hashquevieneenlaurl="";
 
-		if(url.length()>=68) {
-			hashquevieneenlaurl=url.substring(58, url.length());
+		//if(url.length()>=68) {
+			//hashquevieneenlaurl=url.substring(58, url.length());
 			AlgoritmoHash ahbd=new AlgoritmoHash();
 			try {
-				ahbd = (AlgoritmoHash) getSession().createQuery(String.format("FROM AlgoritmoHash WHERE resultadohash=:hashquevieneenlaurl", getDomainClass().getSimpleName())).setString("hashquevieneenlaurl", hashquevieneenlaurl).uniqueResult();
+				ahbd = (AlgoritmoHash) getSession().createQuery(String.format("FROM AlgoritmoHash WHERE resultadohash=:hashquevieneenlaurl", getDomainClass().getSimpleName())).setString("hashquevieneenlaurl", url).uniqueResult();
 				if(ahbd==null)
 					throw new NotFoundException();
 				else{
@@ -53,7 +58,6 @@ public class AlgoritmoHashDAO extends GenericDAO<AlgoritmoHash, Integer> impleme
 			} finally {
 				closeSession();
 			}
-		}
-		return null;
+		//}
 	}
 }

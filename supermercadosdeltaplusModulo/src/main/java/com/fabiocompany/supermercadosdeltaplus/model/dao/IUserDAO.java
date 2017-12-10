@@ -7,4 +7,5 @@ import com.fabiocompany.supermercadosdeltaplus.persistence.exception.Persistence
 
 public interface IUserDAO extends IGenericDAO<User, Integer> {
 	public User load(String username) throws PersistenceException, NotFoundException;
+	public int addRoleDAO(User user,int idrole) throws PersistenceException, NotFoundException;
 }

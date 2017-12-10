@@ -90,5 +90,28 @@ public class Beans {
 	}
 	
 	
+	@Bean
+	@Autowired
+	public IPrivilegeService privilegeService(final IPrivilegeDAO privilegeService) {
+		return new PrivilegeService(privilegeService);
+	}
+	
+	@Bean
+	@Autowired
+	public IPrivilegeDAO privilegeDAO(final SessionFactory sessionFactory) {
+		return new PrivilegeDAO(sessionFactory);
+	}
+	
+	@Bean
+	@Autowired
+	public IRoleService roleService(final IRoleDAO roleService) {
+		return new RoleService(roleService);
+	}
+	
+	@Bean
+	@Autowired
+	public IRoleDAO RoleDAO(final SessionFactory sessionFactory) {
+		return new RoleDAO(sessionFactory);
+	}
 	
 }

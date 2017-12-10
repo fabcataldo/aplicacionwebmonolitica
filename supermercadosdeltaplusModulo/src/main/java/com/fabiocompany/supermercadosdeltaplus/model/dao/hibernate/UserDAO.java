@@ -29,5 +29,25 @@ public class UserDAO extends GenericDAO<User, Integer> implements IUserDAO {
 		return r;
 	}
 	
+	@Override
+	public int addRoleDAO(User user, int idrole) throws PersistenceException, NotFoundException {
+		User r=null;
+		int a=0;
+		//update Customer c set c.name = :newName where c.name = :oldName
+			//insert into DelinquentAccount (id, name) select c.id, c.name from Customer c where ..c.
+		try {
+			String hqlupdate="INSERT INTO User u (u.roles.id)="+idrole;
+			r = (User) getSession().createQuery(hqlupdate);
+			if(r==null)
+				throw new NotFoundException();
+			else 
+				a++;
+		} catch (Exception e) {
+			throw new PersistenceException(e.getMessage(), e);
+		} finally {
+			closeSession();
+		}
+		return a;
+	}
 
 }

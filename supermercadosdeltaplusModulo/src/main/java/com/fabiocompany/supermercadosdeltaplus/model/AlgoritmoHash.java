@@ -72,7 +72,7 @@ public class AlgoritmoHash {
 	
 	@Override
 	public String toString() {
-		return "\n"+"["+ resultadohash+ "]";
+		return resultadohash;
 	}
 
 	//todo el codigo necesario para obtener el hash, se obtuvo de 

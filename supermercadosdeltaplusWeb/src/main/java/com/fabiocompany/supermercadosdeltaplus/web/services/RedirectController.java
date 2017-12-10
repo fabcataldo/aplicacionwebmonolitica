@@ -25,9 +25,9 @@ public class RedirectController {
 	@RequestMapping(value="/hashredirect/{hash}", method = RequestMethod.GET)
 	public String redirect(@PathVariable("hash") String hash) {
 		String urlaredireccionar="";
-		String urlbasedelservicio="http://localhost:8080/supermercadosdeltaplus/hashredirect/";
+		//String urlbasedelservicio="http://localhost:8080/supermercadosdeltaplus/hashredirect/";
 		try {
-			urlaredireccionar=algoritmohashservice.ObtenerHashService(urlbasedelservicio+hash);
+			urlaredireccionar=algoritmohashservice.ObtenerHashService(hash);
 		} catch (ServiceException e) {
 			LOG.error(e.getMessage(), e);
 			return e.getMessage();
@@ -38,10 +38,10 @@ public class RedirectController {
 	
 	@RequestMapping(value="/arreglodehashes", method = RequestMethod.GET)
 	public ResponseEntity<Object> arreglodehashes() {
-		String arreglodehashes="";
+		String[] arreglodehashes=null;
 		try {
 			arreglodehashes=algoritmohashservice.ObtenerArregloDeHashesService();
-			return new ResponseEntity<Object>(""+arreglodehashes, HttpStatus.OK);
+			return new ResponseEntity<Object>(arreglodehashes, HttpStatus.OK);
 		} catch (ServiceException e) {
 			LOG.error(e.getMessage(), e);
 			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

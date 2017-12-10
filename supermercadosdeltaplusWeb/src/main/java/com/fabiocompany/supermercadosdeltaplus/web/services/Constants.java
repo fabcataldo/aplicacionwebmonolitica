@@ -15,5 +15,8 @@ public final class Constants {
 	public static final String URL_DENY = "/deny";
 	
 	public static final String URL_USUARIO=URL_BASE+"/usuarios";
+	public static final String URL_ROL=URL_BASE+"/roles";
+	public static final String URL_PRIVILEGIO=URL_BASE+"/privilegios";
+	
 	
 }

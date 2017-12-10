@@ -2,9 +2,70 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Supermercados Delta Plus</title>
+<title>Supermercados Delta Plus-----> Interfaz Web</title>
+<link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap-theme.min.css">
+
+<script src="js/angular/angular.js" type="text/javascript"></script>
+<script src="js/angular-route/angular-route.min.js"	type="text/javascript"></script>
+<script src="js/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="js/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" ></script>
+<script src="js/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="js/angular-utils-pagination/dirPagination.js"></script>
+
+<script src="app.js" type="text/javascript"></script>
+<script src="config/interceptors.js" type="text/javascript" ></script>
+<script src="config/routes.js" type="text/javascript"></script>
+<script src="controllers/maincontroller.js" type="text/javascript"></script>
+<script src="controllers/loginformcontroller.js" type="text/javascript"></script>
+<script src="controllers/usuarioscontroller.js" type="text/javascript"></script>
+<script src="controllers/rolescontroller.js" type="text/javascript"></script>
+<script src="controllers/privilegioscontroller.js" type="text/javascript"></script>
+
+<script src="services/coreservice.js" type="text/javascript"></script>
+<script src="services/usuariosservices.js" type="text/javascript"></script>
+<script src="services/privilegiosservices.js" type="text/javascript"></script>
+
+<style type="text/css">
+body {
+	background-image:  url("images/fondo.jpg");
+}
+</style>
 </head>
-<body>
-	Contenido estático
+
+
+
+<body ng-app="moduloPrincipal">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" ng-click="relocate('/')" href="#">Supermercados Delta Plus</a>
+			</div>
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li ng-class="option=='Usuarios' ? 'active' : ''"
+						ng-click="relocate('/usuarios')"><a href="#">Administrar usuarios 
+						<span class="sr-only">(current)</span></a></li> 
+					<li ng-class="option=='Roles' ? 'active' : ''"
+						ng-click="relocate('/roles')"><a href="#">Administrar Roles 
+						<span class="sr-only">(current)</span></a></li>
+					<li ng-class="option=='Privilegios' ? 'active' : ''"
+						ng-click="relocate('/roles')"><a href="#">Administrar Privilegios
+						<span class="sr-only">(current)</span></a></li>
+						
+				</ul>
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#"> <span class="azul espacio20"></span>
+					</a>
+				</div>
+				<ul ng-hide="!authenticated" class="nav navbar-nav navbar-right">
+					<li><a ng-click="logout()" href="#">({{user.name}}) Salir</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div ng-view=""></div>
 </body>
 </html>

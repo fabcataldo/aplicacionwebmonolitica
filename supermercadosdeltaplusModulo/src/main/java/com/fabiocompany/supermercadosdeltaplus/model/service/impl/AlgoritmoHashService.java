@@ -28,7 +28,7 @@ public class AlgoritmoHashService extends GenericService<AlgoritmoHash, Integer>
 		}
 	}
 	
-	public String ObtenerArregloDeHashesService() throws ServiceException{
+	public String[] ObtenerArregloDeHashesService() throws ServiceException{
 		try {
 			return this.dao.ObtenerArreglodeHashes();
 		} catch (PersistenceException e) {

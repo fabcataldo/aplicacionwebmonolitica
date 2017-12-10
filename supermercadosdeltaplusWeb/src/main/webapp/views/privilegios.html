@@ -1,0 +1,68 @@
+<div class="container">
+	<div class="panel panel-primary">
+		<div class="panel-header">
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-md-1"></div>
+				<div class="col-md-1">
+					<button type="button" ng-click="agregar()" class="btn btn-primary">Agregar</button></div>
+				<div class="col-md-8">
+					<form>
+						<div class="input-group">
+							<div class="input-group-addon"
+								title="Busca en la lista actual por cualquier campo">
+								<i class="fa fa-search"></i>
+							</div>
+							<input type="text" class="form-control"
+								placeholder="Texto a buscar" ng-model="search">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Descripción</th>
+						<th>Nombre</th>
+						<th>Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr	dir-paginate="r in data | orderBy:'id' | filter:search | itemsPerPage: 10"
+						pagination-id="privilegios">
+						<td>{{r.id}}</td>
+						<td>
+							<span ng-hide="instancia.id==r.id" ng-bind-html="r.description | highlight: search"></span>
+							<input ng-hide="instancia.id!=r.id" ng-model="instancia.description"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.id==r.id" ng-bind-html="r.name | highlight: search"></span>
+							<input ng-hide="instancia.id!=r.id" ng-model="instancia.name"></input>						
+						</td>
+						
+						<td>
+							<span ng-hide="instancia.id">
+								<span class="puntero glyphicon glyphicon-edit" ng-click="editar(r)"></span>
+								<span class="espacio10 puntero glyphicon glyphicon-trash" ng-click="remove(r.id)"></span>
+							</span>
+							
+							<span ng-hide="!instancia.id"> 
+								<span class="puntero glyphicon glyphicon-ok" ng-click="guardar(false)"></span> 
+								<span class="espacio10 puntero glyphicon glyphicon-remove" ng-click="cancelar()"></span>
+							</span>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+	<div class="panel-footer">
+		<dir-pagination-controls max-size="20" pagination-id="privilegios"></dir-pagination-controls>
+	</div>
+</div>
+

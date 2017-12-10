@@ -1,0 +1,55 @@
+
+<div class="modal-header">
+	<h3 class="modal-title" id="modal-title">
+		Nuevo usuario!
+	</h3>
+</div>
+<div class="modal-body" id="modal-body">
+	<form class="form-horizontal">
+		<fieldset>
+			<div class="form-group">
+				<label class="col-md-4 control-label">Nombre de usuario</label>
+				<div class="col-md-7">
+					<input type="text"
+						placeholder="Tiene que haber si o si letras" class="form-control input-md"
+						required ng-model="$ctrl.instancia.username">
+					<br>
+				</div>
+				<label class="col-md-4 control-label">Contraseña</label>
+				<div class="col-md-7">
+					<input type="text"
+						placeholder="Contraseña de no más de 8 caracteres" class="form-control input-md"
+						required ng-model="$ctrl.instancia.password">
+					<br>
+				</div>
+				<label class="col-md-4 control-label">Nombre</label>
+				<div class="col-md-7">
+					<input type="text"
+						placeholder="" class="form-control input-md"
+						required ng-model="$ctrl.instancia.firstName">
+					<br>
+				</div>
+				<label class="col-md-4 control-label">Apellido</label>
+				<div class="col-md-7">
+					<input type="text"
+						placeholder="" class="form-control input-md"
+						required ng-model="$ctrl.instancia.lastName">
+					<br>
+				</div>
+				<label class="col-md-4 control-label">Correo electrónico</label>
+				<div class="col-md-7">
+					<input type="text"
+						placeholder="" class="form-control input-md"
+						required ng-model="$ctrl.instancia.email">
+					<br><br>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">Guardar</button>
+	<button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+</div>
+
