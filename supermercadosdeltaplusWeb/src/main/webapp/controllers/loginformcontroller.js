@@ -1,5 +1,5 @@
 angular.module('moduloPrincipal')
-.controller('LoginFormController', ['$rootScope', '$scope', '$log', '$uibModalInstance', 'coreService','user',  LoginFormController]);
+.controller('LoginFormController', ['$rootScope', '$scope', '$log', '$uibModalInstance', 'coreService','user', LoginFormController]);
 
 function LoginFormController($rootScope, $scope, $log, $uibModalInstance, coreService, user) {
 	$scope.user=user;

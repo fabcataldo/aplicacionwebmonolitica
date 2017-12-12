@@ -36,7 +36,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="r in data | filter:search">
+							<tr ng-repeat="r in data | filter:search | orderBy:'idUser'">
 								<td>{{r.idUser}}</td>
 								<td>{{r.username}}</td>
 								<td>{{r.password}}</td>

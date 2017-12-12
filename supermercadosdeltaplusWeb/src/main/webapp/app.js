@@ -1,6 +1,6 @@
 angular.module('moduloPrincipal', ['ui.bootstrap','ngRoute','angularUtils.directives.dirPagination']);
 angular.module('moduloPrincipal').constant('URL_BASE', '/supermercadosdeltaplus/');
-angular.module('moduloPrincipal').constant('URL_API_BASE','http://localhost:8080/supermercadosdeltaplus/api/v1/');
+angular.module('moduloPrincipal').constant('URL_API_BASE','/supermercadosdeltaplus/api/v1/');
 
 angular.module('moduloPrincipal').filter('highlight',function($sce) {
 			return function(text, phrase) {

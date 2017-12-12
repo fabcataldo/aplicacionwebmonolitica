@@ -17,6 +17,9 @@ angular.module('moduloPrincipal').config(
 			}).when('/privilegios', {
 				templateUrl : 'views/privilegios.html',
 				controller : 'privilegiosController'
+			}).when('/cambiarcontraseña', {
+				templateUrl : 'views/changePasswordForm.html',
+				controller : 'ChangePasswordFormController'
 			}).otherwise({
 				redirectTo : '/'
 			});

@@ -15,7 +15,6 @@ angular.module('moduloPrincipal')
 	   },
 	   logout: function() {
 		   return $http.get(URL_BASE+"logout");
-	   }
-	   
+	   },
    }
 }]);
