@@ -30,32 +30,4 @@ public class UserDAO extends GenericDAO<User, Integer> implements IUserDAO {
 		}
 		return r;
 	}
-	
-	@Override
-	public int addRoleDAO(int idrole, User user) throws PersistenceException, NotFoundException {
-		Role r=new Role();
-		r.setId(idrole);
-		int a=0;
-		Session session = getSession();
-		try {
-			for(int i=0;i<user.getRoles().size();i++) {
-				if(user.getRoles().contains(r)) {
-					session.beginTransaction();
-					session.save(user);
-					session.getTransaction().commit();
-					a++;
-				}
-				else {
-					a=0;
-				}
-			}	
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			throw new PersistenceException(e.getMessage(), e);
-		} finally {
-			closeSession();
-		}
-		return a;
-	}
-
 }

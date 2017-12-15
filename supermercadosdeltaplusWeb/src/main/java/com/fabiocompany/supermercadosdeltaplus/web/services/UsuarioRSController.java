@@ -101,20 +101,4 @@ public class UsuarioRSController {
 			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	@RequestMapping(value = "/agregarrol/{idrole},/agregarrol/{iduser}", method = RequestMethod.POST)
-	public ResponseEntity<Object> addRole(@PathVariable("idrole") int idrole,@PathVariable("iduser") int iduser){
-		try {
-			User user= new User();
-			user.setIdUser(iduser);
-			userService.addRoleService(idrole,user);
-			return new ResponseEntity<Object>(HttpStatus.OK);
-		} catch (ServiceException e) {
-			LOG.error(e.getMessage(), e);
-			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (NotFoundException e) {
-			// LOG.error(e.getMessage(), e);
-			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 }

@@ -348,18 +348,28 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 				if (instancia){
 					rolesService.list().then(function(respuesta) {
 						for(i=0;i<respuesta.data.length;i++){
+							console.log("AAAGREGO ROLL");
 							if(respuesta.data[i].description==instancia.roles.description){
+								console.log("ENTRO AL IF DEL AG ROL");
 								instancia.roles=[];
 								instancia.roles[0]=respuesta.data[i];
 								break;
 							}
-						}
-						$scope.instancia = instancia;
-						$scope.guardar(true);
-					}, function(respuesta) {
-						$scope.cancelar();
+						}					
+					}, function() {
 					});
-					$scope.instancia = instancia;
+					privilegiosService.list().then(function(respuesta2) {
+						for(i=0;i<respuesta2.data.length;i++){
+							if(respuesta2.data[i].description==instancia.privileges.description){
+								instancia.privileges=[];
+								instancia.privileges[0]=respuesta2.data[i];
+								$scope.instancia = instancia;
+								$scope.guardar(true);
+								break;
+							}
+						}					
+					}, function() {
+					});
 				}
 			}, function() {
 				$scope.cancelar();
