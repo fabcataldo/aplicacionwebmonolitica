@@ -113,11 +113,21 @@
 				<tr dir-paginate="r in data | orderBy:'idUser' | filter:search | itemsPerPage: 8"
 						pagination-id="usuarios">
 						<td>{{r.idUser}}</td>
-						<td ng-repeat="a in r.roles">
+						<td>
+							<div ng-repeat="a in r.roles">
+								{{a.description}}						
+							</div>
+							 <!-- 
 							 <span ng-hide="instancia.idUser==r.idUser && instancia.idUser!=r.idUser" ng-bind-html="a.description | highlight: search"></span>
+							 -->
 						</td>	
-						<td ng-repeat="b in r.privileges">
+						<td>
+							<div ng-repeat="b in r.privileges">
+								{{b.description}}
+							</div>
+							 <!-- 
 							 <span ng-hide="instancia.idUser==r.idUser && instancia.idUser!=r.idUser" ng-bind-html="b.description | highlight: search"></span>
+							-->
 						</td>	
 							
 						<td>

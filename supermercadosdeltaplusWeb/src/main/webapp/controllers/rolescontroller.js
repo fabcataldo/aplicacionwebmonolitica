@@ -150,7 +150,7 @@ function RolesController($scope, $rootScope, $uibModal, rolesService, privilegio
 							if (privilegioaagregar){
 								privilegiosService.list().then(function(respuesta) {
 									for(i=0;i<respuesta.data.length;i++){
-										if(respuesta.data[i].description==privilegioaagregar.description){
+										if(respuesta.data[i].description==privilegioaagregar){
 												$scope.instancia.privileges[$scope.instancia.privileges.length]=respuesta.data[i];
 												$scope.guardar(false);
 												break;
@@ -176,7 +176,7 @@ function RolesController($scope, $rootScope, $uibModal, rolesService, privilegio
 							controllerAs : '$ctrl',
 							size : 'lg',
 							resolve : {
-								parametro0 : $scope.instancia.privileges.length
+								parametro0 : $scope.instancia.privileges.length,
 							}
 						});
 						modalInstance.result.then(function(instancianuevoprivilegio) {
@@ -253,9 +253,23 @@ angular.module('moduloPrincipal').controller('PrivilegePerRoleErrorController',
 		});
 
 angular.module('moduloPrincipal').controller('AddPrivilegePerRoleController',
-		function($uibModalInstance) {
+		function($uibModalInstance, privilegiosService) {
 			var $ctrl = this;
-			$ctrl.newprivilege={};
+			$ctrl.newprivilege="";
+			$ctrl.listaDePrivilegiosDisponibles=[];
+			
+			privilegiosService.list().then(
+				function(respuesta){
+					for(i=0;i<respuesta.data.length;i++){
+						$ctrl.listaDePrivilegiosDisponibles[i]=respuesta.data[i].description;
+					}					
+				},
+				function(err){
+					$ctrl.listaDePrivilegiosQueQuedanPorAsignar=[];
+				}
+			);
+			
+			
 			$ctrl.ok = function() {
 				$uibModalInstance.close($ctrl.newprivilege);
 			};
@@ -266,10 +280,23 @@ angular.module('moduloPrincipal').controller('AddPrivilegePerRoleController',
 		})
 
 angular.module('moduloPrincipal').controller('PrivilegePerRoleEditController',
-		function($uibModalInstance, parametro0) {
+		function($uibModalInstance, parametro0, privilegiosService) {
 			var $ctrl = this;
 			$ctrl.nuevoprivilegio={};
 			$ctrl.largoDelArregloDePrivilegios=parametro0;
+			
+			$ctrl.listaDePrivilegiosDisponibles=[];
+			
+			privilegiosService.list().then(
+				function(respuesta){
+					for(i=0;i<respuesta.data.length;i++){
+						$ctrl.listaDePrivilegiosDisponibles[i]=respuesta.data[i].description;
+					}					
+				},
+				function(err){
+					$ctrl.listaDePrivilegiosQueQuedanPorAsignar=[];
+				}
+			);
 			
 			$ctrl.ok = function() {
 				$uibModalInstance.close($ctrl.nuevoprivilegio);

@@ -47,8 +47,13 @@
 							<input ng-hide="instancia.id!=r.id" ng-model="instancia.name"></input>						
 						</td>
 						
-						<td ng-repeat="b in r.privileges">
-							 <span ng-hide="instancia.idUser==r.idUser && instancia.idUser!=r.idUser" ng-bind-html="b.description | highlight: search"></span>
+						<td>
+							<div ng-repeat="b in r.privileges">
+							{{b.description}}
+							<!--	<span ng-hide="instancia.idUser==r.idUser && instancia.idUser!=r.idUser" ng-bind-html="b.description | highlight: search"></span>
+							-->
+							
+							</div>
 						</td>	
 							
 						<td>
