@@ -87,6 +87,12 @@ public class RoleRSController {
 		try {
 			Role role=new Role();
 			role.setId(id);
+			//seteo description y name ya que no puedo enviarle algo nulo a Hibernate, 
+			//ya que en la bd a description y a name no les puedo no poner algo 
+			//Hibernate me avisa con un error de persistencia, que no puede enviar algo
+			//nulo a la bd, ya que la/s columna/s están seteadas como NOT NULL
+			role.setDescription("cualquierdescripcion");
+			role.setName("cualquiernombre");
 			roleService.delete(role);
 			return new ResponseEntity<Object>( HttpStatus.OK);
 		} catch (ServiceException e) {

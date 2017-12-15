@@ -1,0 +1,143 @@
+<div class="container">
+	<div class="panel panel-primary">
+		<div class="panel-header">
+			<div class="row" style="margin-top: 18px;">
+				<div class="col-md-1"></div>
+				<div class="col-md-1">
+					<button type="button" ng-click="agregar()" class="btn btn-primary">Agregar nuevo usuario</button>
+				</div>
+				<div class="col-md-1"></div>
+				<div class="col-md-5">
+					<form>
+						<div class="input-group">
+							<div class="input-group-addon"
+								title="Busca en la lista actual por cualquier campo">
+								<i class="fa fa-search"></i>
+							</div>
+							<input type="text" class="form-control"
+								placeholder="Texto a buscar" ng-model="search">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+						
+			<table class="table table-striped">
+				<thead>
+					<h3>Administración básica de usuarios</h3>
+					<tr>
+						<th align=center>Id del usuario</th>
+						<th align=center>Nombre de usuario</th>
+						<th align=center>Contraseña</th>
+						<th align=center>Nombre</th>
+						<th align=center>Apellido</th>
+						<th align=center>Correo electrónico</th>
+						<th align=center>Credenciales expiradas</th>
+						<th align=center>Cuenta blockeada</th>
+						<th align=center>Cuenta expirada</th>
+						<th align=center>Cuenta habilitada</th>	
+						<th align=center>Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr	dir-paginate="r in data | orderBy:'idUser' | filter:search | itemsPerPage: 8"
+						pagination-id="usuarios">
+						<td>{{r.idUser}}</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.username | highlight: search"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.username" size="8"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.password | highlight: search"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.password" size="8"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.firstName | highlight: search"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.firstName" size="8"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.lastName | highlight: search"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.lastName" size="8"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.email | highlight: search"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.email" size="8"></input>						
+						</td>
+						
+						<!-- -->
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.credentialsExpired | changeInfoInBitsUser: r.accountExpired"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.credentialsExpired" size="4"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.accountLocked | changeInfoInBitsUser: r.accountExpired"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.accountLocked" size="4"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.accountExpired | changeInfoInBitsUser: r.accountExpired"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.accountExpired" size="4"></input>						
+						</td>
+						<td>
+							<span ng-hide="instancia.idUser==r.idUser" ng-bind-html="r.accountEnabled | changeInfoInBitsUser: r.accountEnabled"></span>
+							<input ng-hide="instancia.idUser!=r.idUser" ng-model="instancia.accountEnabled" size="4"></input>						
+						</td>
+						
+						<td>
+							<span ng-hide="instancia.idUser">
+								<span class="puntero glyphicon glyphicon-edit" ng-click="editar(r)"></span>
+								<span class="espacio10 puntero glyphicon glyphicon-trash" ng-click="remove(r.idUser)"></span>
+							</span>
+							
+							<span ng-hide="instancia.idUser!=r.idUser">
+								<span class="puntero glyphicon glyphicon-ok" ng-click="guardar(false)"></span> 
+								<span class="espacio10 puntero glyphicon glyphicon-remove" ng-click="cancelar()"></span>
+							</span>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		
+		<table class="table table-striped">
+		<br><br>
+			<thead>
+					<h3>Administración de roles y privilegios por usuario</h3>
+					<th align=center>Id del usuario</th>
+					<th align=center>Rol/es asignado/s</th>
+					<th align=center>Privilegio/s asignado/s</th>
+					<th align=center>Administrar rol/es</th>
+					<th align=center>Administrar privilegio/s</th>	
+			</thead>
+			<tbody>
+				<tr dir-paginate="r in data | orderBy:'idUser' | filter:search | itemsPerPage: 8"
+						pagination-id="usuarios">
+						<td>{{r.idUser}}</td>
+						<td ng-repeat="a in r.roles">
+							 <span ng-hide="instancia.idUser==r.idUser && instancia.idUser!=r.idUser" ng-bind-html="a.description | highlight: search"></span>
+						</td>	
+						<td ng-repeat="b in r.privileges">
+							 <span ng-hide="instancia.idUser==r.idUser && instancia.idUser!=r.idUser" ng-bind-html="b.description | highlight: search"></span>
+						</td>	
+							
+						<td>
+							<span class="puntero glyphicon glyphicon glyphicon-plus" ng-click="administrarRol(r,1)"></span>
+							<span class="puntero glyphicon glyphicon-edit" ng-click="administrarRol(r,2)"></span>
+							<span class="puntero glyphicon glyphicon glyphicon-trash" ng-click="administrarRol(r,3)"></span>
+						</td>
+						<td>
+							<span class="puntero glyphicon glyphicon glyphicon-plus" ng-click="administrarPrivilegio(r,1)"></span>
+							<span class="puntero glyphicon glyphicon-edit" ng-click="administrarPrivilegio(r,2)"></span>
+							<span class="puntero glyphicon glyphicon glyphicon-trash" ng-click="administrarPrivilegio(r,3)"></span>
+
+						</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+	<div class="panel-footer">
+		<dir-pagination-controls max-size="20" pagination-id="usuarios"></dir-pagination-controls>
+	</div>
+</div>
+

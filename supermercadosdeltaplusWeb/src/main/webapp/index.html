@@ -26,10 +26,18 @@
 <script src="services/coreservice.js" type="text/javascript"></script>
 <script src="services/usuariosservices.js" type="text/javascript"></script>
 <script src="services/privilegiosservices.js" type="text/javascript"></script>
+<script src="services/rolesservices.js" type="text/javascript"></script>
+
 
 <style type="text/css">
 body {
 	background-image:  url("images/fondo.jpg");
+}
+.modal-header{
+	 background-color:#ffffff;
+}
+.form-horizontal{
+	 background-color:#ffffff;
 }
 </style>
 </head>
@@ -52,7 +60,7 @@ body {
 						ng-click="relocate('/roles')"><a href="#">Administrar Roles 
 						<span class="sr-only">(current)</span></a></li>
 					<li ng-class="option=='Privilegios' ? 'active' : ''"
-						ng-click="relocate('/roles')"><a href="#">Administrar Privilegios
+						ng-click="relocate('/privilegios')"><a href="#">Administrar Privilegios
 						<span class="sr-only">(current)</span></a></li>
 					<li ng-class="option=='Privilegios' ? 'active' : ''"
 						ng-click="relocate('/cambiarcontraseña')"><a href="#">Cambiar contraseña

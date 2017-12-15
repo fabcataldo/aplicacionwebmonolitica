@@ -62,12 +62,6 @@ function PrivilegiosController($scope, $rootScope, $uibModal, privilegiosService
 				controller : 'AddPrivilegiosController',
 				controllerAs : '$ctrl',
 				size : 'lg',
-				resolve : {
-					parametro0 : function() {
-						return "Un valor";
-					},
-					parametro1 : {id:1}
-				}
 			});
 			modalInstance.result.then(function(instancia) {
 				if (instancia)
@@ -80,10 +74,8 @@ function PrivilegiosController($scope, $rootScope, $uibModal, privilegiosService
 }
 
 angular.module('moduloPrincipal').controller('AddPrivilegiosController',
-		function($uibModalInstance, parametro0, parametro1) {
+		function($uibModalInstance) {
 			var $ctrl = this;
-			console.log(parametro0);
-			console.log(parametro1);
 			$ctrl.instancia={};
 
 			$ctrl.ok = function() {

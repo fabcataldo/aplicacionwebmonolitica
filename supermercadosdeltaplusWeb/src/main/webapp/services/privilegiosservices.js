@@ -10,7 +10,7 @@ angular.module('moduloPrincipal').factory('privilegiosService',['$http','URL_API
 		   return $http.put(URL_API_BASE+"privilegios",e);
 	   },
 	   remove: function(id) {
-		   return $http.delete(URL_API_BASE+"privilegios?id="+id);
+		   return $http.delete(URL_API_BASE+"privilegios/"+id);
 	   } 
    }
 }]);

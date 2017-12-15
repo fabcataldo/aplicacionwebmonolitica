@@ -86,6 +86,11 @@ public class UsuarioRSController {
 	public ResponseEntity<Object> remove(@PathVariable("id") int id) {
 		try {
 			User user = new User();
+			//seteo el username ya que no puedo enviarle algo nulo a Hibernate, ya que en la bd
+			//a username no le puedo no poner algo 
+			//Hibernate me avisa con un error de persistencia, que no puede enviar algo
+			//nulo a la bd, ya que la/s columna/s están seteadas como NOT NULL
+			user.setUsername("cualquiernomnbre");
 			user.setIdUser(id);
 			userService.delete(user);
 			return new ResponseEntity<Object>(HttpStatus.OK);
@@ -97,12 +102,12 @@ public class UsuarioRSController {
 		}
 	}
 	
-	@RequestMapping(value = "/agregarrol/{iduser}{idrole}", method = RequestMethod.POST)
-	public ResponseEntity<Object> addRole(@PathVariable("iduser") int iduser,@PathVariable("idrole") int idrole){
+	@RequestMapping(value = "/agregarrol/{idrole},/agregarrol/{iduser}", method = RequestMethod.POST)
+	public ResponseEntity<Object> addRole(@PathVariable("idrole") int idrole,@PathVariable("iduser") int iduser){
 		try {
-			User user=new User();
+			User user= new User();
 			user.setIdUser(iduser);
-			userService.addRoleService(user,idrole);
+			userService.addRoleService(idrole,user);
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} catch (ServiceException e) {
 			LOG.error(e.getMessage(), e);

@@ -9,7 +9,7 @@ angular.module('moduloPrincipal').config(
 				templateUrl : 'views/main.html',
 				controller : 'mainController'
 			}).when('/usuarios', {
-				templateUrl : 'views/users.html',
+				templateUrl : 'views/usuarios.html',
 				controller : 'usuariosController'
 			}).when('/roles', {
 				templateUrl : 'views/roles.html',
@@ -19,7 +19,7 @@ angular.module('moduloPrincipal').config(
 				controller : 'privilegiosController'
 			}).when('/cambiarcontraseña', {
 				templateUrl : 'views/changePasswordForm.html',
-				controller : 'ChangePasswordFormController'
+				controller : 'ChangePasswordFormController',
 			}).otherwise({
 				redirectTo : '/'
 			});

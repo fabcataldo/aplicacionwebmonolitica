@@ -70,6 +70,7 @@ public class User implements UserDetails, Serializable {
 	@Column(unique = true, nullable = false)
 	private String username;
 
+	@JsonIgnore
 	public boolean containsAuthority(String auth) {
 		for (GrantedAuthority ga : getAuthorities()) {
 			if (ga.getAuthority().equalsIgnoreCase(auth))
@@ -84,6 +85,7 @@ public class User implements UserDetails, Serializable {
 	}
 
 	@Override  
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<String> l = new ArrayList<String>();
 		for (Role r : roles) {

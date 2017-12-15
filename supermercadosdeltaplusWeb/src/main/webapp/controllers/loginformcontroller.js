@@ -10,7 +10,7 @@ function LoginFormController($rootScope, $scope, $log, $uibModalInstance, coreSe
 					$rootScope.loginOpen=false;
 					$uibModalInstance.dismiss();
 					coreService.pingAuth().then(
-							function(resp){ 
+							function(resp){   
 								  if(resp.status===200 && resp.data.code==0) {
 									  $rootScope.user.name=resp.data.username;
 									  $rootScope.authenticated=true;

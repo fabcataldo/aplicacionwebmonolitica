@@ -1,5 +1,6 @@
 package com.fabiocompany.supermercadosdeltaplus.model.dao.hibernate;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.fabiocompany.supermercadosdeltaplus.exception.NotFoundException;
@@ -7,6 +8,7 @@ import com.fabiocompany.supermercadosdeltaplus.model.User;
 import com.fabiocompany.supermercadosdeltaplus.model.dao.IUserDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.dao.hibernate.GenericDAO;
 import com.fabiocompany.supermercadosdeltaplus.persistence.exception.PersistenceException;
+import com.fabiocompany.supermercadosdeltaplus.model.Role;
 
 public class UserDAO extends GenericDAO<User, Integer> implements IUserDAO {
 
@@ -30,19 +32,25 @@ public class UserDAO extends GenericDAO<User, Integer> implements IUserDAO {
 	}
 	
 	@Override
-	public int addRoleDAO(User user, int idrole) throws PersistenceException, NotFoundException {
-		User r=null;
+	public int addRoleDAO(int idrole, User user) throws PersistenceException, NotFoundException {
+		Role r=new Role();
+		r.setId(idrole);
 		int a=0;
-		//update Customer c set c.name = :newName where c.name = :oldName
-			//insert into DelinquentAccount (id, name) select c.id, c.name from Customer c where ..c.
+		Session session = getSession();
 		try {
-			String hqlupdate="INSERT INTO User u (u.roles.id)="+idrole;
-			r = (User) getSession().createQuery(hqlupdate);
-			if(r==null)
-				throw new NotFoundException();
-			else 
-				a++;
+			for(int i=0;i<user.getRoles().size();i++) {
+				if(user.getRoles().contains(r)) {
+					session.beginTransaction();
+					session.save(user);
+					session.getTransaction().commit();
+					a++;
+				}
+				else {
+					a=0;
+				}
+			}	
 		} catch (Exception e) {
+			session.getTransaction().rollback();
 			throw new PersistenceException(e.getMessage(), e);
 		} finally {
 			closeSession();

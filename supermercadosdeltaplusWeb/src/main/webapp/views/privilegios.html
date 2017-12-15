@@ -4,8 +4,9 @@
 			<div class="row" style="margin-top: 20px;">
 				<div class="col-md-1"></div>
 				<div class="col-md-1">
-					<button type="button" ng-click="agregar()" class="btn btn-primary">Agregar</button></div>
-				<div class="col-md-8">
+					<button type="button" ng-click="agregar()" class="btn btn-primary">Agregar nuevo privilegio</button></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-5">
 					<form>
 						<div class="input-group">
 							<div class="input-group-addon"
@@ -20,9 +21,10 @@
 			</div>
 		</div>
 		<div class="panel-body">
-
+	
 			<table class="table table-striped">
 				<thead>
+					<h3>Administración básica de privilegios</h3>
 					<tr>
 						<th>Id</th>
 						<th>Descripción</th>
@@ -31,7 +33,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr	dir-paginate="r in data | orderBy:'id' | filter:search | itemsPerPage: 10"
+					<tr	dir-paginate="r in data | orderBy:'id' | filter:search | itemsPerPage: 8"
 						pagination-id="privilegios">
 						<td>{{r.id}}</td>
 						<td>
@@ -49,7 +51,7 @@
 								<span class="espacio10 puntero glyphicon glyphicon-trash" ng-click="remove(r.id)"></span>
 							</span>
 							
-							<span ng-hide="!instancia.id"> 
+							<span ng-hide="instancia.id!=r.id">
 								<span class="puntero glyphicon glyphicon-ok" ng-click="guardar(false)"></span> 
 								<span class="espacio10 puntero glyphicon glyphicon-remove" ng-click="cancelar()"></span>
 							</span>

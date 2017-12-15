@@ -10,7 +10,7 @@ angular.module('moduloPrincipal').factory('usuariosService',['$http','URL_API_BA
 		   return $http.put(URL_API_BASE+"usuarios",e);
 	   },
 	   remove: function(id) {
-		   return $http.delete(URL_API_BASE+"usuarios?id="+id);
+		   return $http.delete(URL_API_BASE+"usuarios/"+id);
 	   } 
    }
 }]);
