@@ -29,7 +29,9 @@
 						<th>Id</th>
 						<th>Descripción</th>
 						<th>Nombre</th>
-						<th>Opciones</th>
+						<th>Privilegio/s asignado/s</th>
+						<th>Administrar privilegio/s</th>
+						<th>Opciones de configuración básica</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -43,6 +45,16 @@
 						<td>
 							<span ng-hide="instancia.id==r.id" ng-bind-html="r.name | highlight: search"></span>
 							<input ng-hide="instancia.id!=r.id" ng-model="instancia.name"></input>						
+						</td>
+						
+						<td ng-repeat="b in r.privileges">
+							 <span ng-hide="instancia.idUser==r.idUser && instancia.idUser!=r.idUser" ng-bind-html="b.description | highlight: search"></span>
+						</td>	
+							
+						<td>
+							<span class="puntero glyphicon glyphicon glyphicon-plus" ng-click="administrarPrivilegioPorRol(r,1)"></span>
+							<span class="puntero glyphicon glyphicon-edit" ng-click="administrarPrivilegioPorRol(r,2)"></span>
+							<span class="puntero glyphicon glyphicon glyphicon-trash" ng-click="administrarPrivilegioPorRol(r,3)"></span>
 						</td>
 						
 						<td>

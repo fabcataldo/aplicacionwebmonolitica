@@ -1,9 +1,16 @@
 angular.module('moduloPrincipal').controller('rolesController',
-		[ '$scope', '$rootScope','$uibModal', 'rolesService', RolesController ]);
+		[ '$scope', '$rootScope','$uibModal', 'rolesService', 'privilegiosService', RolesController ]);
 
-function RolesController($scope, $rootScope, $uibModal, rolesService) {
+function RolesController($scope, $rootScope, $uibModal, rolesService, privilegiosService) {
 	$scope.data=[];
 	$scope.instancia={};
+	$scope.cantidadDePrivilegiosDisponibles=0;
+	
+	privilegiosService.list().then(
+			function(respuesta){$scope.cantidadDePrivilegiosDisponibles=respuesta.data.length;},
+			function(error){$scope.cantidadDePrivilegiosDisponibles=0;}
+	);
+	
 	rolesService.list().then(
 			function(res){$scope.data=res.data;},
 			function(err){$scope.data=[];}
@@ -71,6 +78,140 @@ function RolesController($scope, $rootScope, $uibModal, rolesService) {
 				$scope.cancelar();
 			});
 		};
+	
+		
+	$scope.administrarPrivilegioPorRol = function (r,opcion){
+			$scope.editar(r);
+			if(opcion==3){
+				var modalInstance = $uibModal.open({
+					animation : true,
+					backdrop: false,
+					ariaLabelledBy : 'modal-title',
+					ariaDescribedBy : 'modal-body',
+					templateUrl : 'views/privilegePerRoleRemoveForm.html',
+					controller : 'RemovePrivilegePerRoleController',
+					controllerAs : '$ctrl',
+					size : 'lg',
+				});
+				modalInstance.result.then(function(privilegioaeliminar) {
+					if (privilegioaeliminar){
+						privilegiosService.list().then(function(respuesta) {
+							for(i=0;i<$scope.instancia.privileges.length;i++){
+								if($scope.instancia.privileges[i].description==privilegioaeliminar.description){
+									$scope.instancia.privileges.splice(i,1);
+									break;
+								}
+							}
+							$scope.guardar(false);
+						}, function(respuesta) {
+							$scope.cancelar();
+						});
+					}
+				}, function() {
+					$scope.cancelar();
+				});
+			}
+			else{
+				if($scope.instancia.privileges.length>=$scope.cantidadDePrivilegiosDisponibles){
+					var modalInstance = $uibModal.open({
+						animation : true,
+						backdrop: false,
+						ariaLabelledBy : 'modal-title',
+						ariaDescribedBy : 'modal-body',
+						templateUrl : 'views/privilegePerRoleError.html',
+						controller : 'PrivilegePerRoleErrorController',
+						controllerAs : '$ctrl',
+						size : 'lg',
+					});
+					modalInstance.result.then(
+							function(message) {
+								if (message){
+									$scope.instancia={};
+									return;
+								}
+							}, function() {
+								$scope.cancelar();
+							}
+					);
+				}
+				else{
+					if(opcion==1){
+						var modalInstance = $uibModal.open({
+							animation : true,
+							backdrop: false,
+							ariaLabelledBy : 'modal-title',
+							ariaDescribedBy : 'modal-body',
+							templateUrl : 'views/privilegePerRoleAddForm.html',
+							controller : 'AddPrivilegePerRoleController',
+							controllerAs : '$ctrl',
+							size : 'lg',
+						});
+						modalInstance.result.then(function(privilegioaagregar) {
+							if (privilegioaagregar){
+								privilegiosService.list().then(function(respuesta) {
+									for(i=0;i<respuesta.data.length;i++){
+										if(respuesta.data[i].description==privilegioaagregar.description){
+												$scope.instancia.privileges[$scope.instancia.privileges.length]=respuesta.data[i];
+												$scope.guardar(false);
+												break;
+			
+										}
+									}
+								}, function(respuesta) {
+									$scope.cancelar();
+								});
+							}
+						}, function() {
+							$scope.cancelar();
+						});
+					}
+					if(opcion==2){
+						var modalInstance = $uibModal.open({
+							animation : true,
+							backdrop: false,
+							ariaLabelledBy : 'modal-title',
+							ariaDescribedBy : 'modal-body',
+							templateUrl : 'views/privilegePerRoleEditForm.html',
+							controller : 'PrivilegePerRoleEditController',
+							controllerAs : '$ctrl',
+							size : 'lg',
+							resolve : {
+								parametro0 : $scope.instancia.privileges.length
+							}
+						});
+						modalInstance.result.then(function(instancianuevoprivilegio) {
+							if (instancianuevoprivilegio){						
+								privilegiosService.list().then(function(respuesta) {
+									$scope.editar(r);
+									$scope.nuevoprivilegioencontradoenprivilegiosservice={};
+									for(i=0;i<respuesta.data.length;i++){
+										if(respuesta.data[i].description==instancianuevoprivilegio.descriptionnuevoprivilegio){
+											$scope.nuevoprivilegioencontradoenprivilegiosservice=respuesta.data[i];
+											if(instancianuevoprivilegio.descriptionviejoprivilegio==null){
+												$scope.instancia.privileges=[];
+												$scope.instancia.privileges[0]=$scope.nuevoprivilegioencontradoenprivilegiosservice;
+											}
+											else
+												for(j=0;j<$scope.instancia.privileges.length;j++){
+													if($scope.instancia.privileges[j].description==instancianuevoprivilegio.descriptionviejoprivilegio)
+															$scope.instancia.privileges[j]=$scope.nuevoprivilegioencontradoenprivilegiosservice;
+												}
+											break;
+										}
+									}
+									$scope.guardar(false);
+								}, function(respuesta) {
+									$scope.cancelar();
+								});
+							}
+						}, function() {
+							$scope.cancelar();
+						});
+
+					}
+				}
+			}
+		}
 }
 
 angular.module('moduloPrincipal').controller('AddRolesController',
@@ -82,6 +223,57 @@ angular.module('moduloPrincipal').controller('AddRolesController',
 				$uibModalInstance.close($ctrl.instancia);
 			};
 
+			$ctrl.cancel = function() {
+				$uibModalInstance.dismiss();
+			};
+		});
+
+
+angular.module('moduloPrincipal').controller('RemovePrivilegePerRoleController',
+		function($uibModalInstance) {
+			var $ctrl = this;
+			$ctrl.privilegetodelete={};
+			$ctrl.ok = function() {
+				$uibModalInstance.close($ctrl.privilegetodelete);
+			};
+
+			$ctrl.cancel = function() {
+				$uibModalInstance.dismiss();
+			};
+		});
+
+
+angular.module('moduloPrincipal').controller('PrivilegePerRoleErrorController',
+		function($uibModalInstance) {
+			var $ctrl = this;
+			$ctrl.message="El rol seleccionado ya tiene todos los privilegios disponibles asignados";
+			$ctrl.ok = function() {
+				$uibModalInstance.close($ctrl.message);
+			};
+		});
+
+angular.module('moduloPrincipal').controller('AddPrivilegePerRoleController',
+		function($uibModalInstance) {
+			var $ctrl = this;
+			$ctrl.newprivilege={};
+			$ctrl.ok = function() {
+				$uibModalInstance.close($ctrl.newprivilege);
+			};
+
+			$ctrl.cancel = function() {
+				$uibModalInstance.dismiss();
+			};
+		})
+
+angular.module('moduloPrincipal').controller('PrivilegePerRoleEditController',
+		function($uibModalInstance, parametro0) {
+			var $ctrl = this;
+			$ctrl.nuevoprivilegio={};
+			$ctrl.largoDelArregloDePrivilegios=parametro0;
+			
+			$ctrl.ok = function() {
+				$uibModalInstance.close($ctrl.nuevoprivilegio);
+			};
 			$ctrl.cancel = function() {
 				$uibModalInstance.dismiss();
 			};

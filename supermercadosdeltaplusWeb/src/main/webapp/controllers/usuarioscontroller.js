@@ -4,7 +4,19 @@ angular.module('moduloPrincipal').controller('usuariosController',
 function UsuariosController($scope, $rootScope, $uibModal, usuariosService, rolesService, privilegiosService) {
 	$scope.data=[];
 	$scope.instancia={};
-
+	$scope.cantidadDePrivilegiosEnElSistema=0;
+	$scope.cantidadDeRolesDisponiblesEnElSistema=0;
+	
+	privilegiosService.list().then(
+			function(respuesta){$scope.cantidadDePrivilegiosEnElSistema=respuesta.data.length;},
+			function(error){$scope.cantidadDePrivilegiosEnElSistema=0;}
+	);
+	
+	rolesService.list().then(
+			function(respuesta){$scope.cantidadDeRolesDisponiblesEnElSistema=respuesta.data.length;},
+			function(error){$scope.cantidadDeRolesDisponiblesEnElSistema=0;}
+	);
+	
 	usuariosService.list().then(
 			function(res){
 				$scope.data=res.data;
@@ -17,7 +29,6 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 		// $scope.instancia=i;
 		angular.copy(i, $scope.instancia);
 	}
-	
 	
 	$scope.administrarPrivilegio = function (r,opcion){
 		$scope.editar(r);
@@ -51,7 +62,7 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 			});
 		}
 		else{
-			if($scope.instancia.privileges.length>=5){
+			if($scope.instancia.privileges.length>=$scope.cantidadDePrivilegiosEnElSistema){
 				var modalInstance = $uibModal.open({
 					animation : true,
 					backdrop: false,
@@ -151,13 +162,6 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 			}
 		}
 	}
-
-	
-	
-	
-	
-	
-	
 	
 	$scope.administrarRol = function (r,opcion){
 		$scope.editar(r);
@@ -192,7 +196,7 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 			});
 		}
 		else{
-			if($scope.instancia.roles.length>=3){
+			if($scope.instancia.roles.length>=$scope.cantidadDeRolesDisponiblesEnElSistema){
 				var modalInstance = $uibModal.open({
 					animation : true,
 					backdrop: false,
