@@ -20,7 +20,6 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 	usuariosService.list().then(
 			function(res){
 				$scope.data=res.data;
-				console.log($scope.data);
 			},
 			function(err){
 				$scope.data=[];

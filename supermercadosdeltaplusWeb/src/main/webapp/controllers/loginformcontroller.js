@@ -1,7 +1,7 @@
 angular.module('moduloPrincipal')
-.controller('LoginFormController', ['$rootScope', '$scope', '$log', '$uibModalInstance', 'coreService','user', LoginFormController]);
+.controller('LoginFormController', ['$rootScope', '$scope', '$log', '$uibModalInstance', 'coreService','user', '$uibModal', LoginFormController]);
 
-function LoginFormController($rootScope, $scope, $log, $uibModalInstance, coreService, user) {
+function LoginFormController($rootScope, $scope, $log, $uibModalInstance, coreService, user, $uibModal) {
 	$scope.user=user;
 	$scope.login = function () {
 		coreService.login(user).then(
@@ -26,5 +26,30 @@ function LoginFormController($rootScope, $scope, $log, $uibModalInstance, coreSe
 				$log.log(respErr);
 			}
 		);
-	  };
+	};
+	
+	$scope.sendMailToRecoverPasswordFromLoginForm = function () {
+		console.log("ASDASDDAS");
+		var modalInstance = $uibModal.open({
+			animation : true,
+			backdrop: false,
+			ariaLabelledBy : 'modal-title',
+			ariaDescribedBy : 'modal-body',
+			templateUrl : 'views/recoverPasswordForm.html',
+			controller : 'RecoverPasswordController',
+			controllerAs : '$ctrl2',
+			size : 'lg',
+		});
+		modalInstance.result.then(function(mensajeok) {
+			if(mensajeok){
+				$rootScope.authenticated=false;
+				$rootScope.openLoginForm();
+			}
+		}, function() {
+			$scope.cancelar();
+		});
+	}
+	$scope.cancelar = function(i) {
+		
+	}
 }

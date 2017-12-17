@@ -17,10 +17,11 @@ angular.module('moduloPrincipal').config(
 			}).when('/privilegios', {
 				templateUrl : 'views/privilegios.html',
 				controller : 'privilegiosController'
-			}).when('/cambiarcontraseña', {
+			}).when('/cambiarcontrasenia', {
 				templateUrl : 'views/changePasswordForm.html',
 				controller : 'ChangePasswordFormController',
 			}).otherwise({
 				redirectTo : '/'
 			});
 		});
+

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Beans {
+	
 	@Bean
 	@Autowired
 	public IUserDAO UserDAO(final SessionFactory sessionFactory) {

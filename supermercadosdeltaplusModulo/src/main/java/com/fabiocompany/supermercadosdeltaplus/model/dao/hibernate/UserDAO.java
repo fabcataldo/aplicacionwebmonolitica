@@ -30,4 +30,20 @@ public class UserDAO extends GenericDAO<User, Integer> implements IUserDAO {
 		}
 		return r;
 	}
+	
+	@Override
+	public User loadByEmail(String pemail) throws PersistenceException, NotFoundException {
+		User r=null;
+		try {
+			r = (User) getSession().createQuery(String.format("FROM %s WHERE email=:pemail", getDomainClass().getSimpleName())).setString("pemail", pemail).uniqueResult();
+			if(r==null)
+				throw new NotFoundException();
+		} catch (Exception e) {
+			throw new PersistenceException(e.getMessage(), e);
+		} finally {
+			closeSession();
+		}
+		return r;
+	}
+	
 }

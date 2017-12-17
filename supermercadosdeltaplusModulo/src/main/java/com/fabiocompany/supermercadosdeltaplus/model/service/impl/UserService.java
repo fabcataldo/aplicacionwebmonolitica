@@ -24,4 +24,13 @@ public class UserService extends GenericService<User, Integer> implements IUserS
 			throw new ServiceException(e.getMessage(), e);
 		}
 	}
+	
+	@Override
+	public User loadByEmail(String email) throws ServiceException, NotFoundException {
+		try {
+			return dao.loadByEmail(email);
+		} catch (PersistenceException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+	}
 }
