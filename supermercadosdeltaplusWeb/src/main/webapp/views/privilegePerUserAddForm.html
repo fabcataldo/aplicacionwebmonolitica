@@ -1,0 +1,43 @@
+<div class="modal-header">
+	<h3 class="modal-title" id="modal-title">
+		Nuevo privilegio a asignar!
+	</h3>
+	<h4>
+		Nota: si escribe un privilegio que ya existe, no se va a guardar en el sistema.
+	</h4>
+</div>
+<div class="modal-body" id="modal-body">
+	<form class="form-horizontal">
+		<div></div>
+		<label class="col-md-5 control-label">Privilegios disponibles</label>
+		<table class="col-md-7" align="center">
+			<tbody>
+				<tr>
+					<td>
+						<div ng-repeat="data in $ctrl.listaDePrivilegiosDisponibles">
+							{{data}}</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br><br><br><br><br><br>
+		<fieldset>			
+			<div class="form-group">
+				<label class="col-md-5 control-label">Descripción del privilegio a asignar</label>
+				<div class="col-md-5">
+					<input type="text"
+						placeholder="" class="form-control input-md"
+						required ng-model="$ctrl.newprivilege.description">
+				</div>
+				
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">Asignar privilegio</button>
+	<button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+</div>
+

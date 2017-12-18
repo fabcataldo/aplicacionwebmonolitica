@@ -29,7 +29,6 @@ function LoginFormController($rootScope, $scope, $log, $uibModalInstance, coreSe
 	};
 	
 	$scope.sendMailToRecoverPasswordFromLoginForm = function () {
-		console.log("ASDASDDAS");
 		var modalInstance = $uibModal.open({
 			animation : true,
 			backdrop: false,

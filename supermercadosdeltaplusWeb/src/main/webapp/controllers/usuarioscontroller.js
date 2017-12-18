@@ -30,6 +30,25 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 		angular.copy(i, $scope.instancia);
 	}
 	
+	$scope.callModalPrivilegeAddEditRemoveError = function(){
+		var modalInstance = $uibModal.open({
+			animation : true,
+			backdrop: false,
+			ariaLabelledBy : 'modal-title',
+			ariaDescribedBy : 'modal-body',
+			templateUrl : 'views/privilegePerUserAddEditRemoveFormError.html',
+			controller : 'privilegePerUserAddEditRemoveFormErrorController',
+			controllerAs : '$ctrlprivilegeaddeditremoveformerror',
+			size : 'lg',
+		});
+		modalInstance.result.then(function(instanciamodal) {
+			if (instanciamodal){
+				$scope.cancelar();
+			}
+		}, function(){								
+		});	
+	};
+	
 	$scope.administrarPrivilegio = function (r,opcion){
 		$scope.editar(r);
 		if(opcion==3){
@@ -38,8 +57,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 				backdrop: false,
 				ariaLabelledBy : 'modal-title',
 				ariaDescribedBy : 'modal-body',
-				templateUrl : 'views/privilegeRemoveForm.html',
-				controller : 'RemovePrivilegeController',
+				templateUrl : 'views/privilegePerUserRemoveForm.html',
+				controller : 'RemovePrivilegePerUserController',
 				controllerAs : '$ctrl',
 				size : 'lg',
 			});
@@ -51,6 +70,9 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 								$scope.instancia.privileges.splice(i,1);
 								break;
 							}
+							else
+								if(i==$scope.instancia.privileges.length-1)
+									$scope.callModalPrivilegeAddEditRemoveError();
 						}
 						$scope.guardar(false);
 					}, function(respuesta) {
@@ -68,8 +90,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 					backdrop: false,
 					ariaLabelledBy : 'modal-title',
 					ariaDescribedBy : 'modal-body',
-					templateUrl : 'views/roleError.html',
-					controller : 'RoleErrorController',
+					templateUrl : 'views/privilegePerUserError.html',
+					controller : 'PrivilegePerUserErrorController',
 					controllerAs : '$ctrl',
 					size : 'lg',
 				});
@@ -91,8 +113,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 						backdrop: false,
 						ariaLabelledBy : 'modal-title',
 						ariaDescribedBy : 'modal-body',
-						templateUrl : 'views/privilegeAddForm.html',
-						controller : 'AddPrivilegeController',
+						templateUrl : 'views/privilegePerUserAddForm.html',
+						controller : 'AddPrivilegePerUserController',
 						controllerAs : '$ctrl',
 						size : 'lg',
 					});
@@ -104,7 +126,9 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 											$scope.instancia.privileges[$scope.instancia.privileges.length]=respuesta.data[i];
 											$scope.guardar(false);
 											break;
-		
+									}
+									if(i==respuesta.data.length-1){
+										$scope.callModalPrivilegeAddEditRemoveError();								
 									}
 								}
 							}, function(respuesta) {
@@ -121,8 +145,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 						backdrop: false,
 						ariaLabelledBy : 'modal-title',
 						ariaDescribedBy : 'modal-body',
-						templateUrl : 'views/privilegeEditForm.html',
-						controller : 'EditPrivilegeController',
+						templateUrl : 'views/privilegePerUserEditForm.html',
+						controller : 'EditPrivilegePerUserController',
 						controllerAs : '$ctrl',
 						size : 'lg',
 						resolve : {
@@ -148,6 +172,9 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 											}
 										break;
 									}
+									if(i==respuesta.data.length-1){
+										$scope.callModalPrivilegeAddEditRemoveError();								
+									}
 								}
 								$scope.guardar(false);
 							}, function(respuesta) {
@@ -163,6 +190,26 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 		}
 	}
 	
+	
+	$scope.callModalRoleAddEditRemoveError = function(){
+		var modalInstance = $uibModal.open({
+			animation : true,
+			backdrop: false,
+			ariaLabelledBy : 'modal-title',
+			ariaDescribedBy : 'modal-body',
+			templateUrl : 'views/rolePerUserAddEditRemoveFormError.html',
+			controller : 'rolePerUserAddEditRemoveFormErrorController',
+			controllerAs : '$ctrlroleaddeditremoveformerror',
+			size : 'lg',
+		});
+		modalInstance.result.then(function(instancianewrol) {
+			if (instancianewrol){
+				$scope.cancelar();
+			}
+		}, function(){								
+		});	
+	};
+	
 	$scope.administrarRol = function (r,opcion){
 		$scope.editar(r);
 		if(opcion==3){
@@ -171,8 +218,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 				backdrop: false,
 				ariaLabelledBy : 'modal-title',
 				ariaDescribedBy : 'modal-body',
-				templateUrl : 'views/roleRemoveForm.html',
-				controller : 'RemoveRoleController',
+				templateUrl : 'views/rolePerUserRemoveForm.html',
+				controller : 'RemoveRolePerUserController',
 				controllerAs : '$ctrl',
 				size : 'lg',
 			});
@@ -183,10 +230,15 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 						for(i=0;i<$scope.instancia.roles.length;i++){
 							if($scope.instancia.roles[i].description==instanciarolaeliminar.description){
 								$scope.instancia.roles.splice(i,1);
+								$scope.guardar(false);
 								break;
 							}
+							else{
+								if(i==$scope.instancia.privileges.length-1)
+									$scope.callModalRoleAddEditRemoveError();
+							}							
 						}
-						$scope.guardar(false);
+						
 					}, function(respuesta) {
 						$scope.cancelar();
 					});
@@ -202,8 +254,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 					backdrop: false,
 					ariaLabelledBy : 'modal-title',
 					ariaDescribedBy : 'modal-body',
-					templateUrl : 'views/roleError.html',
-					controller : 'RoleErrorController',
+					templateUrl : 'views/rolePerUserError.html',
+					controller : 'RolePerUserErrorController',
 					controllerAs : '$ctrl',
 					size : 'lg',
 				});
@@ -225,8 +277,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 						backdrop: false,
 						ariaLabelledBy : 'modal-title',
 						ariaDescribedBy : 'modal-body',
-						templateUrl : 'views/roleAddForm.html',
-						controller : 'AddRoleController',
+						templateUrl : 'views/rolePerUserAddForm.html',
+						controller : 'AddRolePerUserController',
 						controllerAs : '$ctrl',
 						size : 'lg',
 					});
@@ -238,7 +290,9 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 											$scope.instancia.roles[$scope.instancia.roles.length]=respuesta.data[i];
 											$scope.guardar(false);
 											break;
-		
+									}
+									if(i==respuesta.data.length-1){
+										$scope.callModalRoleAddEditRemoveError();								
 									}
 								}
 							}, function(respuesta) {
@@ -246,6 +300,7 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 							});
 						}
 					}, function() {
+						
 						$scope.cancelar();
 					});
 				}
@@ -255,8 +310,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 						backdrop: false,
 						ariaLabelledBy : 'modal-title',
 						ariaDescribedBy : 'modal-body',
-						templateUrl : 'views/roleEditForm.html',
-						controller : 'EditRoleController',
+						templateUrl : 'views/rolePerUserEditForm.html',
+						controller : 'EditRolePerUserController',
 						controllerAs : '$ctrl',
 						size : 'lg',
 						resolve : {
@@ -275,12 +330,16 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 											$scope.instancia.roles=[];
 											$scope.instancia.roles[0]=$scope.nuevorolencontradoenroleservice;
 										}
-										else
+										else{
 											for(j=0;j<$scope.instancia.roles.length;j++){
 												if($scope.instancia.roles[j].description==instancianuevorol.descriptionviejorol)
 														$scope.instancia.roles[j]=$scope.nuevorolencontradoenroleservice;
 											}
+										}
 										break;
+									}
+									if(i==respuesta.data.length-1){
+										$scope.callModalRoleAddEditRemoveError();								
 									}
 								}
 								$scope.guardar(false);
@@ -325,16 +384,28 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 	}
 	
 	$scope.remove = function(id) {
-		if(confirm("Desea eliminar el item seleccionado?")) {
-			usuariosService.remove(id).then(function(r){
-				$scope.data.forEach(function(o,i){
-					if(o.idUser==id) {
-						$scope.data.splice(i,1);
-						return false;
-					}
+		var modalInstance = $uibModal.open({
+			animation : true,
+			backdrop: false,
+			ariaLabelledBy : 'modal-title',
+			ariaDescribedBy : 'modal-body',
+			templateUrl : 'views/userRemoveForm.html',
+			controller : 'userRemoveFormController',
+			controllerAs : '$ctrluserremoveformcontroller',
+			size : 'lg',
+		});
+		modalInstance.result.then(function(instanciamodal) {
+			if (instanciamodal){
+				usuariosService.remove(id).then(function(r){
+					$scope.data.forEach(function(o,i){
+						if(o.idUser==id) {
+							$scope.data.splice(i,1);
+							return false;
+						}
+					});
 				});
-			})
-		}
+			}
+		});	
 	};
 	
 	$scope.agregar = function() {
@@ -352,9 +423,7 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 				if (instancia){
 					rolesService.list().then(function(respuesta) {
 						for(i=0;i<respuesta.data.length;i++){
-							console.log("AAAGREGO ROLL");
 							if(respuesta.data[i].description==instancia.roles.description){
-								console.log("ENTRO AL IF DEL AG ROL");
 								instancia.roles=[];
 								instancia.roles[0]=respuesta.data[i];
 								break;
@@ -396,7 +465,7 @@ angular.module('moduloPrincipal').controller('AddUsuariosController',
 			};
 		});
 
-angular.module('moduloPrincipal').controller('EditRoleController',
+angular.module('moduloPrincipal').controller('EditRolePerUserController',
 		function($uibModalInstance, parametro0) {
 			var $ctrl = this;
 			$ctrl.nuevorol={};
@@ -410,20 +479,34 @@ angular.module('moduloPrincipal').controller('EditRoleController',
 			};
 		});
 
-angular.module('moduloPrincipal').controller('AddRoleController',
-		function($uibModalInstance) {
+angular.module('moduloPrincipal').controller('AddRolePerUserController',
+		function($uibModalInstance, rolesService) {
 			var $ctrl = this;
 			$ctrl.newrol={};
+			
+			$ctrl.listaDeRolesDisponibles=[];
+			rolesService.list().then(
+				function(respuesta){
+					for(i=0;i<respuesta.data.length;i++){
+						$ctrl.listaDeRolesDisponibles[i]=respuesta.data[i].description;
+					}					
+				},
+				function(err){
+					$ctrl.listaDeRolesDisponibles=[];
+				}
+			);
+			
 			$ctrl.ok = function() {
 				$uibModalInstance.close($ctrl.newrol);
 			};
+			
 
 			$ctrl.cancel = function() {
 				$uibModalInstance.dismiss();
 			};
 		});
 
-angular.module('moduloPrincipal').controller('RemoveRoleController',
+angular.module('moduloPrincipal').controller('RemoveRolePerUserController',
 		function($uibModalInstance) {
 			var $ctrl = this;
 			$ctrl.roltodelete={};
@@ -437,7 +520,7 @@ angular.module('moduloPrincipal').controller('RemoveRoleController',
 		});
 
 
-angular.module('moduloPrincipal').controller('RoleErrorController',
+angular.module('moduloPrincipal').controller('RolePerUserErrorController',
 		function($uibModalInstance) {
 			var $ctrl = this;
 			$ctrl.rolmessage="El usuario seleccionado ya tiene todos los roles disponibles asignados";
@@ -446,8 +529,17 @@ angular.module('moduloPrincipal').controller('RoleErrorController',
 			};
 		});
 
+angular.module('moduloPrincipal').controller('PrivilegePerUserErrorController',
+		function($uibModalInstance) {
+			var $ctrl = this;
+			$ctrl.rolmessage="El usuario seleccionado ya tiene todos los privilegios disponibles asignados";
+			$ctrl.ok = function() {
+				$uibModalInstance.close($ctrl.rolmessage);
+			};
+		});
 
-angular.module('moduloPrincipal').controller('EditPrivilegeController',
+
+angular.module('moduloPrincipal').controller('EditPrivilegePerUserController',
 		function($uibModalInstance, parametro0) {
 			var $ctrl = this;
 			$ctrl.nuevoprivilegio={};
@@ -462,7 +554,7 @@ angular.module('moduloPrincipal').controller('EditPrivilegeController',
 		});
 
 
-angular.module('moduloPrincipal').controller('RemovePrivilegeController',
+angular.module('moduloPrincipal').controller('RemovePrivilegePerUserController',
 		function($uibModalInstance) {
 			var $ctrl = this;
 			$ctrl.privilegetodelete={};
@@ -475,10 +567,24 @@ angular.module('moduloPrincipal').controller('RemovePrivilegeController',
 			};
 		});
 
-angular.module('moduloPrincipal').controller('AddPrivilegeController',
-		function($uibModalInstance) {
+angular.module('moduloPrincipal').controller('AddPrivilegePerUserController',
+		function($uibModalInstance, privilegiosService) {
 			var $ctrl = this;
 			$ctrl.newprivilege={};
+			
+			$ctrl.listaDePrivilegiosDisponibles=[];
+			privilegiosService.list().then(
+				function(respuesta){
+					for(i=0;i<respuesta.data.length;i++){
+						$ctrl.listaDePrivilegiosDisponibles[i]=respuesta.data[i].description;
+					}					
+				},
+				function(err){
+					$ctrl.llistaDePrivilegiosDisponibles=[];
+				}
+			);
+			
+			
 			$ctrl.ok = function() {
 				$uibModalInstance.close($ctrl.newprivilege);
 			};

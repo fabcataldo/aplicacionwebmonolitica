@@ -12,29 +12,22 @@ import com.fabiocompany.supermercadosdeltaplus.model.service.IAuthTokenService;
 import com.fabiocompany.supermercadosdeltaplus.model.service.IUserService;
 import com.fabiocompany.supermercadosdeltaplus.service.SimpleResponse;
 import com.fabiocompany.supermercadosdeltaplus.service.exception.ServiceException;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
-import org.springframework.transaction.annotation.Transactional;
+import javax.mail.Session;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.mail.SimpleMailMessage;
 import java.util.Properties;
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -69,7 +62,7 @@ public class PasswordRecoverRSController extends BaseRSController{
 			//establezco las propiedades de la conexión
 			Properties props = new Properties();
 			// Nombre del host de correo, es smtp.gmail.com
-			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.host", "smtp.gmail.com");	
 
 			// TLS si está disponible
 			props.setProperty("mail.smtp.starttls.enable", "true");
@@ -84,7 +77,7 @@ public class PasswordRecoverRSController extends BaseRSController{
 			props.setProperty("mail.smtp.auth", "true");
 			
 			//creo la sesión para el envío de mail		
-	        javax.mail.Session session = javax.mail.Session.getDefaultInstance(props);
+	        Session session = Session.getDefaultInstance(props);
 			
 	        //mando un mail con contenido con formato MIME
 			MimeMessage message = new MimeMessage(session);

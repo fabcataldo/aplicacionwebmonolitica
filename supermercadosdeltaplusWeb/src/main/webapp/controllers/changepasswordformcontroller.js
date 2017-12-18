@@ -6,14 +6,13 @@ function ChangePasswordFormController($rootScope, $scope, $log, $uibModal, usuar
 	$scope.modifieduser={};
 	$scope.bandera=0;
 	$scope.actualusername=$rootScope.user.name;
+	$scope.banderarecarga=0;
 	
 	if($routeParams.token!=undefined){
 		var tokenValue = $routeParams.token;
-		console.log(tokenValue);
 		recoverPasswordService.loginTemporarly(tokenValue).then(
 				function(resp){ 
 					if(resp.status===404){
-						console.log("PISO ACAAA");
 						coreService.pingAuth().then(
 								function(resp){   
 									  console.log(resp);
@@ -23,24 +22,9 @@ function ChangePasswordFormController($rootScope, $scope, $log, $uibModal, usuar
 										  $rootScope.regularCall=true;
 										  console.log($rootScope.user);
 									  } else {
-										  
+										  $log.log(respErr);
 									  }
 									});
-						/*var modalInstance = $uibModal.open({
-							animation : true,
-							backdrop: false,
-							ariaLabelledBy : 'modal-title',
-							ariaDescribedBy : 'modal-body',
-							templateUrl : 'views/recoverPasswordOK.html',
-							controller : 'recoverPasswordOKController',
-							controllerAs : '$ctrlrecover',
-							size : 'lg',
-						});
-						modalInstance.result.then(function() {
-										
-						}, function() {
-							
-						});  */
 					}
 				},
 				function(respErr){
