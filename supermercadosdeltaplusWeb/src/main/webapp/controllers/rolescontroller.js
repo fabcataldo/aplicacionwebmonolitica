@@ -114,6 +114,8 @@ function RolesController($scope, $rootScope, $uibModal, rolesService, privilegio
 		
 	$scope.administrarPrivilegioPorRol = function (r,opcion){
 			$scope.editar(r);
+			$scope.yoquieroamibandera=false;
+			
 			if(opcion==3){
 				var modalInstance = $uibModal.open({
 					animation : true,
@@ -131,13 +133,13 @@ function RolesController($scope, $rootScope, $uibModal, rolesService, privilegio
 							for(i=0;i<$scope.instancia.privileges.length;i++){
 								if($scope.instancia.privileges[i].description==privilegioaeliminar.description){
 									$scope.instancia.privileges.splice(i,1);
+									$scope.yoquieroamibandera=true;
+									$scope.guardar(false);
 									break;
 								}
-								else
-									if(i==$scope.instancia.privileges.length-1)
-										$scope.callModalPrivilegePerRoleAddEditRemoveError();
 							}
-							$scope.guardar(false);
+							if($scope.yoquieroamibandera===false)
+								$scope.callModalPrivilegePerRoleAddEditRemoveError();
 						}, function(respuesta) {
 							$scope.cancelar();
 						});
@@ -147,7 +149,11 @@ function RolesController($scope, $rootScope, $uibModal, rolesService, privilegio
 				});
 			}
 			else{
-				if($scope.instancia.privileges.length>=$scope.cantidadDePrivilegiosDisponibles){
+			//el null lo contemplo también porque cuando agrego un rol nuevo y le quiero asignar 
+			//privilegios, me salta error y el length no lo lee porque no tiene privilegios
+			//cuando el rol es nuevo, por eso pongo esa ventana al usuario
+			//para que él recargue la página y ahí poder ponerle privilegios al rol nuevo
+				if($scope.instancia.privileges==null || $scope.instancia.privileges.length>=$scope.cantidadDePrivilegiosDisponibles){
 					var modalInstance = $uibModal.open({
 						animation : true,
 						backdrop: false,
@@ -188,12 +194,12 @@ function RolesController($scope, $rootScope, $uibModal, rolesService, privilegio
 										if(respuesta.data[i].description==privilegioaagregar){
 												$scope.instancia.privileges[$scope.instancia.privileges.length]=respuesta.data[i];
 												$scope.guardar(false);
+												$scope.yoquieroamibandera=true;
 												break;
-										}
-										if(i==respuesta.data.length-1){
-											$scope.callModalPrivilegePerRoleAddEditRemoveError();							
-										}
+										}							
 									}
+									if($scope.yoquieroamibandera===false)
+										$scope.callModalPrivilegePerRoleAddEditRemoveError();
 								}, function(respuesta) {
 									$scope.cancelar();
 								});
@@ -227,19 +233,22 @@ function RolesController($scope, $rootScope, $uibModal, rolesService, privilegio
 											if(instancianuevoprivilegio.descriptionviejoprivilegio==null){
 												$scope.instancia.privileges=[];
 												$scope.instancia.privileges[0]=$scope.nuevoprivilegioencontradoenprivilegiosservice;
+												$scope.yoquieroamibandera=true;
+												$scope.guardar(false);
 											}
 											else
 												for(j=0;j<$scope.instancia.privileges.length;j++){
-													if($scope.instancia.privileges[j].description==instancianuevoprivilegio.descriptionviejoprivilegio)
+													if($scope.instancia.privileges[j].description==instancianuevoprivilegio.descriptionviejoprivilegio){
 															$scope.instancia.privileges[j]=$scope.nuevoprivilegioencontradoenprivilegiosservice;
+															$scope.yoquieroamibandera=true;
+															$scope.guardar(false);
+													}
 												}
 											break;
-										}
-										if(i==respuesta.data.length-1){
-											$scope.callModalPrivilegePerRoleAddEditRemoveError();								
-										}
+										}							
 									}
-									$scope.guardar(false);
+									if($scope.yoquieroamibandera===false)
+										$scope.callModalPrivilegePerRoleAddEditRemoveError();
 								}, function(respuesta) {
 									$scope.cancelar();
 								});

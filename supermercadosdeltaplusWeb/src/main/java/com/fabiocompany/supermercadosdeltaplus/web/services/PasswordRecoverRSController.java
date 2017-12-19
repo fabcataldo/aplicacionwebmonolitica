@@ -33,6 +33,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
 @Controller
 @RequestMapping(value = "/")
 public class PasswordRecoverRSController extends BaseRSController{
@@ -48,12 +49,9 @@ public class PasswordRecoverRSController extends BaseRSController{
     private JavaMailSender mailSender;
 	
 	@RequestMapping(value = "/sendmailtoresetpassword", method = RequestMethod.GET)
-	public ResponseEntity<Object> sendMailToResetPassword(HttpServletRequest request, @RequestParam("email") String userEmail) throws ServiceException, NotFoundException {
+	public ResponseEntity<Object> sendMailToResetPassword(HttpServletRequest request, @RequestParam("email") String userEmail){
 		try {
 			User user = userService.loadByEmail(userEmail);
-			if (user == null) {
-				throw new NotFoundException();
-			}
 			
 			AuthToken at=new AuthToken(86400, user.getUsername());
 			String tokenuser=at.encodeCookieValue();
@@ -110,6 +108,9 @@ public class PasswordRecoverRSController extends BaseRSController{
 		}
 		 catch (ServiceException e) {
 			 LOG.error(e.getMessage(), e);
+			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotFoundException e) {
+			LOG.error(e.getMessage(), e);
 			return new ResponseEntity<Object>(new SimpleResponse(-1, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

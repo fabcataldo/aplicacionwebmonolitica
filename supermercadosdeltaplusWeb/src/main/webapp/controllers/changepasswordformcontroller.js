@@ -5,33 +5,30 @@ function ChangePasswordFormController($rootScope, $scope, $log, $uibModal, usuar
 	$scope.userbd={};
 	$scope.modifieduser={};
 	$scope.bandera=0;
-	$scope.actualusername=$rootScope.user.name;
-	$scope.banderarecarga=0;
 	
 	if($routeParams.token!=undefined){
 		var tokenValue = $routeParams.token;
 		recoverPasswordService.loginTemporarly(tokenValue).then(
 				function(resp){ 
-					if(resp.status===404){
 						coreService.pingAuth().then(
 								function(resp){   
-									  console.log(resp);
 									  if(resp.status===200 && resp.data.code==0) {
 										  $rootScope.user.name=resp.data.username;
 										  $rootScope.authenticated=true;
 										  $rootScope.regularCall=true;
+										  $rootScope.loginOpen = true;
 										  console.log($rootScope.user);
 									  } else {
 										  $log.log(respErr);
 									  }
 									});
-					}
 				},
 				function(respErr){
 					$log.log(respErr);
 				}
 		);
 	}
+	
 	
 	usuariosService.list().then(
 			function(respuesta){			
@@ -45,8 +42,8 @@ function ChangePasswordFormController($rootScope, $scope, $log, $uibModal, usuar
 					$scope.modifieduser=$scope.userbd;					
 					$scope.bandera=1;
 				}
-				console.log("LLAMOOO A LIST() DE USERS");
 				console.log($scope.modifieduser);
+				$scope.modifieduser.password="";				
 			},
 			function(respuestaerronea){
 				$scope.userbd={};
@@ -61,6 +58,8 @@ function ChangePasswordFormController($rootScope, $scope, $log, $uibModal, usuar
 				function(resp){ 
 					if(resp.status===200) {
 						$rootScope.authenticated=false;
+						$rootScope.regularCall=false;
+						$rootScope.loginOpen = false;
 						$rootScope.logout();
 						$rootScope.openLoginForm();
 					}

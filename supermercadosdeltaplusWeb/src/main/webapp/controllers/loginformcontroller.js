@@ -48,7 +48,7 @@ function LoginFormController($rootScope, $scope, $log, $uibModalInstance, coreSe
 			$scope.cancelar();
 		});
 	}
-	$scope.cancelar = function(i) {
+	$scope.cancelar = function() {
 		
 	}
 }

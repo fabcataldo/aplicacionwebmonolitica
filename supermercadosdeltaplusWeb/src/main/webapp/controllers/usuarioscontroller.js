@@ -51,6 +51,8 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 	
 	$scope.administrarPrivilegio = function (r,opcion){
 		$scope.editar(r);
+		$scope.banderadealto=false;
+		
 		if(opcion==3){
 			var modalInstance = $uibModal.open({
 				animation : true,
@@ -68,13 +70,13 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 						for(i=0;i<$scope.instancia.privileges.length;i++){
 							if($scope.instancia.privileges[i].description==privilegioaeliminar.description){
 								$scope.instancia.privileges.splice(i,1);
+								$scope.guardar(false);
+								$scope.banderadealto=true;
 								break;
 							}
-							else
-								if(i==$scope.instancia.privileges.length-1)
-									$scope.callModalPrivilegeAddEditRemoveError();
 						}
-						$scope.guardar(false);
+						if($scope.banderadealto===false)
+							$scope.callModalPrivilegeAddEditRemoveError();
 					}, function(respuesta) {
 						$scope.cancelar();
 					});
@@ -125,12 +127,12 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 									if(respuesta.data[i].description==privilegioaagregar.description){
 											$scope.instancia.privileges[$scope.instancia.privileges.length]=respuesta.data[i];
 											$scope.guardar(false);
+											$scope.banderadealto=true;
 											break;
 									}
-									if(i==respuesta.data.length-1){
-										$scope.callModalPrivilegeAddEditRemoveError();								
-									}
 								}
+								if($scope.banderadealto===false)
+									$scope.callModalPrivilegeAddEditRemoveError();
 							}, function(respuesta) {
 								$scope.cancelar();
 							});
@@ -164,19 +166,24 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 										if(instancianuevoprivilegio.descriptionviejoprivilegio==null){
 											$scope.instancia.privileges=[];
 											$scope.instancia.privileges[0]=$scope.nuevoprivilegioencontradoenprivilegiosservice;
+											$scope.guardar(false);
+											$scope.banderadealto=true;
 										}
 										else
 											for(j=0;j<$scope.instancia.privileges.length;j++){
-												if($scope.instancia.privileges[j].description==instancianuevoprivilegio.descriptionviejoprivilegio)
+												if($scope.instancia.privileges[j].description==instancianuevoprivilegio.descriptionviejoprivilegio){
 														$scope.instancia.privileges[j]=$scope.nuevoprivilegioencontradoenprivilegiosservice;
+														$scope.guardar(false);
+														$scope.banderadealto=true;
+												}
 											}
 										break;
 									}
-									if(i==respuesta.data.length-1){
-										$scope.callModalPrivilegeAddEditRemoveError();								
-									}
 								}
-								$scope.guardar(false);
+								if($scope.banderadealto==false){
+									$scope.callModalRoleAddEditRemoveError();								
+								}
+								
 							}, function(respuesta) {
 								$scope.cancelar();
 							});
@@ -212,6 +219,7 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 	
 	$scope.administrarRol = function (r,opcion){
 		$scope.editar(r);
+		$scope.bandera=false;
 		if(opcion==3){
 			var modalInstance = $uibModal.open({
 				animation : true,
@@ -231,14 +239,12 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 							if($scope.instancia.roles[i].description==instanciarolaeliminar.description){
 								$scope.instancia.roles.splice(i,1);
 								$scope.guardar(false);
+								$scope.bandera=true;
 								break;
 							}
-							else{
-								if(i==$scope.instancia.privileges.length-1)
-									$scope.callModalRoleAddEditRemoveError();
-							}							
 						}
-						
+						if($scope.bandera===false)
+							$scope.callModalRoleAddEditRemoveError();
 					}, function(respuesta) {
 						$scope.cancelar();
 					});
@@ -289,12 +295,12 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 									if(respuesta.data[i].description==instancianewrol.description){
 											$scope.instancia.roles[$scope.instancia.roles.length]=respuesta.data[i];
 											$scope.guardar(false);
+											$scope.bandera=true;
 											break;
 									}
-									if(i==respuesta.data.length-1){
-										$scope.callModalRoleAddEditRemoveError();								
-									}
 								}
+								if($scope.bandera===false)
+									$scope.callModalRoleAddEditRemoveError();	
 							}, function(respuesta) {
 								$scope.cancelar();
 							});
@@ -329,20 +335,24 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 										if(instancianuevorol.descriptionviejorol==null){
 											$scope.instancia.roles=[];
 											$scope.instancia.roles[0]=$scope.nuevorolencontradoenroleservice;
+											$scope.guardar(false);
+											$scope.bandera=true;
 										}
 										else{
 											for(j=0;j<$scope.instancia.roles.length;j++){
-												if($scope.instancia.roles[j].description==instancianuevorol.descriptionviejorol)
-														$scope.instancia.roles[j]=$scope.nuevorolencontradoenroleservice;
+												if($scope.instancia.roles[j].description==instancianuevorol.descriptionviejorol){
+													$scope.instancia.roles[j]=$scope.nuevorolencontradoenroleservice;
+													$scope.guardar(false);
+													$scope.bandera=true;
+												}
 											}
 										}
 										break;
 									}
-									if(i==respuesta.data.length-1){
-										$scope.callModalRoleAddEditRemoveError();								
-									}
 								}
-								$scope.guardar(false);
+								if($scope.bandera==false){
+									$scope.callModalRoleAddEditRemoveError();								
+								}
 							}, function(respuesta) {
 								$scope.cancelar();
 							});
@@ -355,8 +365,44 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 		}
 	}
 
-	$scope.guardar = function(nuevo) {
+	$scope.acomodarDatos = function(){
+		if($scope.instancia.accountEnabled==="Si" || $scope.instancia.accountEnabled==="si" ){
+			$scope.instancia.accountEnabled="true";
+		}
+		
+		else{
+			if($scope.instancia.accountEnabled==="No" || $scope.instancia.accountEnabled==="no" )
+				$scope.instancia.accountEnabled="false";
+		}
+		
+		if($scope.instancia.accountExpired==="Si" || $scope.instancia.accountExpired==="si" ){
+			$scope.instancia.accountExpired="true";
+		}
+		else{
+			if($scope.instancia.accountExpired==="No" || $scope.instancia.accountExpired==="no" )
+				$scope.instancia.accountExpired="false";
+		}
+		
+		if($scope.instancia.accountLocked==="Si" || $scope.instancia.accountLocked==="si" ){
+			$scope.instancia.accountLocked="true";
+		}
+		else{
+			if($scope.instancia.accountLocked==="No" || $scope.instancia.accountLocked==="no" )
+				$scope.instancia.accountLocked="false";
+		}
+		
+		if($scope.instancia.credentialsExpired==="Si" || $scope.instancia.credentialsExpired==="si" ){
+			$scope.instancia.credentialsExpired="true";
+		}
+		else{
+			if($scope.instancia.credentialsExpired==="No" || $scope.instancia.credentialsExpired==="no" )
+			$scope.instancia.credentialsExpired="false";
+		}
+	}
+
+	$scope.guardar = function(nuevo) {		
 		if(nuevo) {
+			$scope.acomodarDatos();
 			usuariosService.add($scope.instancia).then(
 					function(res){
 							$scope.data.push(res.data);
@@ -365,6 +411,7 @@ function UsuariosController($scope, $rootScope, $uibModal, usuariosService, role
 					function(err){$scope.instancia={};}
 			);
 		}else{
+			$scope.acomodarDatos();
 			usuariosService.edit($scope.instancia).then(
 					function(res){
 						$scope.data.forEach(function(o,i){
