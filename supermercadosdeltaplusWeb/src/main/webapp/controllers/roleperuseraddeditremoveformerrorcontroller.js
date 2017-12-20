@@ -3,7 +3,7 @@ angular.module('moduloPrincipal')
 
 function RolePerUserAddEditRemoveFormErrorController($rootScope, $scope, $uibModalInstance) {
 	var $ctrlroleaddeditremoveformerror = this;
-	$ctrlroleaddeditremoveformerror.mensajedeok="Hubo un error en el envío del mail";
+	$ctrlroleaddeditremoveformerror.mensajedeok="all";
 	
 	$ctrlroleaddeditremoveformerror.ok = function() {
 		$uibModalInstance.close($ctrlroleaddeditremoveformerror.mensajedeok);

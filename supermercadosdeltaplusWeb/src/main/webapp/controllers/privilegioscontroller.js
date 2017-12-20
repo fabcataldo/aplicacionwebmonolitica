@@ -41,17 +41,30 @@ function PrivilegiosController($scope, $rootScope, $uibModal, privilegiosService
 		$scope.instancia={};
 	}
 	$scope.remove = function(id) {
-		if(confirm("Desea eliminar el item seleccionado?")) {
-			privilegiosService.remove(id).then(function(r){
-				$scope.data.forEach(function(o,i){
-					if(o.id==id) {
-						$scope.data.splice(i,1);
-						return false;
-					}
+		var modalInstance = $uibModal.open({
+			animation : true,
+			backdrop: false,
+			ariaLabelledBy : 'modal-title',
+			ariaDescribedBy : 'modal-body',
+			templateUrl : 'views/privilegeRemoveForm.html',
+			controller : 'privilegeRemoveFormController',
+			controllerAs : '$ctrlprivilegeremoveformcontroller',
+			size : 'lg',
+		});
+		modalInstance.result.then(function(instanciamodal) {
+			if (instanciamodal){
+				privilegiosService.remove(id).then(function(r){
+					$scope.data.forEach(function(o,i){
+						if(o.id==id) {
+							$scope.data.splice(i,1);
+							return false;
+						}
+					});
 				});
-			})
-		}
+			}
+		});	
 	};
+	
 	$scope.agregar = function() {
 			var modalInstance = $uibModal.open({
 				animation : true,
